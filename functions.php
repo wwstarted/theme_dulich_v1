@@ -60,7 +60,7 @@ function wl_enqueue_assets()
         array(),
         null
     );
-    $ver = '1.1.1';
+    $ver = '1.1.4';
 
     $uri = get_template_directory_uri();
 

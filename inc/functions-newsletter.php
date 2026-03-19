@@ -179,3 +179,64 @@ function wl_featured_posts_customizer($wp_customize)
         ),
     ));
 }
+
+
+// ── Customizer: Clients / Partners Logo Grid ─────────────────
+add_action('customize_register', 'wl_clients_customizer');
+
+function wl_clients_customizer($wp_customize)
+{
+
+    $wp_customize->add_section('wl_clients', array(
+        'title' => __('Partners / Clients (Hero bottom)', 'wanderland'),
+        'description' => __('5 logo hiển thị ngay dưới hero banner. Mỗi logo có ảnh mặc định + ảnh hover.', 'wanderland'),
+        'priority' => 34,
+    ));
+
+    for ($i = 1; $i <= 5; $i++) {
+
+        // Image default
+        $wp_customize->add_setting('wl_client_' . $i . '_image', array(
+            'default' => '',
+            'sanitize_callback' => 'absint',
+        ));
+        $wp_customize->add_control(new WP_Customize_Media_Control($wp_customize, 'wl_client_' . $i . '_image', array(
+            'label' => sprintf(__('Logo %d — ảnh mặc định', 'wanderland'), $i),
+            'section' => 'wl_clients',
+            'mime_type' => 'image',
+        )));
+
+        // Image hover
+        $wp_customize->add_setting('wl_client_' . $i . '_hover', array(
+            'default' => '',
+            'sanitize_callback' => 'absint',
+        ));
+        $wp_customize->add_control(new WP_Customize_Media_Control($wp_customize, 'wl_client_' . $i . '_hover', array(
+            'label' => sprintf(__('Logo %d — ảnh hover', 'wanderland'), $i),
+            'section' => 'wl_clients',
+            'mime_type' => 'image',
+        )));
+
+        // URL
+        $wp_customize->add_setting('wl_client_' . $i . '_url', array(
+            'default' => '#',
+            'sanitize_callback' => 'esc_url_raw',
+        ));
+        $wp_customize->add_control('wl_client_' . $i . '_url', array(
+            'label' => sprintf(__('Logo %d — link URL', 'wanderland'), $i),
+            'section' => 'wl_clients',
+            'type' => 'url',
+        ));
+
+        // Alt text
+        $wp_customize->add_setting('wl_client_' . $i . '_alt', array(
+            'default' => 'Partner ' . $i,
+            'sanitize_callback' => 'sanitize_text_field',
+        ));
+        $wp_customize->add_control('wl_client_' . $i . '_alt', array(
+            'label' => sprintf(__('Logo %d — tên / alt text', 'wanderland'), $i),
+            'section' => 'wl_clients',
+            'type' => 'text',
+        ));
+    }
+}

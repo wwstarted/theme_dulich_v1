@@ -16,10 +16,6 @@
   background-color: var(--color-dark, #1a1a1a);
 }
 
-/* ============================================================
-   2. TRACK & SLIDES
-   ============================================================ */
-
 .wl-hero-track {
   position: relative;
   width: 100%;
@@ -327,18 +323,24 @@
 .wl-hero-btn:hover .wl-btn-icon {
   transform: translateX(3px);
 }
-
 /* ============================================================
-   10. ARROWS
+   WANDERLAND — Hero Arrow Update (Brush Stroke Style)
+   
+   Thay thế phần "10. ARROWS" trong home.css
+   bằng toàn bộ block dưới đây.
+   
+   Yêu cầu: copy file arrow-brush.svg vào /images/arrow-brush.svg
+   trong thư mục theme.
    ============================================================ */
 
+/* ── Base button ── */
 .wl-hero-arrow {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
   z-index: 10;
-  width: 52px;
-  height: 52px;
+  width: 88px; /* 66×1.33 — scale up từ viewBox 66×44 */
+  height: 59px;
   background: transparent;
   border: none;
   cursor: pointer;
@@ -347,42 +349,128 @@
   align-items: center;
   justify-content: center;
   outline: none;
+  transition:
+    transform 0.22s ease,
+    filter 0.22s ease;
 }
 
-.wl-hero-arrow:focus-visible .wl-arrow-inner {
+.wl-hero-arrow:hover {
+  filter: brightness(1.08);
+}
+
+.wl-hero-arrow:focus-visible {
   outline: 2px solid var(--color-accent, #b89d6e);
-  outline-offset: 4px;
-  border-radius: 50%;
+  outline-offset: 3px;
+  border-radius: 2px;
 }
 
+/* ── Position ── */
 .wl-hero-arrow--prev {
-  left: 32px;
+  left: 28px;
 }
 .wl-hero-arrow--next {
-  right: 32px;
+  right: 28px;
 }
 
+/* ── Inner wrapper — chứa brush shape + arrow icon ── */
 .wl-arrow-inner {
-  width: 52px;
-  height: 52px;
-  color: rgba(255, 255, 255, 0.75);
+  position: relative;
+  width: 100%;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition:
-    color 0.18s ease,
-    transform 0.18s ease;
 }
 
-.wl-hero-arrow:hover .wl-arrow-inner {
-  color: #fff;
-  transform: scale(1.1);
+/* ── Brush stroke background (mask-image approach) ── */
+.wl-hero-arrow .wl-arrow-inner::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  /* Brush stroke shape được dùng như mask */
+  -webkit-mask-image: url("../images/arrow-brush.svg");
+  mask-image: url("../images/arrow-brush.svg");
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+
+  /* Màu nền button — trắng mờ */
+  background-color: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+
+  transition: background-color 0.22s ease;
 }
 
-.wl-hero-arrow svg {
-  width: 52px;
-  height: 52px;
-  display: block;
+/* Next: flip brush shape ngang */
+.wl-hero-arrow--next .wl-arrow-inner::before {
+  -webkit-mask-image: url("../images/arrow-brush.svg");
+  mask-image: url("../images/arrow-brush.svg");
+  transform: scaleX(-1);
+}
+
+/* Hover: tăng opacity */
+.wl-hero-arrow:hover .wl-arrow-inner::before {
+  background-color: rgba(255, 255, 255, 0.96);
+}
+
+/* ── Arrow icon (SVG inline, z-index trên brush shape) ── */
+.wl-arrow-inner svg {
+  position: relative;
+  z-index: 1;
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  /* Dịch nhẹ về phía mũi tên để cân bằng shape không đối xứng */
+  transform: translateX(2px);
+}
+
+.wl-hero-arrow--prev .wl-arrow-inner svg {
+  transform: translateX(-2px);
+}
+
+/* ── Responsive ── */
+@media (max-width: 1199px) {
+  .wl-hero-arrow {
+    width: 72px;
+    height: 48px;
+  }
+  .wl-hero-arrow--prev {
+    left: 14px;
+  }
+  .wl-hero-arrow--next {
+    right: 14px;
+  }
+}
+
+@media (max-width: 767px) {
+  .wl-hero-arrow {
+    width: 62px;
+    height: 41px;
+  }
+  .wl-hero-arrow--prev {
+    left: 8px;
+  }
+  .wl-hero-arrow--next {
+    right: 8px;
+  }
+  .wl-arrow-inner svg {
+    width: 15px;
+    height: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .wl-hero-arrow {
+    width: 54px;
+    height: 36px;
+  }
+  .wl-arrow-inner svg {
+    width: 13px;
+    height: 13px;
+  }
 }
 
 /* ============================================================
@@ -665,35 +753,52 @@
 
 .wl-hero-brush {
   position: absolute;
-  bottom: -1px;
+  /* Push down so only the top bristle edge peeks above 100vh */
+  bottom: -30px;
   left: 0;
   width: 100%;
   z-index: 5;
   pointer-events: none;
   line-height: 0;
+  overflow: visible;
 }
 
-.wl-hero-brush svg {
+.wl-hero-brush img {
   display: block;
   width: 100%;
-  height: 36px;
+  height: auto;
+  max-height: 80px;
+  min-height: 30px;
+  object-fit: cover;
+  object-position: top center;
 }
 
 @media (max-width: 1199px) {
-  .wl-hero-brush svg {
-    height: 30px;
+  .wl-hero-brush {
+    bottom: -22px;
+  }
+  .wl-hero-brush img {
+    max-height: 65px;
   }
 }
 
 @media (max-width: 767px) {
-  .wl-hero-brush svg {
-    height: 24px;
+  .wl-hero-brush {
+    bottom: -16px;
+  }
+  .wl-hero-brush img {
+    max-height: 52px;
+    min-height: 24px;
   }
 }
 
 @media (max-width: 480px) {
-  .wl-hero-brush svg {
-    height: 20px;
+  .wl-hero-brush {
+    bottom: -12px;
+  }
+  .wl-hero-brush img {
+    max-height: 40px;
+    min-height: 20px;
   }
 }
 
@@ -1192,20 +1297,51 @@
   line-height: 0;
   z-index: 2;
   pointer-events: none;
+  overflow: hidden;
 }
 
-.wl-nl-brush svg {
+.wl-nl-brush img {
   display: block;
   width: 100%;
-  height: 40px;
+  height: auto;
+  max-height: 80px;
+  min-height: 30px;
+  object-fit: cover;
+  object-position: top center;
 }
 
+/* Top: flip vertically so bristles point down into beige section */
 .wl-nl-brush--top {
   margin-bottom: -2px;
 }
+.wl-nl-brush--top img {
+  transform: scaleY(-1);
+  object-position: bottom center;
+}
 
+/* Bottom: normal orientation, bristles point up */
 .wl-nl-brush--bottom {
   margin-top: -2px;
+}
+
+@media (max-width: 1199px) {
+  .wl-nl-brush img {
+    max-height: 65px;
+  }
+}
+
+@media (max-width: 767px) {
+  .wl-nl-brush img {
+    max-height: 52px;
+    min-height: 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  .wl-nl-brush img {
+    max-height: 40px;
+    min-height: 20px;
+  }
 }
 
 /* ── Inner container ── */
@@ -1643,20 +1779,19 @@
   background: currentColor;
 }
 
-/* ── Slider wrapper — arrows sit outside viewport ── */
 .wl-featured-slider-wrap {
   position: relative;
   display: flex;
   align-items: center;
   gap: 0;
-  margin: 0 -44px; /* arrows bleed outside inner container */
+  margin: 0 -44px;
 }
 
 /* ── Arrows ── */
 .wl-featured-arrow {
   flex-shrink: 0;
-  width: 44px;
-  height: 44px;
+  width: 72px;
+  height: 48px;
   background: transparent;
   border: none;
   cursor: pointer;
@@ -1665,25 +1800,21 @@
   align-items: center;
   justify-content: center;
   color: var(--color-primary, #2c2c2c);
-  transition: color 0.18s ease;
+  transition:
+    color 0.18s ease,
+    filter 0.22s ease;
   outline: none;
   z-index: 2;
+  position: relative;
+  overflow: visible;
 }
 
 .wl-featured-arrow:hover {
-  color: var(--color-accent, #b89d6e);
+  filter: brightness(1.08);
 }
 
-.wl-featured-arrow:focus-visible {
-  outline: 2px solid var(--color-accent, #b89d6e);
-  outline-offset: 2px;
-  border-radius: 4px;
-}
-
-.wl-featured-arrow svg {
-  width: 44px;
-  height: 44px;
-  display: block;
+.wl-featured-arrow::before {
+  content: none;
 }
 
 .wl-featured-arrow--prev {
@@ -1693,6 +1824,62 @@
   margin-left: 0;
 }
 
+/* wl-arrow-inner: explicit px — giống hero */
+.wl-featured-arrow .wl-arrow-inner {
+  position: relative;
+  z-index: 1;
+  width: 72px;
+  height: 48px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Brush stroke trên ::before của inner */
+.wl-featured-arrow .wl-arrow-inner::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  -webkit-mask-image: url("../images/arrow-brush.svg");
+  mask-image: url("../images/arrow-brush.svg");
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  background-color: rgba(180, 157, 110, 0.18);
+  transition: background-color 0.22s ease;
+}
+
+.wl-featured-arrow--next .wl-arrow-inner::before {
+  transform: scaleX(-1);
+}
+
+.wl-featured-arrow:hover .wl-arrow-inner::before {
+  background-color: rgba(180, 157, 110, 0.32);
+}
+
+.wl-featured-arrow .wl-arrow-inner svg {
+  position: relative;
+  z-index: 1;
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+.wl-featured-arrow--prev .wl-arrow-inner svg {
+  transform: translateX(-1px);
+}
+.wl-featured-arrow--next .wl-arrow-inner svg {
+  transform: translateX(1px);
+}
+
+/* Disabled state */
+.wl-featured-arrow:disabled {
+  opacity: 0.25;
+  cursor: default;
+}
 /* Disabled state */
 .wl-featured-arrow:disabled {
   opacity: 0.25;
@@ -1881,14 +2068,18 @@
   }
 
   .wl-featured-arrow {
-    width: 36px;
-    height: 36px;
+    width: 60px;
+    height: 40px;
+  }
+  .wl-featured-arrow .wl-arrow-inner {
+    width: 60px;
+    height: 40px;
   }
 
-  .wl-featured-arrow svg {
+  /* .wl-featured-arrow svg {
     width: 36px;
     height: 36px;
-  }
+  } */
 }
 
 /* ============================================================
@@ -1917,14 +2108,18 @@
   }
 
   .wl-featured-arrow {
-    width: 32px;
-    height: 32px;
+    width: 52px;
+    height: 35px;
+  }
+  .wl-featured-arrow .wl-arrow-inner {
+    width: 52px;
+    height: 35px;
   }
 
-  .wl-featured-arrow svg {
+  /* .wl-featured-arrow svg {
     width: 32px;
     height: 32px;
-  }
+  } */
 }
 
 /* ============================================================
@@ -1941,14 +2136,18 @@
   }
 
   .wl-featured-arrow {
-    width: 28px;
-    height: 28px;
+    width: 44px;
+    height: 30px;
+  }
+  .wl-featured-arrow .wl-arrow-inner {
+    width: 44px;
+    height: 30px;
   }
 
-  .wl-featured-arrow svg {
+  /* .wl-featured-arrow svg {
     width: 28px;
     height: 28px;
-  }
+  } */
 
   .wl-featured-card-title {
     font-size: 0.88rem;
@@ -1957,6 +2156,7 @@
 
 /* ============================================================
    SECTION 5 — DESTINATIONS TIMELINE
+   Matches: mkdf-horizontal-timeline-wrapper, 91px/128px padding
    ============================================================ */
 
 .wl-dest-section {
@@ -1964,6 +2164,40 @@
   background-color: #f4f1eb;
   overflow: hidden;
   padding: 0;
+}
+
+/* ── Brush strokes top & bottom ── */
+.wl-dest-brush {
+  position: relative;
+  width: 100%;
+  line-height: 0;
+  z-index: 3;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.wl-dest-brush img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 80px;
+  min-height: 30px;
+  object-fit: cover;
+  object-position: top center;
+}
+
+/* Top: flip so bristles point down */
+.wl-dest-brush--top {
+  margin-bottom: -2px;
+}
+.wl-dest-brush--top img {
+  transform: scaleY(-1);
+  object-position: bottom center;
+}
+
+/* Bottom: normal */
+.wl-dest-brush--bottom {
+  margin-top: -2px;
 }
 
 /* ── Topographic SVG background ── */
@@ -1997,17 +2231,17 @@
   user-select: none;
 }
 
-/* ── Inner ── */
+/* ── Inner — padding matches element: 91px top, 128px bottom ── */
 .wl-dest-inner {
   position: relative;
   z-index: 2;
-  padding: 0;
+  padding: 91px 0 128px;
 }
 
-/* ── No-scroll wrapper on desktop/tablet ── */
+/* ── Scroll wrapper ── */
 .wl-dest-scroll-wrap {
-  overflow-x: auto; /* horizontal scroll when many items */
-  overflow-y: hidden; /* NO vertical scroll/overflow */
+  overflow-x: auto;
+  overflow-y: hidden;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
   cursor: grab;
@@ -2021,7 +2255,7 @@
   cursor: grabbing;
 }
 
-/* ── Track — absolute positioning, JS sets width/height ── */
+/* ── Track — JS sets width/height ── */
 .wl-dest-track {
   position: relative;
   display: block;
@@ -2029,7 +2263,7 @@
   overflow: visible;
 }
 
-/* ── SVG line overlay ── */
+/* ── SVG dashed line ── */
 .wl-dest-line-svg {
   position: absolute;
   top: 0;
@@ -2039,15 +2273,14 @@
   overflow: visible;
 }
 
-/* ── Individual destination item — JS positions absolutely ── */
+/* ── Item — JS positions absolutely ── */
 .wl-dest-item {
-  position: absolute; /* JS sets left/top */
+  position: absolute;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   text-decoration: none;
   z-index: 3;
-  width: 200px; /* JS also sets this */
   opacity: 0;
   transition: opacity 0.4s ease;
 }
@@ -2056,32 +2289,30 @@
   opacity: 1;
 }
 
-/* Hover lift for content */
 .wl-dest-item:hover .wl-dest-item-inner {
-  transform: translateY(-4px);
+  transform: translateY(-3px);
 }
 
-/* ── Item inner ── */
+/* ── Item inner: image LEFT + text RIGHT (mkdf-hti-content-item-wrap) ── */
 .wl-dest-item-inner {
   display: flex;
+  flex-direction: row;
   align-items: center;
   gap: 10px;
   transition: transform 0.25s ease;
-  width: 100%;
 }
 
-/* ── Flag / image ── */
+/* ── Flag image: 108×65px matching element ── */
 .wl-dest-img-wrap {
   flex-shrink: 0;
-  width: 80px;
-  height: 50px;
+  width: 108px;
+  height: 65px;
   overflow: hidden;
-  border-radius: 2px;
 }
 
 .wl-dest-img-wrap img {
-  width: 100%;
-  height: 100%;
+  width: 108px;
+  height: 65px;
   object-fit: cover;
   display: block;
 }
@@ -2089,16 +2320,19 @@
 /* ── Text block ── */
 .wl-dest-text {
   flex: 1;
+  min-width: 0;
 }
 
+/* Title: bold uppercase — matches mkdf-hti-title */
 .wl-dest-title {
   font-family: var(--font-body, "Jost", sans-serif);
   font-size: 13px;
   font-weight: 700;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--color-primary, #2c2c2c);
-  margin: 0 0 2px;
+  margin: 0 0 3px;
+  white-space: nowrap;
   transition: color 0.18s ease;
 }
 
@@ -2106,48 +2340,21 @@
   color: var(--color-accent, #b89d6e);
 }
 
-.wl-dest-desc {
-  font-family: var(--font-body, "Jost", sans-serif);
-  font-size: 11px;
-  font-weight: 300;
-  color: var(--color-secondary, #878787);
-  margin: 0 0 2px;
-  line-height: 1.4;
-}
-
+/* Coords: mkdf-hti-label-one / label-two */
 .wl-dest-coord {
   font-family: var(--font-body, "Jost", sans-serif);
   font-size: 10px;
   font-weight: 300;
-  color: rgba(135, 135, 135, 0.75);
+  color: rgba(135, 135, 135, 0.8);
   margin: 0;
-  letter-spacing: 0.04em;
-  line-height: 1.4;
+  letter-spacing: 0.03em;
+  line-height: 1.5;
+  white-space: nowrap;
 }
 
-/* ── Pin dot — hidden, SVG circles handle this visually ── */
+/* ── Pin dot — hidden, SVG handles ── */
 .wl-dest-pin {
   display: none;
-}
-
-/* ── Item inner — flush against the line ── */
-.wl-dest-item-inner {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  transition: transform 0.25s ease;
-  /* Above: align bottom of content to line = justify-content end */
-  width: 100%;
-}
-
-/* Above items: content sits above line, bottom edge touches pinY */
-.wl-dest-item--above .wl-dest-item-inner {
-  align-items: flex-end;
-}
-
-/* Below items: content sits below line, top edge at pinY */
-.wl-dest-item--below .wl-dest-item-inner {
-  align-items: flex-start;
 }
 
 /* ── Empty state ── */
@@ -2157,63 +2364,59 @@
   font-size: 13px;
   color: var(--color-secondary, #878787);
 }
-
 .wl-dest-empty a {
   color: var(--color-accent, #b89d6e);
 }
 
-/* ============================================================
-   DESTINATIONS RESPONSIVE — Tablet ≤ 1199px
-   JS still handles absolute layout, just smaller TRACK_H
-   ============================================================ */
-
+/* ── Tablet ≤ 1199px ── */
 @media (max-width: 1199px) {
-  /* JS reads window.innerWidth and adjusts TRACK_H via JS constant */
-  /* CSS just ensures no overflow */
-  .wl-dest-scroll-wrap {
-    overflow: hidden;
+  .wl-dest-inner {
+    padding: 72px 0 96px;
+  }
+  .wl-dest-brush img {
+    max-height: 65px;
   }
   .wl-dest-img-wrap {
-    width: 64px;
-    height: 40px;
+    width: 88px;
+    height: 53px;
   }
-  .wl-dest-title {
-    font-size: 12px;
+  .wl-dest-img-wrap img {
+    width: 88px;
+    height: 53px;
   }
 }
 
-/* ============================================================
-   DESTINATIONS RESPONSIVE — Mobile ≤ 767px
-   Grid layout on mobile (no horizontal scroll)
-   ============================================================ */
-
+/* ── Mobile ≤ 767px — grid layout ── */
 @media (max-width: 767px) {
   .wl-dest-inner {
-    padding: 56px 0 64px;
+    padding: 48px 0 56px;
   }
 
   .wl-dest-watermark {
-    font-size: 2.5rem;
-    letter-spacing: 0.12em;
+    font-size: 2.2rem;
+    letter-spacing: 0.1em;
   }
 
-  /* Switch to vertical grid on mobile */
+  .wl-dest-brush img {
+    max-height: 52px;
+    min-height: 24px;
+  }
+
   .wl-dest-scroll-wrap {
     overflow: visible;
     cursor: default;
-    padding: 0 20px;
+    padding: 0 16px;
   }
 
   .wl-dest-track {
+    display: flex;
     flex-wrap: wrap;
-    min-width: unset;
-    padding: 0;
-    gap: 20px;
-    align-items: flex-start;
+    gap: 12px;
     justify-content: center;
+    height: auto !important;
+    width: auto !important;
   }
 
-  /* Hide SVG line on mobile (doesn't make sense in grid) */
   .wl-dest-line-svg {
     display: none;
   }
@@ -2221,59 +2424,46 @@
   .wl-dest-item,
   .wl-dest-item--above,
   .wl-dest-item--below {
-    position: relative;
-    transform: none !important;
-    opacity: 1;
+    position: relative !important;
+    left: auto !important;
+    top: auto !important;
+    width: calc(50% - 6px) !important;
+    opacity: 1 !important;
     flex-direction: row;
-    width: calc(50% - 10px);
-    margin: 0;
-    padding: 14px;
-    background: rgba(255, 255, 255, 0.6);
+    align-items: center;
+    background: rgba(255, 255, 255, 0.65);
     border: 1px solid rgba(180, 165, 140, 0.2);
-    border-radius: 4px;
-  }
-
-  .wl-dest-item:hover .wl-dest-item-inner {
-    transform: none;
-  }
-
-  .wl-dest-item-inner {
-    flex-direction: row;
-  }
-
-  .wl-dest-pin {
-    display: none; /* hide pin on grid layout */
+    border-radius: 3px;
+    padding: 10px 12px;
+    transform: none !important;
   }
 
   .wl-dest-img-wrap {
-    width: 52px;
-    height: 34px;
+    width: 60px;
+    height: 36px;
   }
-
+  .wl-dest-img-wrap img {
+    width: 60px;
+    height: 36px;
+  }
   .wl-dest-title {
     font-size: 11px;
+    white-space: normal;
   }
 }
 
-/* ============================================================
-   DESTINATIONS RESPONSIVE — Small mobile ≤ 480px
-   ============================================================ */
-
+/* ── Small mobile ≤ 480px ── */
 @media (max-width: 480px) {
-  .wl-dest-scroll-wrap {
-    padding: 0 16px;
-  }
-
   .wl-dest-item,
   .wl-dest-item--above,
   .wl-dest-item--below {
-    width: 100%;
+    width: 100% !important;
+  }
+  .wl-dest-brush img {
+    max-height: 40px;
+    min-height: 20px;
   }
 }
-
-/* ============================================================
-   SECTION 6 — DESTINATION CATEGORIES + POSTS GRID + CTA
-   ============================================================ */
 
 .wl-dcl-section {
   position: relative;
@@ -2702,5 +2892,125 @@
   }
   .wl-dcl-posts-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+/* ============================================================
+   SECTION 1b — CLIENTS / PARTNERS LOGO GRID
+   White background, 5 logos, default+hover swap
+   ============================================================ */
+
+.wl-clients-section {
+  background-color: #ffffff;
+  padding: 36px 0 40px;
+  position: relative;
+  z-index: 6; /* above brush stroke */
+}
+
+.wl-clients-inner {
+  max-width: var(--container-max, 1160px);
+  margin: 0 auto;
+  padding: 0 var(--gutter, 40px);
+}
+
+/* 5 columns equal width */
+.wl-clients-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0;
+  align-items: center;
+}
+
+/* Single client item */
+.wl-client-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 24px;
+}
+
+/* Link wrapper — fixed 150x95 */
+.wl-client-link {
+  display: block;
+  position: relative;
+  line-height: 0;
+  width: 150px;
+  height: 95px;
+}
+
+/* Both images fill the fixed box */
+.wl-client-img,
+.wl-client-img-hover {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: opacity 0.3s ease;
+}
+
+.wl-client-img-hover {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+}
+
+/* On hover: swap images */
+.wl-client-link:hover .wl-client-img {
+  opacity: 0;
+}
+
+.wl-client-link:hover .wl-client-img-hover {
+  opacity: 1;
+}
+
+/* ── Responsive — Tablet ≤ 1199px ── */
+@media (max-width: 1199px) {
+  .wl-clients-section {
+    padding: 28px 0 32px;
+  }
+
+  .wl-client-item {
+    padding: 10px 16px;
+  }
+
+  .wl-client-link {
+    width: 120px;
+    height: 76px;
+  }
+}
+
+/* ── Responsive — Mobile ≤ 767px ── */
+@media (max-width: 767px) {
+  .wl-clients-section {
+    padding: 24px 0 28px;
+  }
+
+  .wl-clients-inner {
+    padding: 0 16px;
+  }
+
+  .wl-clients-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .wl-client-item {
+    padding: 8px 12px;
+  }
+
+  .wl-client-link {
+    width: 90px;
+    height: 58px;
+  }
+}
+
+/* ── Responsive — Small mobile ≤ 480px ── */
+@media (max-width: 480px) {
+  .wl-clients-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .wl-client-link {
+    width: 80px;
+    height: 50px;
   }
 }

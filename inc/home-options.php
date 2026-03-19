@@ -135,49 +135,62 @@ function wl_enqueue_home_options_assets($hook)
 // ═══════════════════════════════════════════════════════════════
 //  4. SAVE HANDLER
 // ═══════════════════════════════════════════════════════════════
-
 add_action('admin_post_wl_save_home_sections', 'wl_save_home_sections');
 
 function wl_save_home_sections()
 {
-    // Security checks
+    // ── Security ────────────────────────────────────────────────
     if (!current_user_can('edit_theme_options')) {
         wp_die(__('Bạn không có quyền thực hiện thao tác này.', 'wanderland'));
     }
 
     check_admin_referer('wl_home_sections_save', 'wl_home_nonce');
 
+    // ── Xác định section đang active ────────────────────────────
+    // FIX: Dùng wl_active_tab từ form thay vì loop tất cả sections.
+    // wl_active_tab đã có sẵn trong form (hidden input) nhưng chưa được dùng.
+    $active_tab = isset($_POST['wl_active_tab'])
+        ? sanitize_key($_POST['wl_active_tab'])
+        : '';
+
     $sections = wl_get_home_sections();
 
-    foreach ($sections as $key => $section) {
-        $option_key = 'wl_section_' . $key;
-
-        if (isset($_POST[$option_key]) && is_array($_POST[$option_key])) {
-            // Sanitize: chỉ lấy integers dương
-            $post_ids = array_map('absint', $_POST[$option_key]);
-            // Loại bỏ IDs = 0
-            $post_ids = array_filter($post_ids);
-            // Giới hạn max_posts
-            $max = isset($section['max_posts']) ? (int) $section['max_posts'] : 10;
-            $post_ids = array_slice($post_ids, 0, $max);
-            // Reindex
-            $post_ids = array_values($post_ids);
-
-            update_option($option_key, $post_ids);
-        } else {
-            // Nếu không có data → xoá option (empty array)
-            update_option($option_key, array());
-        }
+    // Validate: active_tab phải là một section hợp lệ
+    if (empty($active_tab) || !array_key_exists($active_tab, $sections)) {
+        wp_redirect(add_query_arg(array(
+            'page' => 'wl-home-sections',
+            'saved' => 'error',
+        ), admin_url('themes.php')));
+        exit;
     }
 
-    // Redirect về trang với thông báo success
+    // ── Chỉ save section đang active ────────────────────────────
+    // FIX: Không loop tất cả sections nữa — tránh ghi đè array() rỗng
+    // lên các sections khác không có trong $_POST.
+    $section = $sections[$active_tab];
+    $option_key = 'wl_section_' . $active_tab;
+
+    if (isset($_POST[$option_key]) && is_array($_POST[$option_key])) {
+        $post_ids = array_map('absint', $_POST[$option_key]);
+        $post_ids = array_filter($post_ids);                                        // bỏ ID = 0
+        $max = isset($section['max_posts']) ? (int) $section['max_posts'] : 10;
+        $post_ids = array_slice(array_values($post_ids), 0, $max);                 // giới hạn + reindex
+
+        update_option($option_key, $post_ids);
+    } else {
+        // Không có bài nào được chọn → lưu mảng rỗng cho section này
+        update_option($option_key, array());
+    }
+
+    // ── Redirect về đúng tab sau khi lưu ────────────────────────
+    // FIX: Thêm 'tab' vào query arg để sau khi save không nhảy về tab đầu tiên.
     wp_redirect(add_query_arg(array(
         'page' => 'wl-home-sections',
+        'tab' => $active_tab,   // ← thêm mới
         'saved' => '1',
     ), admin_url('themes.php')));
     exit;
 }
-
 
 // ═══════════════════════════════════════════════════════════════
 //  5. HELPER: GET POSTS FOR A SECTION
@@ -418,7 +431,8 @@ function wl_render_home_options_page()
                             <span class="dashicons dashicons-plus-alt2 wl-empty-icon"></span>
                             <p><?php esc_html_e('Chưa có bài viết nào.', 'wanderland'); ?></p>
                             <p class="wl-empty-hint">
-                                <?php esc_html_e('Dùng ô tìm kiếm bên trái để thêm.', 'wanderland'); ?></p>
+                                <?php esc_html_e('Dùng ô tìm kiếm bên trái để thêm.', 'wanderland'); ?>
+                            </p>
                         </div>
 
                         <!-- Saved posts -->

@@ -122,22 +122,21 @@ get_header();
         <button class="wl-hero-arrow wl-hero-arrow--prev"
             aria-label="<?php esc_attr_e('Previous slide', 'wanderland'); ?>" type="button">
             <span class="wl-arrow-inner" aria-hidden="true">
-                <svg viewBox="0 0 44 44" fill="none">
-                    <circle cx="22" cy="22" r="21.5" stroke="currentColor" stroke-opacity="0.5" />
-                    <path d="M25 14L17 22L25 30" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-                        stroke-linejoin="round" />
+                <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <line x1="15" y1="10" x2="5" y2="10" stroke="#2c2c2c" stroke-width="1.8" stroke-linecap="round" />
+                    <path d="M9 5.5L4.5 10L9 14.5" stroke="#2c2c2c" stroke-width="1.8" stroke-linecap="round"
+                        stroke-linejoin="round" fill="none" />
                 </svg>
             </span>
         </button>
-
         <!-- Arrow Next -->
         <button class="wl-hero-arrow wl-hero-arrow--next" aria-label="<?php esc_attr_e('Next slide', 'wanderland'); ?>"
             type="button">
             <span class="wl-arrow-inner" aria-hidden="true">
-                <svg viewBox="0 0 44 44" fill="none">
-                    <circle cx="22" cy="22" r="21.5" stroke="currentColor" stroke-opacity="0.5" />
-                    <path d="M19 14L27 22L19 30" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-                        stroke-linejoin="round" />
+                <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <line x1="5" y1="10" x2="15" y2="10" stroke="#2c2c2c" stroke-width="1.8" stroke-linecap="round" />
+                    <path d="M11 5.5L15.5 10L11 14.5" stroke="#2c2c2c" stroke-width="1.8" stroke-linecap="round"
+                        stroke-linejoin="round" fill="none" />
                 </svg>
             </span>
         </button>
@@ -167,29 +166,10 @@ get_header();
             <div class="wl-hero-progress-bar"></div>
         </div>
 
-        <!-- ── Paint Brush Stroke — asymmetric angled blocks ── -->
+        <!-- ── Paint Brush Stroke — PNG image ── -->
         <div class="wl-hero-brush" aria-hidden="true">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 36" preserveAspectRatio="none">
-                <path fill="#ffffff" d="M0,36
-                         L0,22   L78,18
-                         L78,36  L78,26   L155,22
-                         L155,36 L155,20  L245,24
-                         L245,36 L245,14  L360,18
-                         L360,36 L360,22  L445,17
-                         L445,36 L445,10  L540,14
-                         L540,36 L540,18  L618,13
-                         L618,36 L618,8   L720,12
-                         L720,36 L720,16  L800,10
-                         L800,36 L800,4   L895,9
-                         L895,36 L895,14  L975,8
-                         L975,36 L975,6   L1065,11
-                         L1065,36 L1065,16 L1150,10
-                         L1150,36 L1150,4  L1245,8
-                         L1245,36 L1245,14 L1320,18
-                         L1320,36 L1320,10 L1390,15
-                         L1390,36 L1390,20 L1440,16
-                         L1440,36 Z" />
-            </svg>
+            <img src="<?php echo esc_url(get_template_directory_uri()); ?>/images/h1-rev-bottom.png" alt=""
+                loading="eager" decoding="async">
         </div><!-- .wl-hero-brush -->
 
     </section>
@@ -208,6 +188,90 @@ get_header();
         </div>
     </section>
     <?php endif; ?>
+
+    <!-- ============================================================
+         SECTION 1b: CLIENTS / PARTNERS LOGO GRID
+         5 logos, default + hover swap, white bg
+         Data: Appearance → Customize → Partners / Clients (Home)
+         Fallback: site mẫu images nếu chưa set
+    ============================================================ -->
+
+    <?php
+    // Build clients array từ Customizer (5 slots)
+    // Fallback về ảnh site mẫu nếu chưa set
+    $fallback_imgs = array(
+        array(
+            'img' => 'https://wanderland.qodeinteractive.com/wp-content/uploads/2019/10/h1-clients-img-05.png',
+            'hover' => 'https://wanderland.qodeinteractive.com/wp-content/uploads/2019/12/h1-clients-img-05-hover.png',
+            'alt' => 'Partner 1',
+            'url' => '#',
+        ),
+        array(
+            'img' => 'https://wanderland.qodeinteractive.com/wp-content/uploads/2019/10/h1-clients-img-01.png',
+            'hover' => 'https://wanderland.qodeinteractive.com/wp-content/uploads/2019/12/h1-clients-img-01-hover.png',
+            'alt' => 'Partner 2',
+            'url' => '#',
+        ),
+        array(
+            'img' => 'https://wanderland.qodeinteractive.com/wp-content/uploads/2019/10/h1-clients-img-02.png',
+            'hover' => 'https://wanderland.qodeinteractive.com/wp-content/uploads/2019/12/h1-clients-img-02-hover.png',
+            'alt' => 'Partner 3',
+            'url' => '#',
+        ),
+        array(
+            'img' => 'https://wanderland.qodeinteractive.com/wp-content/uploads/2019/10/h1-clients-img-03.png',
+            'hover' => 'https://wanderland.qodeinteractive.com/wp-content/uploads/2019/12/h1-clients-img-03-hover.png',
+            'alt' => 'Partner 4',
+            'url' => '#',
+        ),
+        array(
+            'img' => 'https://wanderland.qodeinteractive.com/wp-content/uploads/2019/10/h1-clients-img-04.png',
+            'hover' => 'https://wanderland.qodeinteractive.com/wp-content/uploads/2019/12/h1-clients-img-04-hover.png',
+            'alt' => 'Partner 5',
+            'url' => '#',
+        ),
+    );
+
+    $clients = array();
+    for ($ci = 1; $ci <= 5; $ci++) {
+        $img_id = get_theme_mod('wl_client_' . $ci . '_image');
+        $img_h_id = get_theme_mod('wl_client_' . $ci . '_hover');
+        $url = get_theme_mod('wl_client_' . $ci . '_url', '#');
+        $alt = get_theme_mod('wl_client_' . $ci . '_alt', 'Partner ' . $ci);
+
+        $clients[] = array(
+            'img' => $img_id ? wp_get_attachment_image_url($img_id, 'full') : $fallback_imgs[$ci - 1]['img'],
+            'hover' => $img_h_id ? wp_get_attachment_image_url($img_h_id, 'full') : $fallback_imgs[$ci - 1]['hover'],
+            'url' => $url ?: '#',
+            'alt' => $alt,
+        );
+    }
+    ?>
+
+    <section class="wl-clients-section">
+        <div class="wl-clients-inner">
+            <div class="wl-clients-grid">
+
+                <?php foreach ($clients as $client): ?>
+                <div class="wl-client-item">
+                    <a href="<?php echo esc_url($client['url']); ?>" class="wl-client-link" target="_self"
+                        aria-label="<?php echo esc_attr($client['alt']); ?>">
+
+                        <!-- Default image -->
+                        <img class="wl-client-img" src="<?php echo esc_url($client['img']); ?>"
+                            alt="<?php echo esc_attr($client['alt']); ?>" loading="lazy" decoding="async">
+
+                        <!-- Hover image -->
+                        <img class="wl-client-img-hover" src="<?php echo esc_url($client['hover']); ?>" alt=""
+                            loading="lazy" decoding="async" aria-hidden="true">
+
+                    </a>
+                </div>
+                <?php endforeach; ?>
+
+            </div><!-- .wl-clients-grid -->
+        </div><!-- .wl-clients-inner -->
+    </section><!-- .wl-clients-section -->
 
     <!-- ============================================================
          SECTION 2: TRAVEL ESSENTIALS TIPS
@@ -397,29 +461,10 @@ get_header();
 
     <section class="wl-newsletter-section">
 
-        <!-- Top brush stroke (white → beige transition) -->
+        <!-- Top brush stroke — PNG flipped vertically -->
         <div class="wl-nl-brush wl-nl-brush--top" aria-hidden="true">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 40" preserveAspectRatio="none">
-                <path fill="#ffffff" d="M0,0
-                         L0,18   L72,22
-                         L72,0   L72,14   L160,10
-                         L160,0  L160,16  L255,12
-                         L255,0  L255,20  L348,15
-                         L348,0  L348,18  L440,13
-                         L440,0  L440,22  L530,16
-                         L530,0  L530,20  L615,14
-                         L615,0  L615,24  L705,18
-                         L705,0  L705,20  L790,13
-                         L790,0  L790,22  L878,16
-                         L878,0  L878,18  L965,12
-                         L965,0  L965,20  L1055,15
-                         L1055,0 L1055,22 L1140,17
-                         L1140,0 L1140,18 L1230,12
-                         L1230,0 L1230,20 L1315,15
-                         L1315,0 L1315,16 L1390,20
-                         L1390,0 L1390,14 L1440,18
-                         L1440,0 Z" />
-            </svg>
+            <img src="<?php echo esc_url(get_template_directory_uri()); ?>/images/h1-rev-bottom.png" alt=""
+                loading="lazy" decoding="async">
         </div>
 
         <div class="wl-nl-inner">
@@ -534,29 +579,10 @@ get_header();
             </div><!-- .wl-nl-grid -->
         </div><!-- .wl-nl-inner -->
 
-        <!-- Bottom brush stroke (beige → white transition) -->
+        <!-- Bottom brush stroke — PNG normal -->
         <div class="wl-nl-brush wl-nl-brush--bottom" aria-hidden="true">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 40" preserveAspectRatio="none">
-                <path fill="#ffffff" d="M0,40
-                         L0,22   L68,18
-                         L68,40  L68,26  L158,22
-                         L158,40 L158,28 L248,24
-                         L248,40 L248,20 L340,25
-                         L340,40 L340,22 L428,27
-                         L428,40 L428,18 L518,22
-                         L518,40 L518,26 L608,20
-                         L608,40 L608,24 L698,28
-                         L698,40 L698,16 L788,22
-                         L788,40 L788,26 L875,20
-                         L875,40 L875,18 L962,24
-                         L962,40 L962,28 L1050,22
-                         L1050,40 L1050,16 L1138,20
-                         L1138,40 L1138,24 L1228,18
-                         L1228,40 L1228,22 L1318,26
-                         L1318,40 L1318,20 L1390,24
-                         L1390,40 L1390,18 L1440,22
-                         L1440,40 Z" />
-            </svg>
+            <img src="<?php echo esc_url(get_template_directory_uri()); ?>/images/h1-rev-bottom.png" alt=""
+                loading="lazy" decoding="async">
         </div>
 
     </section><!-- .wl-newsletter-section -->
@@ -619,10 +645,14 @@ get_header();
                 <!-- Arrow Prev -->
                 <button class="wl-featured-arrow wl-featured-arrow--prev" type="button"
                     aria-label="<?php esc_attr_e('Previous posts', 'wanderland'); ?>">
-                    <svg viewBox="0 0 44 44" fill="none">
-                        <path d="M25 14L17 22L25 30" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-                            stroke-linejoin="round" />
-                    </svg>
+                    <span class="wl-arrow-inner" aria-hidden="true">
+                        <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <line x1="15" y1="10" x2="5" y2="10" stroke="#2c2c2c" stroke-width="1.8"
+                                stroke-linecap="round" />
+                            <path d="M9 5.5L4.5 10L9 14.5" stroke="#2c2c2c" stroke-width="1.8" stroke-linecap="round"
+                                stroke-linejoin="round" fill="none" />
+                        </svg>
+                    </span>
                 </button>
 
                 <!-- Overflow mask -->
@@ -718,10 +748,14 @@ get_header();
                 <!-- Arrow Next -->
                 <button class="wl-featured-arrow wl-featured-arrow--next" type="button"
                     aria-label="<?php esc_attr_e('Next posts', 'wanderland'); ?>">
-                    <svg viewBox="0 0 44 44" fill="none">
-                        <path d="M19 14L27 22L19 30" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-                            stroke-linejoin="round" />
-                    </svg>
+                    <span class="wl-arrow-inner" aria-hidden="true">
+                        <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <line x1="5" y1="10" x2="15" y2="10" stroke="#2c2c2c" stroke-width="1.8"
+                                stroke-linecap="round" />
+                            <path d="M11 5.5L15.5 10L11 14.5" stroke="#2c2c2c" stroke-width="1.8" stroke-linecap="round"
+                                stroke-linejoin="round" fill="none" />
+                        </svg>
+                    </span>
                 </button>
 
             </div><!-- .wl-featured-slider-wrap -->
@@ -757,105 +791,95 @@ get_header();
 
     <section class="wl-dest-section">
 
-        <!-- Topographic map background (SVG inline) -->
+        <!-- Brush stroke top — flipped PNG (white → beige) -->
+        <div class="wl-dest-brush wl-dest-brush--top" aria-hidden="true">
+            <img src="<?php echo esc_url(get_template_directory_uri()); ?>/images/h1-rev-bottom.png" alt=""
+                loading="lazy" decoding="async">
+        </div>
+
+        <!-- Topographic map contour background -->
         <div class="wl-dest-topo" aria-hidden="true">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 420" preserveAspectRatio="xMidYMid slice">
-                <!-- Concentric topo contour rings — organic, map-like -->
-                <g fill="none" stroke="rgba(180,165,140,0.18)" stroke-width="1">
-                    <ellipse cx="720" cy="210" rx="680" ry="170" />
-                    <ellipse cx="720" cy="210" rx="580" ry="140" />
-                    <ellipse cx="720" cy="210" rx="480" ry="112" />
-                    <ellipse cx="720" cy="210" rx="380" ry="86" />
-                    <ellipse cx="720" cy="210" rx="280" ry="62" />
-                    <ellipse cx="720" cy="210" rx="180" ry="40" />
-                    <!-- Secondary cluster left -->
-                    <ellipse cx="200" cy="280" rx="320" ry="130" />
-                    <ellipse cx="200" cy="280" rx="240" ry="96" />
-                    <ellipse cx="200" cy="280" rx="160" ry="64" />
-                    <ellipse cx="200" cy="280" rx="80" ry="32" />
-                    <!-- Secondary cluster right -->
-                    <ellipse cx="1240" cy="150" rx="300" ry="120" />
-                    <ellipse cx="1240" cy="150" rx="220" ry="88" />
-                    <ellipse cx="1240" cy="150" rx="140" ry="56" />
-                    <ellipse cx="1240" cy="150" rx="60" ry="24" />
+                <g fill="none" stroke="rgba(180,165,140,0.16)" stroke-width="1">
+                    <ellipse cx="720" cy="210" rx="700" ry="190" />
+                    <ellipse cx="720" cy="210" rx="580" ry="155" />
+                    <ellipse cx="720" cy="210" rx="460" ry="122" />
+                    <ellipse cx="720" cy="210" rx="340" ry="90" />
+                    <ellipse cx="720" cy="210" rx="220" ry="60" />
+                    <ellipse cx="720" cy="210" rx="110" ry="32" />
+                    <ellipse cx="180" cy="300" rx="340" ry="140" />
+                    <ellipse cx="180" cy="300" rx="250" ry="100" />
+                    <ellipse cx="180" cy="300" rx="160" ry="65" />
+                    <ellipse cx="180" cy="300" rx="80" ry="32" />
+                    <ellipse cx="1260" cy="140" rx="320" ry="130" />
+                    <ellipse cx="1260" cy="140" rx="230" ry="92" />
+                    <ellipse cx="1260" cy="140" rx="145" ry="58" />
+                    <ellipse cx="1260" cy="140" rx="65" ry="26" />
                 </g>
             </svg>
         </div>
 
-        <!-- Watermark "DESTINATIONS" -->
+        <!-- "DESTINATIONS" watermark -->
         <div class="wl-dest-watermark" aria-hidden="true">DESTINATIONS</div>
 
         <div class="wl-dest-inner">
 
             <?php if ($dest_query->have_posts()):
                 $destinations = $dest_query->posts;
-                $total_dest = count($destinations);
                 wp_reset_postdata();
                 ?>
 
-            <!-- Scrollable timeline container -->
             <div class="wl-dest-scroll-wrap" tabindex="0" role="region"
                 aria-label="<?php esc_attr_e('Destinations timeline', 'wanderland'); ?>">
 
                 <div class="wl-dest-track">
 
-                    <!-- SVG dashed wavy line + pin dots -->
+                    <!-- SVG dashed line + pin dots — drawn by JS -->
                     <svg class="wl-dest-line-svg" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"
                         preserveAspectRatio="none">
-                        <!-- JS will draw this path dynamically based on item positions -->
-                        <path class="wl-dest-path" fill="none" stroke="#b0a898" stroke-width="1.5"
-                            stroke-dasharray="6 5" />
-                        <!-- Pin dots injected by JS -->
+                        <path class="wl-dest-path" fill="none" stroke="#c0b5a5" stroke-width="1.5"
+                            stroke-dasharray="7 5" />
                         <g class="wl-dest-pins"></g>
                     </svg>
 
-                    <!-- Destination items -->
                     <?php foreach ($destinations as $i => $dest_post):
-                            setup_postdata($dest_post);
-                            $img_url = get_the_post_thumbnail_url($dest_post->ID, 'thumbnail');
+                            $img_url = get_the_post_thumbnail_url($dest_post->ID, array(108, 65));
+                            if (!$img_url)
+                                $img_url = get_the_post_thumbnail_url($dest_post->ID, 'full');
                             $lat = get_post_meta($dest_post->ID, '_wl_dest_lat', true);
                             $lng = get_post_meta($dest_post->ID, '_wl_dest_lng', true);
                             $ext_url = get_post_meta($dest_post->ID, '_wl_dest_url', true);
                             $link_url = $ext_url ?: get_permalink($dest_post->ID);
-                            $excerpt = get_the_excerpt($dest_post->ID);
-                            if (!$excerpt)
-                                $excerpt = wp_trim_words($dest_post->post_content, 8, '');
-                            // Alternate: even items go above line, odd below
                             $position = ($i % 2 === 0) ? 'above' : 'below';
                             ?>
 
                     <a class="wl-dest-item wl-dest-item--<?php echo $position; ?>"
                         href="<?php echo esc_url($link_url); ?>" data-index="<?php echo esc_attr($i); ?>">
 
+                        <!-- Content: image + text side by side (mkdf-hti-content-item-wrap) -->
                         <div class="wl-dest-item-inner">
 
-                            <!-- Image (flag or photo) -->
                             <?php if ($img_url): ?>
                             <div class="wl-dest-img-wrap">
                                 <img src="<?php echo esc_url($img_url); ?>"
-                                    alt="<?php echo esc_attr($dest_post->post_title); ?>" loading="lazy">
+                                    alt="<?php echo esc_attr($dest_post->post_title); ?>" loading="lazy"
+                                    decoding="async" width="108" height="65">
                             </div>
                             <?php endif; ?>
 
-                            <!-- Text -->
                             <div class="wl-dest-text">
-                                <h6 class="wl-dest-title">
-                                    <?php echo esc_html($dest_post->post_title); ?>
-                                </h6>
-                                <?php if ($excerpt): ?>
-                                <p class="wl-dest-desc">
-                                    <?php echo esc_html(wp_trim_words($excerpt, 6, '')); ?>
-                                </p>
-                                <?php endif; ?>
-                                <?php if ($lat && $lng): ?>
+                                <h6 class="wl-dest-title"><?php echo esc_html($dest_post->post_title); ?></h6>
+                                <?php if ($lat): ?>
                                 <p class="wl-dest-coord"><?php echo esc_html($lat); ?></p>
+                                <?php endif; ?>
+                                <?php if ($lng): ?>
                                 <p class="wl-dest-coord"><?php echo esc_html($lng); ?></p>
                                 <?php endif; ?>
                             </div>
 
                         </div><!-- .wl-dest-item-inner -->
 
-                        <!-- Pin connector dot -->
+                        <!-- Pin dot on the line -->
                         <span class="wl-dest-pin" aria-hidden="true"></span>
 
                     </a><!-- .wl-dest-item -->
@@ -881,6 +905,12 @@ get_header();
             <?php endif; ?>
 
         </div><!-- .wl-dest-inner -->
+
+        <!-- Brush stroke bottom — normal PNG (beige → white) -->
+        <div class="wl-dest-brush wl-dest-brush--bottom" aria-hidden="true">
+            <img src="<?php echo esc_url(get_template_directory_uri()); ?>/images/h1-rev-bottom.png" alt=""
+                loading="lazy" decoding="async">
+        </div>
 
     </section><!-- .wl-dest-section -->
 
