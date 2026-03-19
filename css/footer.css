@@ -1,0 +1,584 @@
+/* ============================================================
+   WANDERLAND — Footer CSS
+   Footer Top / Middle / Bottom + Back-to-Top Button
+   ============================================================ */
+
+/* ── Shared footer variables ────────────────────────────────── */
+:root {
+  --footer-bg: #2a2a28;
+  --footer-bg-middle: #252523;
+  --footer-bg-bottom: #1e1e1c;
+  --footer-text: #c8c5bc;
+  --footer-text-muted: #7a7871;
+  --footer-heading: #ffffff;
+  --footer-accent: #59815b; /* green highlight */
+  --footer-accent-hover: #6fa372;
+  --footer-border: rgba(255, 255, 255, 0.07);
+  --footer-input-border: rgba(255, 255, 255, 0.18);
+  --footer-grid-gap: 40px;
+}
+
+/* ============================================================
+   1. FOOTER BASE
+   ============================================================ */
+.mkdf-page-footer {
+  width: 100%;
+  background-color: var(--footer-bg);
+  color: var(--footer-text);
+  font-family: var(--font-body);
+}
+
+/* Common grid container */
+.mkdf-page-footer .mkdf-grid {
+  max-width: var(--container-wide);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+/* 12-col grid row */
+.mkdf-page-footer .mkdf-grid-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--footer-grid-gap);
+}
+
+/* Column widths (based on 12-col, gap compensated) */
+.mkdf-page-footer .mkdf-grid-col-3 {
+  flex: 0 0 calc(25% - (var(--footer-grid-gap) * 3 / 4));
+  min-width: 0;
+}
+
+.mkdf-page-footer .mkdf-grid-col-6 {
+  flex: 0 0 calc(50% - (var(--footer-grid-gap) / 2));
+  min-width: 0;
+}
+
+.mkdf-page-footer .mkdf-grid-col-9 {
+  flex: 0 0 calc(75% - (var(--footer-grid-gap) / 4));
+  min-width: 0;
+}
+
+/* Widget title shared */
+.mkdf-widget-title {
+  font-family: var(--font-body);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-widest);
+  text-transform: uppercase;
+  color: var(--footer-heading);
+  margin-bottom: 22px;
+  display: block;
+}
+
+/* ============================================================
+   2. FOOTER TOP — Logo + Bio
+   ============================================================ */
+.mkdf-footer-top-holder {
+  background-color: var(--footer-bg);
+  padding: 64px 0 52px;
+  border-bottom: 1px solid var(--footer-border);
+}
+
+/* Logo */
+.mkdf-footer-logo-link {
+  display: inline-block;
+  max-width: 144px;
+}
+
+.mkdf-footer-logo {
+  width: 100%;
+  height: auto;
+}
+
+.mkdf-footer-site-name {
+  font-family: var(--font-heading);
+  font-size: var(--fs-2xl);
+  font-weight: var(--fw-light);
+  color: var(--footer-heading);
+  letter-spacing: var(--ls-tight);
+}
+
+/* Bio text */
+.mkdf-footer-bio {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.mkdf-footer-bio-text {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-style: italic;
+  font-size: 25px;
+  font-weight: var(--fw-regular);
+  line-height: 1.45;
+  color: var(--footer-text);
+  max-width: 820px;
+}
+
+/* "Thompson." highlight word */
+.mkdf-footer-highlight {
+  display: inline-block;
+  position: relative;
+  color: var(--footer-accent);
+  padding: 0 10px;
+  white-space: nowrap;
+}
+
+.mkdf-footer-highlight::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: rgba(89, 129, 91, 0.12);
+  border-radius: 2px;
+}
+
+/* ============================================================
+   3. FOOTER MIDDLE — 4 Columns
+   ============================================================ */
+.mkdf-footer-middle-holder {
+  background-color: var(--footer-bg-middle);
+  padding: 58px 0 52px;
+  border-bottom: 1px solid var(--footer-border);
+}
+
+.mkdf-footer-widget {
+  height: 100%;
+}
+
+/* About text */
+.mkdf-footer-about-text p {
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-light);
+  line-height: var(--lh-relaxed);
+  color: var(--footer-text);
+  max-width: 90%;
+}
+
+/* ── Newsletter form ───────────────────────────────────────── */
+.mkdf-newsletter-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin-bottom: 22px;
+}
+
+.mkdf-newsletter-field-wrap {
+  border-bottom: 1px solid var(--footer-input-border);
+}
+
+.mkdf-newsletter-input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  padding: 14px 0;
+  font-family: var(--font-body);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-light);
+  color: var(--footer-heading);
+  letter-spacing: 0.01em;
+  transition: border-color var(--transition-fast);
+}
+
+.mkdf-newsletter-input::placeholder {
+  color: var(--footer-text-muted);
+  font-style: italic;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 16px;
+}
+
+.mkdf-newsletter-input:focus {
+  color: var(--footer-heading);
+}
+
+.mkdf-newsletter-field-wrap:focus-within {
+  border-bottom-color: var(--footer-accent);
+}
+
+/* Subscribe button */
+.mkdf-newsletter-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-widest);
+  text-transform: uppercase;
+  color: var(--footer-heading);
+  transition:
+    color var(--transition-fast),
+    gap var(--transition-fast);
+}
+
+.mkdf-newsletter-btn:hover {
+  color: var(--footer-accent);
+  gap: 12px;
+}
+
+.mkdf-btn-arrow {
+  font-size: 16px;
+  line-height: 1;
+  transition: transform var(--transition-fast);
+}
+
+.mkdf-newsletter-btn:hover .mkdf-btn-arrow {
+  transform: translate(3px, -3px);
+}
+
+/* ── Recent posts list ─────────────────────────────────────── */
+.mkdf-footer-recent-posts {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.mkdf-footer-post-item {
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--footer-border);
+}
+
+.mkdf-footer-post-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.mkdf-footer-post-date {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 5px;
+}
+
+.mkdf-footer-post-date .icon_calendar {
+  font-size: 13px;
+  color: var(--footer-accent);
+  flex-shrink: 0;
+}
+
+.mkdf-footer-post-date a {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-style: italic;
+  font-size: 14px;
+  color: var(--footer-accent);
+  transition: color var(--transition-fast);
+}
+
+.mkdf-footer-post-date a:hover {
+  color: var(--footer-accent-hover);
+}
+
+.mkdf-footer-post-title {
+  margin: 0;
+}
+
+.mkdf-footer-post-title a {
+  font-family: var(--font-body);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-light);
+  color: var(--footer-heading);
+  line-height: 1.5;
+  transition: color var(--transition-fast);
+}
+
+.mkdf-footer-post-title a:hover {
+  color: var(--footer-accent);
+}
+
+/* ── Instagram placeholder grid ───────────────────────────── */
+.mkdf-instagram-placeholder {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+}
+
+.mkdf-instagram-placeholder-item {
+  aspect-ratio: 1;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 2px;
+  transition: background-color var(--transition-fast);
+}
+
+.mkdf-instagram-placeholder-item:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* ============================================================
+   4. FOOTER BOTTOM — Socials + Copyright
+   ============================================================ */
+.mkdf-footer-bottom-holder {
+  background-color: var(--footer-bg-bottom);
+  padding: 22px 0;
+}
+
+.mkdf-footer-bottom-inner .mkdf-grid-row {
+  align-items: center;
+  gap: 16px;
+}
+
+/* Social icons group */
+.mkdf-footer-socials {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.mkdf-footer-socials-label {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-style: italic;
+  font-size: 17px;
+  color: var(--footer-text-muted);
+  margin-right: 4px;
+}
+
+.mkdf-footer-socials .mkdf-social-icon-widget-holder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--footer-text-muted);
+  font-size: 16px;
+  line-height: 1;
+  transition:
+    color var(--transition-fast),
+    transform var(--transition-fast);
+}
+
+.mkdf-footer-socials .mkdf-social-icon-widget-holder:hover {
+  color: var(--footer-heading);
+  transform: translateY(-2px);
+}
+
+/* Copyright */
+.mkdf-footer-copyright {
+  text-align: right;
+}
+
+.mkdf-footer-copyright p {
+  font-family: var(--font-body);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-light);
+  color: var(--footer-text-muted);
+  line-height: 1;
+}
+
+.mkdf-footer-copyright a {
+  color: var(--footer-heading);
+  font-weight: var(--fw-medium);
+  transition: color var(--transition-fast);
+}
+
+.mkdf-footer-copyright a:hover {
+  color: var(--footer-accent);
+}
+
+.mkdf-footer-copyright span {
+  color: var(--footer-text-muted);
+}
+
+/* ============================================================
+   5. BACK TO TOP BUTTON
+   ============================================================ */
+#mkdf-back-to-top {
+  position: fixed;
+  bottom: 36px;
+  right: 36px;
+  width: 46px;
+  height: 46px;
+  background-color: var(--footer-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: calc(var(--z-header) - 1);
+  overflow: hidden;
+  cursor: pointer;
+  border-radius: 2px;
+
+  /* Hidden by default — shown via JS */
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(16px);
+  transition:
+    opacity var(--transition-base),
+    visibility var(--transition-base),
+    transform var(--transition-base),
+    background-color var(--transition-fast);
+}
+
+#mkdf-back-to-top.on {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+#mkdf-back-to-top:hover {
+  background-color: var(--footer-accent-hover);
+}
+
+/* Icon stack — two arrows stacked for scroll effect */
+.mkdf-icon-stack {
+  position: relative;
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* SVG arrows */
+.mkdf-btt-arrow {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: var(--color-white);
+  stroke-width: 1.5px;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition:
+    transform 0.28s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.28s ease;
+}
+
+/* Primary arrow: visible at rest */
+.mkdf-btt-arrow-primary {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* Hover arrow: starts below, slides up on hover */
+.mkdf-btt-arrow-hover {
+  transform: translateY(100%);
+  opacity: 0;
+}
+
+#mkdf-back-to-top:hover .mkdf-btt-arrow-primary {
+  transform: translateY(-100%);
+  opacity: 0;
+}
+
+#mkdf-back-to-top:hover .mkdf-btt-arrow-hover {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* ============================================================
+   6. RESPONSIVE
+   ============================================================ */
+
+/* Tablet large (≤ 1199px) */
+@media (max-width: 1199px) {
+  .mkdf-footer-bio-text {
+    font-size: 21px;
+  }
+
+  .mkdf-page-footer .mkdf-grid-col-3 {
+    flex: 0 0 calc(50% - (var(--footer-grid-gap) / 2));
+  }
+
+  .mkdf-footer-top-holder .mkdf-grid-row {
+    flex-direction: column;
+    gap: 28px;
+  }
+
+  .mkdf-footer-top-holder .mkdf-grid-col-3,
+  .mkdf-footer-top-holder .mkdf-grid-col-9 {
+    flex: 0 0 100%;
+  }
+}
+
+/* Tablet (≤ 991px) */
+@media (max-width: 991px) {
+  .mkdf-footer-top-holder {
+    padding: 48px 0 40px;
+  }
+
+  .mkdf-footer-middle-holder {
+    padding: 44px 0 40px;
+  }
+
+  .mkdf-footer-bio-text {
+    font-size: 19px;
+  }
+
+  .mkdf-footer-bottom-inner .mkdf-grid-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  .mkdf-page-footer .mkdf-grid-col-6 {
+    flex: 0 0 100%;
+  }
+
+  .mkdf-footer-copyright {
+    text-align: left;
+  }
+
+  #mkdf-back-to-top {
+    bottom: 24px;
+    right: 24px;
+    width: 42px;
+    height: 42px;
+  }
+}
+
+/* Mobile (≤ 767px) */
+@media (max-width: 767px) {
+  :root {
+    --footer-grid-gap: 28px;
+  }
+
+  .mkdf-footer-top-holder {
+    padding: 40px 0 32px;
+  }
+
+  .mkdf-footer-middle-holder {
+    padding: 36px 0 32px;
+  }
+
+  .mkdf-page-footer .mkdf-grid-col-3 {
+    flex: 0 0 100%;
+  }
+
+  .mkdf-footer-about-text p {
+    max-width: 100%;
+  }
+
+  .mkdf-footer-bio-text {
+    font-size: 17px;
+    line-height: 1.55;
+  }
+
+  .mkdf-footer-bottom-holder {
+    padding: 18px 0;
+  }
+
+  #mkdf-back-to-top {
+    bottom: 20px;
+    right: 16px;
+    width: 40px;
+    height: 40px;
+  }
+
+  .mkdf-btt-arrow {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+/* Small mobile (≤ 480px) */
+@media (max-width: 480px) {
+  .mkdf-footer-socials {
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .mkdf-newsletter-btn {
+    font-size: 10px;
+  }
+}

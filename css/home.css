@@ -1,0 +1,698 @@
+/* ============================================================
+   WANDERLAND — home.css  (v3 — centered hero)
+   ============================================================ */
+
+/* ============================================================
+   1. SLIDER CONTAINER
+   ============================================================ */
+
+.wl-hero-slider {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  min-height: 640px;
+  max-height: 960px;
+  overflow: hidden;
+  background-color: var(--color-dark, #1a1a1a);
+}
+
+/* ============================================================
+   2. TRACK & SLIDES
+   ============================================================ */
+
+.wl-hero-track {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.wl-hero-slide {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  opacity: 0;
+  visibility: hidden;
+  transform: scale(1.04);
+  transition:
+    opacity 0.9s cubic-bezier(0.4, 0, 0.2, 1),
+    visibility 0.9s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 7s ease-out;
+}
+
+.wl-hero-slide.is-active {
+  opacity: 1;
+  visibility: visible;
+  z-index: 2;
+  transform: scale(1);
+}
+
+.wl-hero-slide.is-leaving {
+  opacity: 0;
+  z-index: 1;
+  transform: scale(1.04);
+  transition:
+    opacity 0.9s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.9s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ============================================================
+   3. GRADIENT OVERLAY — dày ở giữa-dưới nơi text đặt
+   ============================================================ */
+
+.wl-hero-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    radial-gradient(
+      ellipse 80% 55% at 50% 85%,
+      rgba(0, 0, 0, 0.7) 0%,
+      transparent 70%
+    ),
+    linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.2) 0%,
+      rgba(0, 0, 0, 0.1) 30%,
+      rgba(0, 0, 0, 0.5) 60%,
+      rgba(0, 0, 0, 0.78) 100%
+    );
+}
+
+/* ============================================================
+   4. CONTENT WRAP — CENTERED
+   ============================================================ */
+
+.wl-hero-content-wrap {
+  position: absolute;
+  inset: 0;
+  /* Leave room at bottom for brush stroke (~56px) so content sits
+     visually centered in the image area above the brush */
+  bottom: 40px;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: calc(
+    var(--topbar-height, 44px) + var(--header-height-desktop, 90px)
+  );
+  padding-left: var(--gutter, 40px);
+  padding-right: var(--gutter, 40px);
+}
+
+/* ============================================================
+   5. CONTENT PANEL — centered, slide-up animation
+   ============================================================ */
+
+.wl-hero-content {
+  width: 100%;
+  max-width: 860px;
+  text-align: center;
+  position: relative;
+  /* Default hidden — animation class added by JS */
+  opacity: 0;
+  transform: translateY(44px);
+}
+
+/* Subtle backdrop behind text for readability */
+.wl-hero-content::before {
+  content: "";
+  position: absolute;
+  inset: -40px -60px;
+  background: radial-gradient(
+    ellipse 100% 100% at 50% 65%,
+    rgba(0, 0, 0, 0.32) 0%,
+    transparent 72%
+  );
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Slide-up enter animation */
+.wl-hero-content.is-content-visible {
+  animation: wl-slide-up 0.75s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* Exit animation */
+.wl-hero-content.is-content-exit {
+  animation: wl-slide-exit 0.32s cubic-bezier(0.4, 0, 1, 1) forwards;
+}
+
+@keyframes wl-slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(44px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes wl-slide-exit {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-18px);
+  }
+}
+
+/* ============================================================
+   6. META ROW — Date + Author with icons, centered
+   ============================================================ */
+
+.wl-hero-meta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+}
+
+.wl-hero-meta-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-body, "Jost", sans-serif);
+  font-size: 12px;
+  font-weight: var(--fw-light, 300);
+  letter-spacing: 0.08em;
+  font-style: italic;
+  color: rgba(255, 255, 255, 0.82);
+  text-shadow: 0 1px 5px rgba(0, 0, 0, 0.65);
+}
+
+.wl-meta-icon {
+  width: 13px;
+  height: 13px;
+  flex-shrink: 0;
+  opacity: 0.8;
+  stroke: currentColor;
+  fill: none;
+}
+
+.wl-hero-meta-item a {
+  color: inherit;
+  text-decoration: none;
+  transition: color var(--transition-fast, 0.18s ease);
+}
+
+.wl-hero-meta-item a:hover {
+  color: var(--color-accent, #b89d6e);
+}
+
+/* Dot divider between items */
+.wl-hero-meta-div {
+  display: inline-block;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.35);
+  flex-shrink: 0;
+}
+
+/* ============================================================
+   7. TITLE — max 2 lines, fluid size, centered
+   ============================================================ */
+
+.wl-hero-title {
+  font-family: var(--font-heading, "Cormorant Garamond", serif);
+  font-size: clamp(2.4rem, 4.8vw, 4rem);
+  font-weight: var(--fw-light, 300);
+  line-height: 1.12;
+  letter-spacing: -0.01em;
+  color: #fff;
+  margin: 0 0 20px;
+
+  /* Max 2 lines */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+
+  /* Strong shadow for any background */
+  text-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.6),
+    0 6px 28px rgba(0, 0, 0, 0.4);
+}
+
+.wl-hero-title a {
+  color: inherit;
+  text-decoration: none;
+  transition: color var(--transition-fast, 0.18s ease);
+}
+
+.wl-hero-title a:hover {
+  color: var(--color-accent, #b89d6e);
+}
+
+/* ============================================================
+   8. EXCERPT — max 3 lines, centered
+   ============================================================ */
+
+.wl-hero-excerpt {
+  font-family: var(--font-body, "Jost", sans-serif);
+  font-size: 13px;
+  font-weight: var(--fw-light, 300);
+  line-height: 1.85;
+  color: rgba(255, 255, 255, 0.75);
+  margin: 0 auto 32px;
+  max-width: 580px;
+  text-shadow: 0 1px 5px rgba(0, 0, 0, 0.55);
+
+  /* Max 3 lines */
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ============================================================
+   9. BUTTON — centered, background + border style
+   ============================================================ */
+
+.wl-hero-btn-wrap {
+  display: flex;
+  justify-content: center;
+}
+
+.wl-hero-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-body, "Jost", sans-serif);
+  font-size: 11px;
+  font-weight: var(--fw-medium, 500);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: #fff;
+
+  /* Filled button like image 2 */
+  padding: 15px 38px;
+  background-color: rgba(184, 157, 110, 0.8);
+  border: 1px solid rgba(184, 157, 110, 0.7);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    gap 0.18s ease,
+    transform 0.18s ease;
+}
+
+.wl-hero-btn:hover {
+  background-color: var(--color-accent, #b89d6e);
+  border-color: var(--color-accent, #b89d6e);
+  gap: 16px;
+  transform: translateY(-2px);
+  color: #fff;
+}
+
+.wl-btn-icon {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+  stroke: currentColor;
+  fill: none;
+  transition: transform 0.18s ease;
+}
+
+.wl-hero-btn:hover .wl-btn-icon {
+  transform: translateX(3px);
+}
+
+/* ============================================================
+   10. ARROWS
+   ============================================================ */
+
+.wl-hero-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  width: 52px;
+  height: 52px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  outline: none;
+}
+
+.wl-hero-arrow:focus-visible .wl-arrow-inner {
+  outline: 2px solid var(--color-accent, #b89d6e);
+  outline-offset: 4px;
+  border-radius: 50%;
+}
+
+.wl-hero-arrow--prev {
+  left: 32px;
+}
+.wl-hero-arrow--next {
+  right: 32px;
+}
+
+.wl-arrow-inner {
+  width: 52px;
+  height: 52px;
+  color: rgba(255, 255, 255, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    color 0.18s ease,
+    transform 0.18s ease;
+}
+
+.wl-hero-arrow:hover .wl-arrow-inner {
+  color: #fff;
+  transform: scale(1.1);
+}
+
+.wl-hero-arrow svg {
+  width: 52px;
+  height: 52px;
+  display: block;
+}
+
+/* ============================================================
+   11. DOTS
+   ============================================================ */
+
+/* Dots — hidden visually, JS still updates aria/classes for accessibility */
+.wl-hero-dots {
+  position: absolute;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  visibility: hidden; /* ← hidden but still in DOM for JS */
+  pointer-events: none;
+}
+
+.wl-hero-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.4);
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  position: relative;
+  transition:
+    background-color 0.28s ease,
+    width 0.28s ease,
+    border-radius 0.28s ease;
+}
+
+.wl-hero-dot::after {
+  content: "";
+  position: absolute;
+  inset: -6px;
+}
+
+.wl-hero-dot.is-active {
+  width: 22px;
+  border-radius: 3px;
+  background-color: var(--color-accent, #b89d6e);
+}
+
+.wl-hero-dot:hover:not(.is-active) {
+  background: rgba(255, 255, 255, 0.7);
+}
+
+/* ============================================================
+   12. COUNTER
+   ============================================================ */
+
+.wl-hero-counter {
+  position: absolute;
+  top: calc(
+    var(--topbar-height, 44px) + var(--header-height-desktop, 90px) + 24px
+  );
+  right: var(--gutter, 40px);
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-body, "Jost", sans-serif);
+  font-size: 11px;
+  font-weight: 300;
+  letter-spacing: 0.14em;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.wl-hero-counter-current {
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 500;
+}
+
+.wl-hero-counter-sep {
+  opacity: 0.4;
+}
+
+/* ============================================================
+   13. PROGRESS BAR
+   ============================================================ */
+
+/* Progress bar — hidden visually, JS still drives the timer */
+.wl-hero-progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: transparent;
+  z-index: 10;
+  overflow: hidden;
+  visibility: hidden; /* ← hidden but JS still runs */
+  pointer-events: none;
+}
+
+.wl-hero-progress-bar {
+  height: 100%;
+  width: 0%;
+  background-color: var(--color-accent, #b89d6e);
+  transition: width linear;
+}
+
+.wl-hero-progress-bar.is-running {
+  width: 100%;
+}
+
+/* ============================================================
+   14. EMPTY STATE
+   ============================================================ */
+
+.wl-hero-slider--empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-dark, #1a1a1a);
+  min-height: 400px;
+}
+
+.wl-hero-empty-msg {
+  font-family: var(--font-body);
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.5);
+  text-align: center;
+}
+
+.wl-hero-empty-msg a {
+  color: var(--color-accent, #b89d6e);
+}
+
+/* ============================================================
+   15. RESPONSIVE — Tablet ≤ 1199px
+   ============================================================ */
+
+@media (max-width: 1199px) {
+  .wl-hero-slider {
+    height: 75vh;
+    min-height: 520px;
+    max-height: 780px;
+  }
+
+  .wl-hero-content-wrap {
+    padding-left: 32px;
+    padding-right: 32px;
+    padding-top: var(--header-height-mobile, 64px);
+    bottom: 32px;
+  }
+
+  .wl-hero-content {
+    max-width: 680px;
+  }
+
+  .wl-hero-counter {
+    top: 20px;
+  }
+
+  .wl-hero-arrow--prev {
+    left: 16px;
+  }
+  .wl-hero-arrow--next {
+    right: 16px;
+  }
+}
+
+/* ============================================================
+   16. RESPONSIVE — Mobile ≤ 767px
+   ============================================================ */
+
+@media (max-width: 767px) {
+  .wl-hero-slider {
+    height: 100svh;
+    min-height: 520px;
+    max-height: none;
+  }
+
+  .wl-hero-content-wrap {
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: var(--header-height-mobile, 64px);
+    bottom: 28px;
+  }
+
+  .wl-hero-title {
+    font-size: clamp(1.9rem, 7.5vw, 2.6rem);
+    margin-bottom: 14px;
+  }
+
+  .wl-hero-excerpt {
+    -webkit-line-clamp: 2;
+    font-size: 12px;
+    margin-bottom: 24px;
+  }
+
+  .wl-hero-btn {
+    padding: 13px 28px;
+    font-size: 10px;
+    letter-spacing: 0.17em;
+  }
+
+  .wl-hero-arrow {
+    width: 40px;
+    height: 40px;
+  }
+  .wl-arrow-inner,
+  .wl-hero-arrow svg {
+    width: 40px;
+    height: 40px;
+  }
+
+  .wl-hero-arrow--prev {
+    left: 10px;
+  }
+  .wl-hero-arrow--next {
+    right: 10px;
+  }
+
+  .wl-hero-counter {
+    display: none;
+  }
+}
+
+/* ============================================================
+   17. RESPONSIVE — Small mobile ≤ 480px
+   ============================================================ */
+
+@media (max-width: 480px) {
+  .wl-hero-content-wrap {
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-top: var(--header-height-mobile, 64px);
+    bottom: 20px;
+  }
+
+  .wl-hero-title {
+    font-size: 1.75rem;
+  }
+
+  .wl-hero-excerpt {
+    display: none;
+  }
+
+  .wl-hero-btn {
+    padding: 12px 22px;
+  }
+
+  .wl-hero-meta {
+    gap: 8px;
+  }
+}
+
+/* ============================================================
+   18. REDUCED MOTION
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  .wl-hero-slide,
+  .wl-hero-slide.is-leaving {
+    transition: opacity 0.3s ease;
+    transform: none !important;
+  }
+
+  .wl-hero-content.is-content-visible,
+  .wl-hero-content.is-content-exit {
+    animation: none !important;
+    opacity: 1;
+    transform: none !important;
+  }
+
+  .wl-hero-btn:hover {
+    transform: none;
+  }
+}
+
+/* ============================================================
+   19. PAINT BRUSH STROKE — bottom edge of hero
+   ============================================================ */
+
+.wl-hero-brush {
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 100%;
+  z-index: 5;
+  pointer-events: none;
+  line-height: 0;
+}
+
+.wl-hero-brush svg {
+  display: block;
+  width: 100%;
+  height: 36px;
+}
+
+@media (max-width: 1199px) {
+  .wl-hero-brush svg {
+    height: 30px;
+  }
+}
+
+@media (max-width: 767px) {
+  .wl-hero-brush svg {
+    height: 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  .wl-hero-brush svg {
+    height: 20px;
+  }
+}

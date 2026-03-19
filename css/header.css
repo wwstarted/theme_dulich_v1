@@ -1,0 +1,951 @@
+/* ============================================================
+   WANDERLAND — Header CSS
+   Top Bar + Main Header (Divided) + Mobile Header
+   ============================================================ */
+
+/* ============================================================
+   1. TOP BAR  (mkdf-top-bar)
+   ============================================================ */
+.mkdf-top-bar {
+  width: 100%;
+  height: var(--topbar-height, 44px);
+  background-color: transparent !important;
+  border-bottom: none !important;
+  position: fixed; /* ← đổi từ relative → fixed */
+  top: 0;
+  left: 0;
+  z-index: calc(var(--z-header, 900) + 2); /* trên cả header */
+  transition:
+    background-color var(--transition-base, 0.3s ease),
+    transform var(--transition-base, 0.3s ease);
+}
+
+.mkdf-top-bar .mkdf-vertical-align-containers {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+  max-width: var(--container-wide, 1400px);
+  margin: 0 auto;
+  padding: 0 var(--gutter, 40px);
+}
+
+/* Left: phone + email */
+.mkdf-top-bar .mkdf-position-left {
+  flex: 1;
+}
+
+.mkdf-top-bar .mkdf-position-left-inner {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+.mkdf-top-bar .mkdf-icon-widget-holder {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--color-secondary, #878787);
+  font-size: var(--fs-sm, 13px);
+  font-weight: 300;
+  letter-spacing: 0.01em;
+  transition: color var(--transition-fast, 0.2s ease);
+  text-decoration: none;
+}
+
+.mkdf-top-bar .mkdf-icon-widget-holder:hover {
+  color: var(--color-accent, #b0956a);
+}
+
+.mkdf-top-bar .mkdf-icon-element {
+  font-size: 15px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.mkdf-top-bar .mkdf-icon-text {
+  font-family: var(--font-body, sans-serif);
+  font-size: var(--fs-sm, 13px);
+  font-weight: 300;
+}
+
+/* Right: social icons */
+.mkdf-top-bar .mkdf-position-right {
+  flex-shrink: 0;
+}
+
+.mkdf-top-bar .mkdf-position-right-inner {
+  display: flex;
+  align-items: center;
+}
+
+/* Widget title ẩn đi */
+.mkdf-social-icons-group-widget .widgettitle {
+  display: none !important;
+}
+
+/* Social icon group */
+.mkdf-social-icons-group-widget {
+  display: flex !important; /* force flex — tránh widget bị block */
+  align-items: center;
+  gap: 14px;
+  flex-wrap: nowrap;
+}
+
+.mkdf-social-icon-widget-holder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  color: var(--color-secondary, #878787) !important; /* override inline style */
+  font-size: 14px;
+  text-decoration: none;
+  transition:
+    color var(--transition-fast, 0.2s ease),
+    transform var(--transition-fast, 0.2s ease);
+}
+
+.mkdf-social-icon-widget-holder:hover {
+  color: var(--color-accent, #b0956a) !important;
+  transform: translateY(-2px);
+}
+
+.mkdf-top-bar.is-hidden {
+  transform: translateY(-100%);
+  pointer-events: none;
+}
+
+body:not(.home) .mkdf-top-bar {
+  background-color: var(--color-white, #fff) !important;
+  border-bottom: 1px solid var(--color-border, #e8e8e8) !important;
+}
+
+.mkdf-page-header {
+  position: fixed;
+  top: var(--topbar-height, 44px); /* dưới topbar */
+  left: 0;
+  width: 100%;
+  z-index: var(--z-header, 900);
+  transition:
+    top var(--transition-base, 0.3s ease),
+    background-color var(--transition-base, 0.3s ease),
+    box-shadow var(--transition-base, 0.3s ease);
+}
+
+.mkdf-page-header .mkdf-menu-area {
+  background-color: transparent;
+  padding: 0 var(--gutter, 40px);
+  transition: background-color var(--transition-base, 0.3s ease);
+}
+
+.mkdf-page-header.is-sticky {
+  top: 0;
+  box-shadow: var(--shadow-header, 0 2px 12px rgba(0, 0, 0, 0.1));
+}
+
+.mkdf-page-header.is-sticky .mkdf-menu-area {
+  background-color: var(--color-white, #fff);
+}
+
+/* ============================================================
+   3. HEADER INNER LAYOUT  (divided: left nav | logo | right nav)
+   ============================================================ */
+.mkdf-menu-area .mkdf-vertical-align-containers {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--header-height-desktop);
+  max-width: var(--container-wide);
+  margin: 0 auto;
+  gap: 0;
+}
+
+/* Left & Right sides equal width, logo takes center */
+.mkdf-position-left,
+.mkdf-position-right {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.mkdf-position-left {
+  justify-content: flex-start;
+}
+
+.mkdf-position-right {
+  justify-content: flex-end;
+}
+
+/* Center logo */
+.mkdf-position-center {
+  flex-shrink: 0;
+  padding: 0 32px;
+}
+
+/* ============================================================
+   4. LOGO
+   ============================================================ */
+.mkdf-logo-wrapper a {
+  display: flex;
+  align-items: center;
+  height: var(--header-height-desktop);
+}
+
+.mkdf-logo-wrapper img {
+  height: 52px;
+  width: auto;
+  transition: opacity var(--transition-fast);
+}
+
+/* Light logo visible when transparent, dark logo when sticky */
+.mkdf-light-logo {
+  display: none;
+}
+.mkdf-dark-logo {
+  display: none;
+}
+.mkdf-normal-logo {
+  display: block;
+}
+
+/* On transparent header over hero — show light logo */
+.mkdf-page-header.is-transparent .mkdf-normal-logo {
+  display: none;
+}
+.mkdf-page-header.is-transparent .mkdf-light-logo {
+  display: block;
+}
+.mkdf-page-header.is-transparent .mkdf-dark-logo {
+  display: none;
+}
+
+/* On sticky white header — show dark logo */
+.mkdf-page-header.is-sticky .mkdf-normal-logo {
+  display: block;
+}
+.mkdf-page-header.is-sticky .mkdf-light-logo {
+  display: none;
+}
+.mkdf-page-header.is-sticky .mkdf-dark-logo {
+  display: none;
+}
+
+/* ============================================================
+   5. DESKTOP NAVIGATION
+   ============================================================ */
+
+/* ul chính là .mkdf-main-menu — KHÔNG có ul con */
+.mkdf-main-menu {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  gap: 0; /* spacing do padding trên <a> */
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* li top-level */
+.mkdf-main-menu > li {
+  position: relative;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+/* Link top-level */
+.mkdf-main-menu > li > a {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  padding: 0 22px; /* ← padding ngang tạo spacing */
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #ffffff;
+  white-space: nowrap;
+  transition: color 0.2s ease;
+  position: relative;
+}
+
+/* Arrow icon */
+.mkdf-main-menu > li > a .mkdf-menu-arrow {
+  margin-left: 5px;
+  font-size: 10px;
+  transition: transform 0.2s ease;
+}
+
+.mkdf-main-menu > li:hover > a .mkdf-menu-arrow {
+  transform: rotate(180deg);
+}
+
+/* Underline indicator */
+.mkdf-main-menu > li > a::after {
+  content: "";
+  position: absolute;
+  bottom: 20px;
+  left: 22px;
+  right: 22px;
+  height: 1px;
+  background-color: var(--color-accent, #b0956a);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.3s ease;
+}
+
+.mkdf-main-menu > li:hover > a::after,
+.mkdf-main-menu > li.mkdf-active-item > a::after {
+  transform: scaleX(1);
+}
+
+/* Sticky → chữ đen */
+.mkdf-page-header.is-sticky .mkdf-main-menu > li > a {
+  color: var(--color-primary, #1a1a1a);
+}
+.mkdf-page-header.is-sticky .mkdf-main-menu > li > a:hover {
+  color: var(--color-accent, #b0956a);
+}
+
+/* Transparent / non-sticky → chữ trắng */
+.mkdf-page-header.is-transparent .mkdf-main-menu > li > a,
+.mkdf-page-header:not(.is-sticky) .mkdf-main-menu > li > a {
+  color: #ffffff;
+}
+.mkdf-page-header:not(.is-sticky) .mkdf-main-menu > li > a:hover {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+/* Non-home → chữ đen luôn */
+body:not(.home) .mkdf-main-menu > li > a {
+  color: var(--color-primary, #1a1a1a);
+}
+/* ============================================================
+   6. DROPDOWN MENU
+   ============================================================ */
+.mkdf-main-menu .second {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 210px;
+  background-color: var(--color-white);
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.12);
+  border-top: 2px solid var(--color-accent);
+  overflow: hidden;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-8px);
+  transition:
+    opacity var(--transition-base),
+    transform var(--transition-base),
+    visibility var(--transition-base);
+  z-index: var(--z-dropdown);
+}
+
+/* Right-aligned dropdown */
+.mkdf-main-menu .second.right {
+  left: auto;
+  right: 0;
+}
+
+.mkdf-main-menu li:hover > .second {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.mkdf-main-menu .second .inner ul {
+  padding: 10px 0;
+}
+
+.mkdf-main-menu .second .inner ul > li > a {
+  display: block;
+  padding: 9px 22px;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-primary, #1a1a1a);
+  transition:
+    color 0.2s ease,
+    padding-left 0.2s ease;
+}
+
+.mkdf-main-menu .second .inner ul li a:hover {
+  color: var(--color-accent);
+  padding-left: 28px;
+}
+
+/* Sub-dropdown (3rd level) */
+.mkdf-main-menu .second ul li.sub {
+  position: relative;
+}
+
+.mkdf-main-menu .second ul li.sub > ul {
+  position: absolute;
+  top: -10px;
+  left: 100%;
+  min-width: 200px;
+  background-color: var(--color-white);
+  box-shadow: var(--shadow-md);
+  border-top: 2px solid var(--color-accent);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(-8px);
+  transition:
+    opacity var(--transition-base),
+    transform var(--transition-base),
+    visibility var(--transition-base);
+  padding: 10px 0;
+}
+
+.mkdf-main-menu .second ul li.sub > ul.right {
+  left: auto;
+  right: 100%;
+  transform: translateX(8px);
+}
+
+.mkdf-main-menu .second ul li.sub:hover > ul {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(0);
+}
+
+/* Sub arrow */
+.mkdf-main-menu .second ul li.sub > a::after {
+  content: "›";
+  float: right;
+  font-size: 14px;
+  line-height: 1;
+  color: var(--color-secondary);
+}
+
+/* ============================================================
+   7. DIVIDER WIDGET AREA (Destinations icon — left of nav)
+   ============================================================ */
+.mkdf-divided-left-widget-area {
+  padding-right: 20px;
+  border-right: 1px solid rgba(255, 255, 255, 0.3);
+  margin-right: 8px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.mkdf-page-header.is-sticky .mkdf-divided-left-widget-area {
+  border-right-color: var(--color-border);
+}
+
+.mkdf-divided-left-widget-area .mkdf-icon-widget-holder {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--font-body);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-medium);
+  letter-spacing: var(--ls-wider);
+  text-transform: uppercase;
+  color: var(--color-white);
+  transition: color var(--transition-fast);
+  white-space: nowrap;
+}
+
+.mkdf-divided-left-widget-area .mkdf-icon-widget-holder:hover {
+  color: var(--color-accent);
+}
+
+.mkdf-divided-left-widget-area .mkdf-icon-element {
+  font-size: 20px;
+  line-height: 1;
+}
+
+.mkdf-page-header.is-sticky
+  .mkdf-divided-left-widget-area
+  .mkdf-icon-widget-holder {
+  color: var(--color-primary);
+}
+
+/* ============================================================
+   8. SEARCH (right widget area)
+   ============================================================ */
+.mkdf-divided-right-widget-area {
+  padding-left: 20px;
+  border-left: 1px solid rgba(255, 255, 255, 0.3);
+  margin-left: 8px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.mkdf-page-header.is-sticky .mkdf-divided-right-widget-area {
+  border-left-color: var(--color-border);
+}
+
+.mkdf-search-opener-holder {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.mkdf-search-opener {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--font-body);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-medium);
+  letter-spacing: var(--ls-wider);
+  text-transform: uppercase;
+  color: var(--color-white);
+  cursor: pointer;
+  transition: color var(--transition-fast);
+  white-space: nowrap;
+}
+
+.mkdf-search-opener:hover {
+  color: var(--color-accent);
+}
+
+.mkdf-page-header.is-sticky .mkdf-search-opener {
+  color: var(--color-primary);
+}
+
+.mkdf-search-opener i {
+  font-size: 18px;
+  line-height: 1;
+}
+
+/* Search form (hidden by default, slides down) */
+.mkdf-on-side-search-form {
+  position: absolute;
+  top: calc(100% + 12px);
+  right: 0;
+  width: 300px;
+  background: var(--color-white);
+  box-shadow: var(--shadow-lg);
+  border-top: 2px solid var(--color-accent);
+  padding: 16px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition:
+    opacity var(--transition-base),
+    transform var(--transition-base),
+    visibility var(--transition-base);
+  z-index: var(--z-dropdown);
+}
+
+.mkdf-search-opener-holder.is-open .mkdf-on-side-search-form {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.mkdf-on-side-search-form .mkdf-form-holder-inner {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid var(--color-border);
+  gap: 10px;
+}
+
+.mkdf-on-side-search-form .mkdf-search-field {
+  flex: 1;
+  border: none;
+  outline: none;
+  padding: 8px 0;
+  font-family: var(--font-body);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-light);
+  color: var(--color-primary);
+  background: transparent;
+}
+
+.mkdf-on-side-search-form .mkdf-search-field::placeholder {
+  color: var(--color-secondary);
+  letter-spacing: var(--ls-wide);
+  text-transform: uppercase;
+  font-size: var(--fs-xs);
+}
+
+.mkdf-onside-btn {
+  flex-shrink: 0;
+  color: var(--color-secondary);
+  transition: color var(--transition-fast);
+}
+
+.mkdf-onside-btn:hover {
+  color: var(--color-accent);
+}
+
+/* ============================================================
+   9. LAYOUT HELPERS for left / right nav inner
+   ============================================================ */
+.mkdf-position-left-inner,
+.mkdf-position-right-inner {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.mkdf-divided-left-part,
+.mkdf-divided-right-part {
+  height: 100%;
+}
+
+/* ============================================================
+   10. MOBILE HEADER  (mkdf-mobile-header)
+   ============================================================ */
+.mkdf-mobile-header {
+  display: none; /* hidden on desktop */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: var(--z-header);
+  background-color: var(--color-white);
+  box-shadow: var(--shadow-sm);
+}
+
+.mkdf-mobile-header-inner {
+  width: 100%;
+}
+
+.mkdf-mobile-header-holder {
+  height: var(--header-height-mobile);
+}
+
+.mkdf-mobile-header-holder .mkdf-grid {
+  max-width: 100%;
+  height: 100%;
+  padding: 0 20px;
+}
+
+.mkdf-mobile-header-holder .mkdf-vertical-align-containers {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.mkdf-mobile-header-holder .mkdf-position-left-inner,
+.mkdf-mobile-header-holder .mkdf-position-right-inner {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+/* Mobile logo */
+.mkdf-mobile-logo-wrapper a {
+  display: flex;
+  align-items: center;
+}
+
+.mkdf-mobile-logo-wrapper img {
+  height: 34px;
+  width: auto;
+}
+
+/* Hamburger button */
+.mkdf-mobile-menu-opener {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.mkdf-mobile-menu-opener a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.mkdf-mobile-menu-text {
+  font-family: var(--font-body);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-medium);
+  letter-spacing: var(--ls-wider);
+  text-transform: uppercase;
+  color: var(--color-primary);
+}
+
+.mkdf-hm-lines {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width: 22px;
+}
+
+.mkdf-hm-line {
+  display: block;
+  height: 1.5px;
+  background-color: var(--color-primary);
+  transition:
+    transform var(--transition-base),
+    opacity var(--transition-base),
+    width var(--transition-base);
+  transform-origin: center;
+}
+
+.mkdf-hm-line.mkdf-line-3 {
+  width: 14px;
+}
+
+/* Hamburger open state */
+.mkdf-mobile-header.is-menu-open .mkdf-hm-line.mkdf-line-1 {
+  transform: translateY(6.5px) rotate(45deg);
+}
+.mkdf-mobile-header.is-menu-open .mkdf-hm-line.mkdf-line-2 {
+  opacity: 0;
+  transform: scaleX(0);
+}
+.mkdf-mobile-header.is-menu-open .mkdf-hm-line.mkdf-line-3 {
+  width: 22px;
+  transform: translateY(-6.5px) rotate(-45deg);
+}
+
+/* ============================================================
+   11. MOBILE NAV PANEL
+   ============================================================ */
+.mkdf-mobile-nav {
+  background-color: var(--color-white);
+  border-top: 1px solid var(--color-border);
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.45s ease;
+}
+
+.mkdf-mobile-header.is-menu-open .mkdf-mobile-nav {
+  max-height: 85vh;
+  overflow-y: auto;
+}
+
+.mkdf-mobile-nav .mkdf-grid {
+  padding: 0 20px 20px;
+}
+
+/* Mobile nav items */
+.mkdf-mobile-nav > .mkdf-grid > ul > li {
+  border-bottom: 1px solid var(--color-light-gray);
+}
+
+.mkdf-mobile-nav ul li a {
+  display: block;
+  padding: 13px 0;
+  font-family: var(--font-body);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-medium);
+  letter-spacing: var(--ls-wider);
+  text-transform: uppercase;
+  color: var(--color-primary);
+  transition: color var(--transition-fast);
+}
+
+.mkdf-mobile-nav ul li a:hover {
+  color: var(--color-accent);
+}
+
+/* Sub arrow toggle */
+.mobile_arrow {
+  float: right;
+  cursor: pointer;
+  padding: 13px 0;
+  line-height: 1;
+  color: var(--color-secondary);
+}
+
+.mobile_arrow .mkdf-sub-arrow {
+  display: inline-block;
+  font-size: 14px;
+  transition:
+    transform var(--transition-fast),
+    display var(--transition-fast);
+}
+
+.mobile_arrow .ion-ios-arrow-down {
+  display: none;
+}
+
+li.is-open > .mobile_arrow .mkdf-sub-arrow {
+  display: none;
+}
+li.is-open > .mobile_arrow .ion-ios-arrow-down {
+  display: inline-block;
+}
+
+/* Sub menu */
+.mkdf-mobile-nav .sub_menu {
+  padding-left: 16px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+
+.mkdf-mobile-nav li.is-open > .sub_menu {
+  max-height: 600px;
+}
+
+.mkdf-mobile-nav .sub_menu li a {
+  font-size: 11px;
+  padding: 10px 0;
+  color: var(--color-secondary);
+}
+
+.mkdf-mobile-nav .sub_menu li a:hover {
+  color: var(--color-accent);
+}
+
+/* ============================================================
+   12. RESPONSIVE BREAKPOINTS
+   ============================================================ */
+
+/* Tablet (≤ 1199px) — hide main desktop header, show mobile */
+@media (max-width: 1199px) {
+  .mkdf-page-header,
+  .mkdf-top-bar {
+    display: none !important;
+  }
+
+  .mkdf-mobile-header {
+    display: block;
+  }
+
+  body {
+    padding-top: var(--header-height-mobile);
+  }
+}
+
+/* Tablet landscape (768–1199px) */
+@media (max-width: 1199px) and (min-width: 768px) {
+  .mkdf-mobile-header-holder .mkdf-grid {
+    padding: 0 32px;
+  }
+}
+
+/* Mobile (≤ 767px) */
+@media (max-width: 767px) {
+  :root {
+    --header-height-mobile: 58px;
+  }
+
+  .mkdf-mobile-logo-wrapper img {
+    height: 28px;
+  }
+
+  .mkdf-mobile-menu-text {
+    display: none;
+  }
+}
+
+/* Small mobile (≤ 480px) */
+@media (max-width: 480px) {
+  .mkdf-mobile-header-holder .mkdf-grid {
+    padding: 0 16px;
+  }
+}
+/* ============================================================
+   13. HERO / OFFSET — gom lại một chỗ  (FIX #3)
+   ============================================================ */
+
+/* Desktop: header dưới topbar lúc đầu */
+@media (min-width: 1200px) {
+  .mkdf-page-header {
+    top: var(--topbar-height, 44px);
+    transition:
+      top var(--transition-base, 0.3s ease),
+      background-color var(--transition-base, 0.3s ease),
+      box-shadow var(--transition-base, 0.3s ease);
+  }
+
+  /* Khi topbar scroll ẩn → header lên top:0 */
+  .mkdf-page-header.topbar-hidden {
+    top: 0;
+  }
+}
+
+/* Trang không phải home → header luôn trắng, không transparent */
+body:not(.home) .mkdf-page-header {
+  background-color: var(--color-white, #fff);
+  box-shadow: var(--shadow-header, 0 2px 12px rgba(0, 0, 0, 0.08));
+}
+
+body:not(.home) .mkdf-main-menu > ul > li > a {
+  color: var(--color-primary, #1a1a1a);
+}
+
+body:not(.home) .mkdf-divided-left-widget-area .mkdf-icon-widget-holder,
+body:not(.home) .mkdf-search-opener {
+  color: var(--color-primary, #1a1a1a);
+}
+
+body:not(.home) .mkdf-divided-left-widget-area {
+  border-right-color: var(--color-border, #e8e8e8);
+}
+
+body:not(.home) .mkdf-divided-right-widget-area {
+  border-left-color: var(--color-border, #e8e8e8);
+}
+
+body:not(.home) .mkdf-logo-wrapper .mkdf-normal-logo {
+  display: block;
+}
+body:not(.home) .mkdf-logo-wrapper .mkdf-light-logo,
+body:not(.home) .mkdf-logo-wrapper .mkdf-dark-logo {
+  display: none;
+}
+
+/* Body cần padding-top để nội dung không bị header che */
+body:not(.home) {
+  padding-top: calc(
+    var(--topbar-height, 44px) + var(--header-height-desktop, 80px)
+  );
+}
+
+/* Home: hero full viewport, không cần padding */
+body.home {
+  padding-top: 0;
+}
+
+/* ============================================================
+   14. WPADMINBAR — ẩn hoàn toàn
+   ============================================================ */
+#wpadminbar {
+  display: none !important;
+}
+
+html {
+  margin-top: 0 !important; /* WP tự thêm margin-top: 32px, reset lại */
+}
+
+/* ============================================================
+   15. SOCIAL ICONS — màu sắc theo trạng thái header
+   ============================================================ */
+
+/* Home transparent state → icon trắng */
+.mkdf-top-bar .mkdf-social-icon-widget-holder {
+  color: #ffffff !important;
+}
+
+.mkdf-top-bar .mkdf-social-icon-widget-holder:hover {
+  color: var(--color-accent, #b0956a) !important;
+  transform: translateY(-2px);
+}
+
+/* Phone + Email trên home → chữ trắng */
+.mkdf-top-bar .mkdf-icon-widget-holder {
+  color: #ffffff !important;
+}
+
+.mkdf-top-bar .mkdf-icon-widget-holder:hover {
+  color: var(--color-accent, #b0956a) !important;
+}
+
+/* Trang không phải home → màu xám tối */
+body:not(.home) .mkdf-top-bar .mkdf-social-icon-widget-holder {
+  color: var(--color-secondary, #878787) !important;
+}
+
+body:not(.home) .mkdf-top-bar .mkdf-icon-widget-holder {
+  color: var(--color-secondary, #878787) !important;
+}
