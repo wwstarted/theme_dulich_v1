@@ -766,7 +766,7 @@
 .wl-essentials-inner {
   position: relative;
   z-index: 1;
-  max-width: var(--container-max, 1280px);
+  max-width: var(--container-max, 1160px);
   margin: 0 auto;
   padding: 0 var(--gutter, 40px);
 }
@@ -1107,7 +1107,7 @@
   }
 
   .wl-essentials-inner {
-    padding: 0 20px;
+    padding: 0 16px;
   }
 
   /* Stack image on top, content below — reset reversed order */
@@ -1212,7 +1212,7 @@
 .wl-nl-inner {
   position: relative;
   z-index: 1;
-  max-width: var(--container-max, 1280px);
+  max-width: var(--container-max, 1160px);
   margin: 0 auto;
   padding: 64px var(--gutter, 40px);
 }
@@ -1521,5 +1521,1186 @@
 
   .wl-nl-brush svg {
     height: 22px;
+  }
+}
+
+/* ============================================================
+   SECTION 4 — FEATURED BLOG POSTS SLIDER
+   ============================================================ */
+
+.wl-featured-section {
+  position: relative;
+  padding: 88px 0 104px;
+  background-color: white;
+  overflow: hidden;
+}
+
+/* Wood grain — same as essentials */
+.wl-featured-bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image:
+    radial-gradient(
+      ellipse 700px 440px at 50% 50%,
+      transparent 56%,
+      rgba(180, 160, 120, 0.07) 57%,
+      transparent 58%
+    ),
+    radial-gradient(
+      ellipse 920px 580px at 50% 50%,
+      transparent 56%,
+      rgba(180, 160, 120, 0.05) 57%,
+      transparent 58%
+    ),
+    radial-gradient(
+      ellipse 1140px 720px at 50% 50%,
+      transparent 56%,
+      rgba(180, 160, 120, 0.04) 57%,
+      transparent 58%
+    ),
+    radial-gradient(
+      ellipse 1360px 860px at 50% 50%,
+      transparent 56%,
+      rgba(180, 160, 120, 0.03) 57%,
+      transparent 58%
+    );
+  background-repeat: no-repeat;
+}
+
+.wl-featured-inner {
+  position: relative;
+  z-index: 1;
+  /* Thụt vào hơn ~8% mỗi bên so với các section khác — match site mẫu */
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0 var(--gutter, 40px);
+}
+
+/* ── Header ── */
+.wl-featured-header {
+  text-align: center;
+  margin-bottom: 56px;
+}
+
+.wl-featured-tagline {
+  display: block;
+  font-family: var(--font-script, "Dancing Script", cursive);
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--color-secondary, #878787);
+  margin-bottom: 10px;
+  letter-spacing: 0.02em;
+}
+
+.wl-featured-title {
+  font-family: var(--font-body, "Jost", sans-serif);
+  font-size: clamp(1.8rem, 3.2vw, 2.5rem);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-primary, #2c2c2c);
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* Highlight shape — same pattern */
+.wl-featured-highlight-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.wl-featured-highlight-text {
+  position: relative;
+  z-index: 2;
+  color: #59815b;
+  padding: 0 6px;
+}
+
+.wl-featured-highlight-shape {
+  position: absolute;
+  inset: -2px -2px;
+  display: flex;
+  align-items: stretch;
+  pointer-events: none;
+  z-index: 1;
+  color: #e8f0e8;
+}
+
+.wl-featured-highlight-shape svg {
+  flex-shrink: 0;
+  width: 14px;
+  height: 100%;
+}
+
+.wl-featured-highlight-mid {
+  flex: 1;
+  background: currentColor;
+}
+
+/* ── Slider wrapper — arrows sit outside viewport ── */
+.wl-featured-slider-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin: 0 -44px; /* arrows bleed outside inner container */
+}
+
+/* ── Arrows ── */
+.wl-featured-arrow {
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-primary, #2c2c2c);
+  transition: color 0.18s ease;
+  outline: none;
+  z-index: 2;
+}
+
+.wl-featured-arrow:hover {
+  color: var(--color-accent, #b89d6e);
+}
+
+.wl-featured-arrow:focus-visible {
+  outline: 2px solid var(--color-accent, #b89d6e);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.wl-featured-arrow svg {
+  width: 44px;
+  height: 44px;
+  display: block;
+}
+
+.wl-featured-arrow--prev {
+  margin-right: 0;
+}
+.wl-featured-arrow--next {
+  margin-left: 0;
+}
+
+/* Disabled state */
+.wl-featured-arrow:disabled {
+  opacity: 0.25;
+  cursor: default;
+}
+
+/* ── Viewport (overflow hidden) ── */
+.wl-featured-viewport {
+  flex: 1;
+  overflow: hidden;
+}
+
+/* ── Track (slides flex row) ── */
+.wl-featured-track {
+  display: flex;
+  gap: 22px;
+  transition: transform 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: transform;
+}
+
+/* ── Individual card ── */
+.wl-featured-card {
+  /* Width calculated by JS. CSS sets minimum */
+  flex-shrink: 0;
+  width: calc((100% - 44px) / 3); /* fallback — JS overrides */
+}
+
+/* Image block — portrait 418:499 ratio on container */
+.wl-featured-card-image {
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 18px;
+  aspect-ratio: 418.667 / 499.5; /* portrait — exact site mẫu ratio */
+}
+
+.wl-featured-img-link {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.wl-featured-img-link img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.wl-featured-img-link:hover img {
+  transform: scale(1.05);
+}
+
+.wl-featured-img-placeholder {
+  width: 100%;
+  height: 100%;
+  background: var(--color-light-gray, #f0eeea);
+}
+
+/* Category badge */
+.wl-featured-cat-badge {
+  position: absolute;
+  top: 14px;
+  left: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--color-primary, #2c2c2c);
+  font-family: var(--font-body, "Jost", sans-serif);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 6px 12px 6px 10px;
+  transition:
+    background 0.18s,
+    color 0.18s;
+}
+
+.wl-featured-cat-badge:hover {
+  background: var(--color-accent, #b89d6e);
+  color: #fff;
+}
+
+.wl-featured-cat-icon svg {
+  width: 11px;
+  height: 11px;
+  stroke: currentColor;
+  fill: none;
+}
+
+/* Content area */
+.wl-featured-card-content {
+  padding: 0 2px;
+}
+
+.wl-featured-meta {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+.wl-featured-meta-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--font-body, "Jost", sans-serif);
+  font-size: 12px;
+  font-weight: 300;
+  font-style: italic;
+  color: var(--color-secondary, #878787);
+}
+
+.wl-feat-icon {
+  width: 12px;
+  height: 12px;
+  flex-shrink: 0;
+  stroke: currentColor;
+  fill: none;
+  opacity: 0.7;
+}
+
+.wl-featured-meta-item a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.18s;
+}
+
+.wl-featured-meta-item a:hover {
+  color: var(--color-accent, #b89d6e);
+}
+
+.wl-featured-card-title {
+  font-family: var(--font-body, "Jost", sans-serif);
+  font-size: clamp(0.88rem, 1.2vw, 1.05rem);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  line-height: 1.4;
+  color: var(--color-primary, #2c2c2c);
+  margin: 0;
+}
+
+.wl-featured-card-title a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.18s;
+}
+
+.wl-featured-card-title a:hover {
+  color: var(--color-accent, #b89d6e);
+}
+
+/* Empty state */
+.wl-featured-empty {
+  text-align: center;
+  padding: 40px;
+  color: var(--color-secondary, #878787);
+  font-size: 13px;
+}
+
+.wl-featured-empty a {
+  color: var(--color-accent, #b89d6e);
+}
+
+/* ============================================================
+   FEATURED RESPONSIVE — Tablet ≤ 1199px
+   ============================================================ */
+
+@media (max-width: 1199px) {
+  .wl-featured-section {
+    padding: 72px 0 88px;
+  }
+
+  .wl-featured-inner {
+    padding: 0 32px;
+  }
+
+  .wl-featured-slider-wrap {
+    margin: 0 -36px;
+  }
+
+  .wl-featured-arrow {
+    width: 36px;
+    height: 36px;
+  }
+
+  .wl-featured-arrow svg {
+    width: 36px;
+    height: 36px;
+  }
+}
+
+/* ============================================================
+   FEATURED RESPONSIVE — Mobile ≤ 767px
+   ============================================================ */
+
+@media (max-width: 767px) {
+  .wl-featured-section {
+    padding: 56px 0 64px;
+  }
+
+  .wl-featured-inner {
+    padding: 0 16px;
+  }
+
+  .wl-featured-slider-wrap {
+    margin: 0 -32px;
+  }
+
+  .wl-featured-header {
+    margin-bottom: 36px;
+  }
+
+  .wl-featured-title {
+    font-size: 1.4rem;
+  }
+
+  .wl-featured-arrow {
+    width: 32px;
+    height: 32px;
+  }
+
+  .wl-featured-arrow svg {
+    width: 32px;
+    height: 32px;
+  }
+}
+
+/* ============================================================
+   FEATURED RESPONSIVE — Small mobile ≤ 480px
+   ============================================================ */
+
+@media (max-width: 480px) {
+  .wl-featured-inner {
+    padding: 0 12px;
+  }
+
+  .wl-featured-slider-wrap {
+    margin: 0 -28px;
+  }
+
+  .wl-featured-arrow {
+    width: 28px;
+    height: 28px;
+  }
+
+  .wl-featured-arrow svg {
+    width: 28px;
+    height: 28px;
+  }
+
+  .wl-featured-card-title {
+    font-size: 0.88rem;
+  }
+}
+
+/* ============================================================
+   SECTION 5 — DESTINATIONS TIMELINE
+   ============================================================ */
+
+.wl-dest-section {
+  position: relative;
+  background-color: #f4f1eb;
+  overflow: hidden;
+  padding: 0;
+}
+
+/* ── Topographic SVG background ── */
+.wl-dest-topo {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.wl-dest-topo svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* ── "DESTINATIONS" watermark ── */
+.wl-dest-watermark {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  font-family: var(--font-body, "Jost", sans-serif);
+  font-size: clamp(3rem, 8vw, 7rem);
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(180, 165, 140, 0.13);
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* ── Inner ── */
+.wl-dest-inner {
+  position: relative;
+  z-index: 2;
+  padding: 0;
+}
+
+/* ── No-scroll wrapper on desktop/tablet ── */
+.wl-dest-scroll-wrap {
+  overflow-x: auto; /* horizontal scroll when many items */
+  overflow-y: hidden; /* NO vertical scroll/overflow */
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  cursor: grab;
+  width: 100%;
+}
+
+.wl-dest-scroll-wrap::-webkit-scrollbar {
+  display: none;
+}
+.wl-dest-scroll-wrap:active {
+  cursor: grabbing;
+}
+
+/* ── Track — absolute positioning, JS sets width/height ── */
+.wl-dest-track {
+  position: relative;
+  display: block;
+  width: 100%;
+  overflow: visible;
+}
+
+/* ── SVG line overlay ── */
+.wl-dest-line-svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 1;
+  overflow: visible;
+}
+
+/* ── Individual destination item — JS positions absolutely ── */
+.wl-dest-item {
+  position: absolute; /* JS sets left/top */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-decoration: none;
+  z-index: 3;
+  width: 200px; /* JS also sets this */
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.wl-dest-item.is-visible {
+  opacity: 1;
+}
+
+/* Hover lift for content */
+.wl-dest-item:hover .wl-dest-item-inner {
+  transform: translateY(-4px);
+}
+
+/* ── Item inner ── */
+.wl-dest-item-inner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: transform 0.25s ease;
+  width: 100%;
+}
+
+/* ── Flag / image ── */
+.wl-dest-img-wrap {
+  flex-shrink: 0;
+  width: 80px;
+  height: 50px;
+  overflow: hidden;
+  border-radius: 2px;
+}
+
+.wl-dest-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ── Text block ── */
+.wl-dest-text {
+  flex: 1;
+}
+
+.wl-dest-title {
+  font-family: var(--font-body, "Jost", sans-serif);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-primary, #2c2c2c);
+  margin: 0 0 2px;
+  transition: color 0.18s ease;
+}
+
+.wl-dest-item:hover .wl-dest-title {
+  color: var(--color-accent, #b89d6e);
+}
+
+.wl-dest-desc {
+  font-family: var(--font-body, "Jost", sans-serif);
+  font-size: 11px;
+  font-weight: 300;
+  color: var(--color-secondary, #878787);
+  margin: 0 0 2px;
+  line-height: 1.4;
+}
+
+.wl-dest-coord {
+  font-family: var(--font-body, "Jost", sans-serif);
+  font-size: 10px;
+  font-weight: 300;
+  color: rgba(135, 135, 135, 0.75);
+  margin: 0;
+  letter-spacing: 0.04em;
+  line-height: 1.4;
+}
+
+/* ── Pin dot — hidden, SVG circles handle this visually ── */
+.wl-dest-pin {
+  display: none;
+}
+
+/* ── Item inner — flush against the line ── */
+.wl-dest-item-inner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: transform 0.25s ease;
+  /* Above: align bottom of content to line = justify-content end */
+  width: 100%;
+}
+
+/* Above items: content sits above line, bottom edge touches pinY */
+.wl-dest-item--above .wl-dest-item-inner {
+  align-items: flex-end;
+}
+
+/* Below items: content sits below line, top edge at pinY */
+.wl-dest-item--below .wl-dest-item-inner {
+  align-items: flex-start;
+}
+
+/* ── Empty state ── */
+.wl-dest-empty {
+  text-align: center;
+  padding: 60px 40px;
+  font-size: 13px;
+  color: var(--color-secondary, #878787);
+}
+
+.wl-dest-empty a {
+  color: var(--color-accent, #b89d6e);
+}
+
+/* ============================================================
+   DESTINATIONS RESPONSIVE — Tablet ≤ 1199px
+   JS still handles absolute layout, just smaller TRACK_H
+   ============================================================ */
+
+@media (max-width: 1199px) {
+  /* JS reads window.innerWidth and adjusts TRACK_H via JS constant */
+  /* CSS just ensures no overflow */
+  .wl-dest-scroll-wrap {
+    overflow: hidden;
+  }
+  .wl-dest-img-wrap {
+    width: 64px;
+    height: 40px;
+  }
+  .wl-dest-title {
+    font-size: 12px;
+  }
+}
+
+/* ============================================================
+   DESTINATIONS RESPONSIVE — Mobile ≤ 767px
+   Grid layout on mobile (no horizontal scroll)
+   ============================================================ */
+
+@media (max-width: 767px) {
+  .wl-dest-inner {
+    padding: 56px 0 64px;
+  }
+
+  .wl-dest-watermark {
+    font-size: 2.5rem;
+    letter-spacing: 0.12em;
+  }
+
+  /* Switch to vertical grid on mobile */
+  .wl-dest-scroll-wrap {
+    overflow: visible;
+    cursor: default;
+    padding: 0 20px;
+  }
+
+  .wl-dest-track {
+    flex-wrap: wrap;
+    min-width: unset;
+    padding: 0;
+    gap: 20px;
+    align-items: flex-start;
+    justify-content: center;
+  }
+
+  /* Hide SVG line on mobile (doesn't make sense in grid) */
+  .wl-dest-line-svg {
+    display: none;
+  }
+
+  .wl-dest-item,
+  .wl-dest-item--above,
+  .wl-dest-item--below {
+    position: relative;
+    transform: none !important;
+    opacity: 1;
+    flex-direction: row;
+    width: calc(50% - 10px);
+    margin: 0;
+    padding: 14px;
+    background: rgba(255, 255, 255, 0.6);
+    border: 1px solid rgba(180, 165, 140, 0.2);
+    border-radius: 4px;
+  }
+
+  .wl-dest-item:hover .wl-dest-item-inner {
+    transform: none;
+  }
+
+  .wl-dest-item-inner {
+    flex-direction: row;
+  }
+
+  .wl-dest-pin {
+    display: none; /* hide pin on grid layout */
+  }
+
+  .wl-dest-img-wrap {
+    width: 52px;
+    height: 34px;
+  }
+
+  .wl-dest-title {
+    font-size: 11px;
+  }
+}
+
+/* ============================================================
+   DESTINATIONS RESPONSIVE — Small mobile ≤ 480px
+   ============================================================ */
+
+@media (max-width: 480px) {
+  .wl-dest-scroll-wrap {
+    padding: 0 16px;
+  }
+
+  .wl-dest-item,
+  .wl-dest-item--above,
+  .wl-dest-item--below {
+    width: 100%;
+  }
+}
+
+/* ============================================================
+   SECTION 6 — DESTINATION CATEGORIES + POSTS GRID + CTA
+   ============================================================ */
+
+.wl-dcl-section {
+  position: relative;
+  background-color: white;
+  padding: 80px 0 100px;
+  overflow: hidden;
+}
+
+.wl-dcl-bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image:
+    radial-gradient(
+      ellipse 900px 500px at 50% 20%,
+      transparent 55%,
+      rgba(180, 160, 120, 0.06) 56%,
+      transparent 57%
+    ),
+    radial-gradient(
+      ellipse 1100px 640px at 50% 20%,
+      transparent 55%,
+      rgba(180, 160, 120, 0.04) 56%,
+      transparent 57%
+    ),
+    radial-gradient(
+      ellipse 1300px 780px at 50% 20%,
+      transparent 55%,
+      rgba(180, 160, 120, 0.03) 56%,
+      transparent 57%
+    );
+  background-repeat: no-repeat;
+}
+
+.wl-dcl-inner {
+  position: relative;
+  z-index: 1;
+  max-width: var(--container-max, 1160px);
+  margin: 0 auto;
+  padding: 0 var(--gutter, 40px);
+}
+
+/* ── Category Icons Row ── */
+.wl-dcl-cats-row {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 0;
+  margin-bottom: 60px;
+  border-bottom: 1px solid var(--color-border, #e8e5e0);
+  padding-bottom: 56px;
+}
+
+.wl-dcl-cat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  padding: 20px 12px;
+  text-decoration: none;
+  position: relative;
+  transition: background 0.2s ease;
+}
+
+.wl-dcl-cat-item:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+/* Image + highlight shape */
+.wl-dcl-cat-image {
+  position: relative;
+  width: 92px;
+  height: 74px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wl-dcl-cat-img-default,
+.wl-dcl-cat-img-hover,
+.wl-dcl-cat-icon-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: opacity 0.25s ease;
+}
+
+.wl-dcl-cat-img-hover {
+  opacity: 0;
+}
+
+.wl-dcl-cat-item:hover .wl-dcl-cat-img-default,
+.wl-dcl-cat-item:hover .wl-dcl-cat-icon-svg {
+  opacity: 0;
+}
+
+.wl-dcl-cat-item:hover .wl-dcl-cat-img-hover {
+  opacity: 1;
+}
+
+/* Default icon SVG when no image */
+.wl-dcl-cat-icon-svg {
+  color: rgba(180, 165, 140, 0.5);
+  position: relative;
+  width: 60px;
+  height: 48px;
+}
+
+/* Highlight shape (tab) — shows on hover */
+.wl-dcl-cat-highlight {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: stretch;
+  pointer-events: none;
+  color: #e8f0e8;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  z-index: 1;
+}
+
+.wl-dcl-cat-item:hover .wl-dcl-cat-highlight {
+  opacity: 1;
+}
+
+.wl-dcl-cat-highlight svg {
+  flex-shrink: 0;
+  width: 14px;
+  height: 100%;
+}
+
+.wl-dcl-hl-mid {
+  flex: 1;
+  background: currentColor;
+}
+
+/* Category text */
+.wl-dcl-cat-text {
+  text-align: center;
+  position: relative;
+  z-index: 2;
+}
+
+.wl-dcl-cat-count {
+  font-family: var(--font-body, "Jost", sans-serif);
+  font-size: 11px;
+  font-weight: 300;
+  color: var(--color-secondary, #878787);
+  margin: 0 0 4px;
+  letter-spacing: 0.04em;
+}
+
+.wl-dcl-cat-name {
+  font-family: var(--font-body, "Jost", sans-serif);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-primary, #2c2c2c);
+  margin: 0;
+  transition: color 0.18s ease;
+}
+
+.wl-dcl-cat-item:hover .wl-dcl-cat-name {
+  color: var(--color-accent, #b89d6e);
+}
+
+/* ── Bottom Row ── */
+.wl-dcl-bottom-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 0 64px;
+  align-items: start;
+}
+
+/* ── Posts Grid 2×2 ── */
+.wl-dcl-posts-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.wl-dcl-post-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.wl-dcl-post-img-link {
+  display: block;
+  overflow: hidden;
+  margin-bottom: 14px;
+  aspect-ratio: 418.328 / 273.844;
+}
+
+.wl-dcl-post-img-link img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.wl-dcl-post-img-link:hover img {
+  transform: scale(1.04);
+}
+
+.wl-dcl-post-img-placeholder {
+  width: 100%;
+  height: 100%;
+  background: var(--color-light-gray, #f0eeea);
+}
+
+.wl-dcl-post-content {
+  padding: 0 2px;
+}
+
+.wl-dcl-post-meta {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+}
+
+.wl-dcl-meta-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--font-body, "Jost", sans-serif);
+  font-size: 11px;
+  font-weight: 300;
+  font-style: italic;
+  color: var(--color-secondary, #878787);
+}
+
+.wl-dcl-meta-icon {
+  width: 11px;
+  height: 11px;
+  flex-shrink: 0;
+  stroke: currentColor;
+  fill: none;
+  opacity: 0.7;
+}
+
+.wl-dcl-meta-item a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.18s;
+}
+
+.wl-dcl-meta-item a:hover {
+  color: var(--color-accent, #b89d6e);
+}
+
+.wl-dcl-post-title {
+  font-family: var(--font-body, "Jost", sans-serif);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  line-height: 1.4;
+  color: var(--color-primary, #2c2c2c);
+  margin: 0;
+}
+
+.wl-dcl-post-title a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.18s;
+}
+
+.wl-dcl-post-title a:hover {
+  color: var(--color-accent, #b89d6e);
+}
+
+.wl-dcl-empty {
+  font-size: 13px;
+  color: var(--color-secondary, #878787);
+}
+
+.wl-dcl-empty a {
+  color: var(--color-accent, #b89d6e);
+}
+
+/* ── CTA Column ── */
+.wl-dcl-cta-inner {
+  padding-top: 8px;
+}
+
+.wl-dcl-cta-tagline {
+  display: block;
+  font-family: var(--font-script, "Dancing Script", cursive);
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--color-secondary, #878787);
+  margin-bottom: 12px;
+  letter-spacing: 0.02em;
+}
+
+.wl-dcl-cta-title {
+  font-family: var(--font-body, "Jost", sans-serif);
+  font-size: clamp(1.3rem, 2.2vw, 1.7rem);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  line-height: 1.3;
+  color: var(--color-primary, #2c2c2c);
+  margin: 0 0 18px;
+}
+
+.wl-dcl-cta-body {
+  font-family: var(--font-body, "Jost", sans-serif);
+  font-size: 15px;
+  font-weight: 300;
+  line-height: 1.75;
+  color: rgba(44, 44, 44, 0.72);
+  margin: 0 0 28px;
+}
+
+/* Social share */
+.wl-dcl-social {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.wl-dcl-social-list {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.wl-dcl-social-list li a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  color: var(--color-secondary, #878787);
+  font-size: 16px;
+  text-decoration: none;
+  transition:
+    color 0.18s ease,
+    transform 0.18s ease;
+}
+
+.wl-dcl-social-list li a:hover {
+  color: var(--color-primary, #2c2c2c);
+  transform: translateY(-2px);
+}
+
+.wl-dcl-social-label {
+  font-family: var(--font-body, "Jost", sans-serif);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-secondary, #878787);
+}
+
+/* ============================================================
+   SECTION 6 RESPONSIVE — Tablet ≤ 1199px
+   ============================================================ */
+
+@media (max-width: 1199px) {
+  .wl-dcl-section {
+    padding: 64px 0 80px;
+  }
+  .wl-dcl-cats-row {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+  .wl-dcl-bottom-row {
+    grid-template-columns: 1fr 1fr;
+    gap: 0 40px;
+  }
+  /* aspect-ratio handles image height automatically */
+}
+
+/* ============================================================
+   SECTION 6 RESPONSIVE — Mobile ≤ 767px
+   ============================================================ */
+
+@media (max-width: 767px) {
+  .wl-dcl-section {
+    padding: 48px 0 64px;
+  }
+  .wl-dcl-inner {
+    padding: 0 20px;
+  }
+  .wl-dcl-cats-row {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    margin-bottom: 40px;
+    padding-bottom: 40px;
+  }
+  .wl-dcl-cat-image {
+    width: 60px;
+    height: 48px;
+  }
+  .wl-dcl-bottom-row {
+    grid-template-columns: 1fr;
+    gap: 48px 0;
+  }
+  .wl-dcl-posts-grid {
+    gap: 12px;
+  }
+}
+
+/* ============================================================
+   SECTION 6 RESPONSIVE — Small mobile ≤ 480px
+   ============================================================ */
+
+@media (max-width: 480px) {
+  .wl-dcl-inner {
+    padding: 0 16px;
+  }
+  .wl-dcl-cats-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .wl-dcl-posts-grid {
+    grid-template-columns: 1fr;
   }
 }

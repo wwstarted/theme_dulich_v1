@@ -53,7 +53,14 @@ add_action('after_setup_theme', 'wl_content_width', 0);
 // ── Enqueue tất cả assets ────────────────────────────────────
 function wl_enqueue_assets()
 {
-    $ver = '1.0.9';
+
+    wp_enqueue_style(
+        'wl-google-fonts',
+        'https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Muli:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Dancing+Script:wght@600&display=swap',
+        array(),
+        null
+    );
+    $ver = '1.1.1';
 
     $uri = get_template_directory_uri();
 
@@ -149,7 +156,10 @@ add_action('wp_enqueue_scripts', 'wl_enqueue_assets');
 
 require_once get_template_directory() . '/inc/home-options.php';
 
+
 require_once get_template_directory() . '/inc/functions-newsletter.php';
+
+require_once get_template_directory() . '/inc/destinations-cpt.php';
 
 
 // ── Customizer settings ──────────────────────────────────────

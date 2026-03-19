@@ -349,3 +349,331 @@
     if (!prefersReducedMotion) startAutoplay();
   }); // end DOMContentLoaded
 })();
+
+// ═══════════════════════════════════════════════════════════════
+//  SECTION 4 — FEATURED BLOG POSTS SLIDER
+//  3 visible desktop / 2 tablet / 1 mobile
+//  Step 1 post per click, arrows disable at edges
+// ═══════════════════════════════════════════════════════════════
+
+(function () {
+  "use strict";
+
+  document.addEventListener("DOMContentLoaded", function () {
+    const sliderWrap = document.querySelector(".wl-featured-slider-wrap");
+    if (!sliderWrap) return;
+
+    const track = sliderWrap.querySelector(".wl-featured-track");
+    const cards = Array.from(track.querySelectorAll(".wl-featured-card"));
+    const btnPrev = sliderWrap.querySelector(".wl-featured-arrow--prev");
+    const btnNext = sliderWrap.querySelector(".wl-featured-arrow--next");
+    const viewport = sliderWrap.querySelector(".wl-featured-viewport");
+    const GAP = 22; // px — matches CSS gap
+    const total = cards.length;
+
+    let current = 0;
+
+    // ── Get visible count based on breakpoint ────────────────
+    function getVisible() {
+      const w = window.innerWidth;
+      if (w <= 767) return 1;
+      if (w <= 1199) return 2;
+      return 3;
+    }
+
+    // ── Calculate card width & set on each card ───────────────
+    function getCardWidth() {
+      const visible = getVisible();
+      const totalGaps = GAP * (visible - 1);
+      return (viewport.offsetWidth - totalGaps) / visible;
+    }
+
+    function setCardWidths() {
+      const w = getCardWidth();
+      cards.forEach(function (card) {
+        card.style.width = w + "px";
+      });
+    }
+
+    // ── Move track to position ────────────────────────────────
+    function moveTo(index) {
+      const visible = getVisible();
+      const cardWidth = getCardWidth();
+      const maxIndex = Math.max(0, total - visible);
+
+      current = Math.max(0, Math.min(index, maxIndex));
+
+      const offset = current * (cardWidth + GAP);
+      track.style.transform = "translateX(-" + offset + "px)";
+
+      // Update arrow states
+      btnPrev.disabled = current === 0;
+      btnNext.disabled = current >= maxIndex;
+    }
+
+    // ── Arrow clicks ─────────────────────────────────────────
+    btnPrev.addEventListener("click", function () {
+      moveTo(current - 1);
+    });
+
+    btnNext.addEventListener("click", function () {
+      moveTo(current + 1);
+    });
+
+    // ── Touch/swipe ──────────────────────────────────────────
+    var touchStartX = 0;
+    var touchStartY = 0;
+    var isSwiping = false;
+
+    viewport.addEventListener(
+      "touchstart",
+      function (e) {
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+        isSwiping = true;
+      },
+      { passive: true },
+    );
+
+    viewport.addEventListener(
+      "touchmove",
+      function (e) {
+        if (!isSwiping) return;
+        var dy = Math.abs(e.touches[0].clientY - touchStartY);
+        var dx = Math.abs(e.touches[0].clientX - touchStartX);
+        if (dy > dx) isSwiping = false;
+      },
+      { passive: true },
+    );
+
+    viewport.addEventListener(
+      "touchend",
+      function (e) {
+        if (!isSwiping) return;
+        isSwiping = false;
+        var dx = e.changedTouches[0].clientX - touchStartX;
+        if (Math.abs(dx) > 48) {
+          dx < 0 ? moveTo(current + 1) : moveTo(current - 1);
+        }
+      },
+      { passive: true },
+    );
+
+    // ── Keyboard ─────────────────────────────────────────────
+    sliderWrap.setAttribute("tabindex", "0");
+    sliderWrap.addEventListener("keydown", function (e) {
+      if (e.key === "ArrowLeft") {
+        e.preventDefault();
+        moveTo(current - 1);
+      }
+      if (e.key === "ArrowRight") {
+        e.preventDefault();
+        moveTo(current + 1);
+      }
+    });
+
+    // ── Resize: recalculate ───────────────────────────────────
+    var resizeTimer;
+    window.addEventListener("resize", function () {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(function () {
+        setCardWidths();
+        moveTo(current); // clamp + re-translate
+      }, 120);
+    });
+
+    // ── Init ─────────────────────────────────────────────────
+    setCardWidths();
+    moveTo(0);
+  });
+})();
+
+// ═══════════════════════════════════════════════════════════════
+//  SECTION 5 — DESTINATIONS TIMELINE  (v4)
+//  - Fixed height (no vertical overflow)
+//  - Horizontal scroll if items > viewport
+//  - Items visible fix + line extends past endpoints
+// ═══════════════════════════════════════════════════════════════
+
+(function () {
+  "use strict";
+
+  document.addEventListener("DOMContentLoaded", function () {
+    var scrollWrap = document.querySelector(".wl-dest-scroll-wrap");
+    var track = document.querySelector(".wl-dest-track");
+    var lineSvg = document.querySelector(".wl-dest-line-svg");
+    var pathEl = document.querySelector(".wl-dest-path");
+    var pinsGroup = document.querySelector(".wl-dest-pins");
+    var items = Array.from(document.querySelectorAll(".wl-dest-item"));
+
+    if (!scrollWrap || !track || items.length === 0) return;
+
+    var TRACK_H = 320;
+    var ABOVE_Y = 110;
+    var BELOW_Y = 210;
+    var ITEM_W = 190;
+    var ITEM_H = 85;
+    var STEP_MIN = 220;
+    var LINE_EXT = 100;
+
+    function isMobile() {
+      return window.innerWidth <= 767;
+    }
+
+    function layoutItems() {
+      if (isMobile()) {
+        resetMobile();
+        return;
+      }
+
+      var total = items.length;
+      var viewW = scrollWrap.offsetWidth || window.innerWidth;
+      var minW = LINE_EXT * 2 + STEP_MIN * (total - 1) + ITEM_W;
+      var trackW = Math.max(viewW, minW);
+      var spanW = trackW - LINE_EXT * 2;
+      var step = total > 1 ? spanW / (total - 1) : 0;
+
+      track.style.position = "relative";
+      track.style.display = "block";
+      track.style.width = trackW + "px";
+      track.style.height = TRACK_H + "px";
+
+      if (lineSvg) {
+        lineSvg.style.display = "";
+        lineSvg.setAttribute("viewBox", "0 0 " + trackW + " " + TRACK_H);
+        lineSvg.style.width = trackW + "px";
+        lineSvg.style.height = TRACK_H + "px";
+      }
+
+      var pinPoints = [];
+
+      items.forEach(function (item, i) {
+        var isAbove = item.classList.contains("wl-dest-item--above");
+        var pinX = LINE_EXT + i * step;
+        var pinY = isAbove ? ABOVE_Y : BELOW_Y;
+        var itemLeft = pinX - ITEM_W / 2;
+        // Flush item edge right against pinY — no gap, SVG circle sits on the line
+        var itemTop = isAbove ? pinY - ITEM_H : pinY;
+
+        item.style.position = "absolute";
+        item.style.left = itemLeft + "px";
+        item.style.top = itemTop + "px";
+        item.style.width = ITEM_W + "px";
+        item.style.transform = "none";
+        item.style.margin = "0";
+        item.style.opacity = "0";
+        item.classList.remove("is-visible");
+
+        pinPoints.push({ x: pinX, y: pinY });
+      });
+
+      setTimeout(function () {
+        drawPath(trackW, pinPoints);
+      }, 30);
+
+      // Stagger animate-in — use inline opacity directly to avoid class timing issues
+      items.forEach(function (item, i) {
+        (function (el, delay) {
+          setTimeout(function () {
+            el.style.opacity = "1";
+            el.classList.add("is-visible");
+          }, delay);
+        })(item, 80 + i * 140);
+      });
+    }
+
+    function drawPath(trackW, pinPoints) {
+      if (!pathEl || !pinsGroup || pinPoints.length === 0) return;
+      var first = pinPoints[0];
+      var last = pinPoints[pinPoints.length - 1];
+      var all = [{ x: first.x - LINE_EXT, y: first.y }]
+        .concat(pinPoints)
+        .concat([{ x: last.x + LINE_EXT, y: last.y }]);
+      var d = "M " + all[0].x + " " + all[0].y;
+      for (var i = 1; i < all.length; i++) {
+        var p0 = all[i - 1],
+          p1 = all[i],
+          cx = (p0.x + p1.x) / 2;
+        d +=
+          " C " +
+          cx +
+          " " +
+          p0.y +
+          " " +
+          cx +
+          " " +
+          p1.y +
+          " " +
+          p1.x +
+          " " +
+          p1.y;
+      }
+      pathEl.setAttribute("d", d);
+      pinsGroup.innerHTML = "";
+      pinPoints.forEach(function (p) {
+        var c = document.createElementNS(
+          "http://www.w3.org/2000/svg",
+          "circle",
+        );
+        c.setAttribute("cx", p.x);
+        c.setAttribute("cy", p.y);
+        c.setAttribute("r", "5");
+        c.setAttribute("fill", "#8a9e8b");
+        c.setAttribute("stroke", "#f4f1eb");
+        c.setAttribute("stroke-width", "2");
+        pinsGroup.appendChild(c);
+      });
+    }
+
+    function resetMobile() {
+      items.forEach(function (item) {
+        item.style.cssText = "";
+        item.classList.add("is-visible");
+      });
+      track.style.cssText = "";
+      if (lineSvg) lineSvg.style.display = "none";
+    }
+
+    // Drag to scroll
+    var isDragging = false,
+      startX = 0,
+      scrollL = 0,
+      moved = false;
+    scrollWrap.addEventListener("mousedown", function (e) {
+      isDragging = true;
+      moved = false;
+      startX = e.pageX - scrollWrap.offsetLeft;
+      scrollL = scrollWrap.scrollLeft;
+      scrollWrap.style.cursor = "grabbing";
+    });
+    document.addEventListener("mouseup", function () {
+      isDragging = false;
+      scrollWrap.style.cursor = "";
+    });
+    scrollWrap.addEventListener("mousemove", function (e) {
+      if (!isDragging) return;
+      e.preventDefault();
+      var walk = (e.pageX - scrollWrap.offsetLeft - startX) * 1.3;
+      if (Math.abs(walk) > 3) moved = true;
+      scrollWrap.scrollLeft = scrollL - walk;
+    });
+    scrollWrap.addEventListener(
+      "click",
+      function (e) {
+        if (moved) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
+      },
+      true,
+    );
+
+    var resizeTimer;
+    window.addEventListener("resize", function () {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(layoutItems, 150);
+    });
+
+    layoutItems();
+  });
+})();

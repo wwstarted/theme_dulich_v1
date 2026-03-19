@@ -4,7 +4,8 @@
    ============================================================ */
 
 /* --- Google Fonts --- */
-@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&family=Dancing+Script:wght@600&display=swap");
+/* Muli (body) + Cormorant Garamond (heading) + Dancing Script (script) */
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Muli:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Dancing+Script:wght@600&display=swap");
 
 /* --- CSS Variables --- */
 :root {
@@ -25,7 +26,7 @@
 
   /* Typography */
   --font-heading: "Cormorant Garamond", Georgia, serif;
-  --font-body: "Muli", sans-serif;
+  --font-body: "Muli", "Jost", sans-serif; /* Muli primary, Jost fallback */
   --font-script: "Dancing Script", cursive;
 
   /* Font Sizes */
@@ -68,11 +69,16 @@
   --space-2xl: 96px;
   --space-3xl: 128px;
 
-  /* Layout */
-  --container-max: 1280px;
+  /* Layout
+     --container-max  : Matches Qode Wanderland grid (1300px)
+     --container-wide : Full-bleed wide container
+     --gutter         : Inner padding on container — ensures readable margins
+                        on viewports exactly at max-width
+  */
+  --container-max: 1160px;
   --container-wide: 1440px;
   --container-narrow: 960px;
-  --gutter: 30px;
+  --gutter: 40px;
 
   /* Header */
   --header-height-desktop: 90px;
@@ -188,19 +194,23 @@ select {
   font-size: inherit;
 }
 
-/* --- Container --- */
+/* --- Container helpers --- */
+
+/* Standard grid container — matches Qode 1300px grid */
 .wl-container {
   max-width: var(--container-max);
   margin: 0 auto;
   padding: 0 var(--gutter);
 }
 
+/* Wide (newsletter, hero content) */
 .wl-container--wide {
   max-width: var(--container-wide);
   margin: 0 auto;
   padding: 0 var(--gutter);
 }
 
+/* Narrow (blog post, single pages) */
 .wl-container--narrow {
   max-width: var(--container-narrow);
   margin: 0 auto;
@@ -208,6 +218,7 @@ select {
 }
 
 /* --- Utility --- */
+
 .wl-section-label {
   display: inline-block;
   font-family: var(--font-body);
@@ -233,10 +244,7 @@ select {
   clear: both;
 }
 
+/* Base body padding — home page overrides to 0 */
 body {
   padding-top: 0;
-}
-
-body.has-topbar {
-  /* topbar + header combined */
 }

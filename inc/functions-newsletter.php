@@ -148,3 +148,34 @@ function wl_handle_newsletter()
     wp_redirect(add_query_arg('nl', 'success', $redirect));
     exit;
 }
+
+
+// ── Customizer: Featured Posts count ─────────────────────────
+add_action('customize_register', 'wl_featured_posts_customizer');
+
+function wl_featured_posts_customizer($wp_customize)
+{
+
+    $wp_customize->add_section('wl_featured_posts', array(
+        'title' => __('Featured Posts Slider (Home)', 'wanderland'),
+        'priority' => 36,
+    ));
+
+    $wp_customize->add_setting('wl_featured_posts_count', array(
+        'default' => 6,
+        'sanitize_callback' => 'absint',
+        'transport' => 'refresh',
+    ));
+
+    $wp_customize->add_control('wl_featured_posts_count', array(
+        'label' => __('Số bài hiển thị trong slider', 'wanderland'),
+        'description' => __('Tối thiểu 3, tối đa 12. Slider hiện 3 bài mỗi lần.', 'wanderland'),
+        'section' => 'wl_featured_posts',
+        'type' => 'number',
+        'input_attrs' => array(
+            'min' => 3,
+            'max' => 12,
+            'step' => 1,
+        ),
+    ));
+}

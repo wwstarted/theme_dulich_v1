@@ -34,14 +34,21 @@ function wl_get_home_sections()
             'min_posts' => 1,
         ),
 
+        'dcl_posts' => array(
+            'label' => __('Latest Posts Grid (Home Section 6)', 'wanderland'),
+            'description' => __('4 bài viết hiển thị trong lưới 2×2 ở section cuối.', 'wanderland'),
+            'icon' => 'dashicons-grid-view',
+            'max_posts' => 4,
+            'min_posts' => 4,
+        ),
+
         // ── Các section sẽ mở khoá sau ──────────────────────
         'featured_posts' => array(
             'label' => __('Featured Posts', 'wanderland'),
-            'description' => __('Bài nổi bật hiển thị dưới hero slider.', 'wanderland'),
+            'description' => __('Bài nổi bật hiển thị trong slider 3 cột.', 'wanderland'),
             'icon' => 'dashicons-star-filled',
-            'max_posts' => 6,
-            'min_posts' => 1,
-            'coming_soon' => true,
+            'max_posts' => 12,
+            'min_posts' => 3,
         ),
 
         'travel_essentials' => array(
@@ -411,8 +418,7 @@ function wl_render_home_options_page()
                             <span class="dashicons dashicons-plus-alt2 wl-empty-icon"></span>
                             <p><?php esc_html_e('Chưa có bài viết nào.', 'wanderland'); ?></p>
                             <p class="wl-empty-hint">
-                                <?php esc_html_e('Dùng ô tìm kiếm bên trái để thêm.', 'wanderland'); ?>
-                            </p>
+                                <?php esc_html_e('Dùng ô tìm kiếm bên trái để thêm.', 'wanderland'); ?></p>
                         </div>
 
                         <!-- Saved posts -->
