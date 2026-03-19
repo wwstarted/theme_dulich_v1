@@ -48,9 +48,8 @@ function wl_get_home_sections()
             'label' => __('Travel Essentials', 'wanderland'),
             'description' => __('Bài tips & tricks hiển thị trong section "Travel Essentials".', 'wanderland'),
             'icon' => 'dashicons-admin-post',
-            'max_posts' => 4,
+            'max_posts' => 2,
             'min_posts' => 1,
-            'coming_soon' => true,
         ),
 
     ));
@@ -303,18 +302,12 @@ function wl_render_home_options_page()
             aria-selected="<?php echo $is_active ? 'true' : 'false'; ?>" <?php if ($is_coming_soon)
                                echo 'aria-disabled="true"'; ?>>
             <span class="dashicons <?php echo esc_attr($section['icon']); ?>"></span>
-            <span class="wl-tab-label">
-                <?php echo esc_html($section['label']); ?>
-            </span>
+            <span class="wl-tab-label"><?php echo esc_html($section['label']); ?></span>
             <?php if ($post_count > 0 && !$is_coming_soon): ?>
-            <span class="wl-tab-count">
-                <?php echo esc_html($post_count); ?>
-            </span>
+            <span class="wl-tab-count"><?php echo esc_html($post_count); ?></span>
             <?php endif; ?>
             <?php if ($is_coming_soon): ?>
-            <span class="wl-tab-lock">
-                <?php esc_html_e('Sắp có', 'wanderland'); ?>
-            </span>
+            <span class="wl-tab-lock"><?php esc_html_e('Sắp có', 'wanderland'); ?></span>
             <?php endif; ?>
         </a>
         <?php endforeach; ?>
@@ -356,9 +349,7 @@ function wl_render_home_options_page()
                 <!-- LEFT: Search + Add -->
                 <div class="wl-search-panel">
                     <div class="wl-panel-header">
-                        <h2>
-                            <?php esc_html_e('Thêm bài viết', 'wanderland'); ?>
-                        </h2>
+                        <h2><?php esc_html_e('Thêm bài viết', 'wanderland'); ?></h2>
                         <p class="wl-panel-desc">
                             <?php printf(
                                     /* translators: %d: max posts number */
@@ -382,9 +373,7 @@ function wl_render_home_options_page()
                         aria-label="<?php esc_attr_e('Kết quả tìm kiếm', 'wanderland'); ?>">
                         <div class="wl-search-placeholder">
                             <span class="dashicons dashicons-search"></span>
-                            <p>
-                                <?php esc_html_e('Nhập từ khoá để tìm bài viết', 'wanderland'); ?>
-                            </p>
+                            <p><?php esc_html_e('Nhập từ khoá để tìm bài viết', 'wanderland'); ?></p>
                         </div>
                     </div>
 
@@ -392,12 +381,8 @@ function wl_render_home_options_page()
                     <div class="wl-section-info-card">
                         <span class="dashicons <?php echo esc_attr($current_section['icon']); ?>"></span>
                         <div>
-                            <strong>
-                                <?php echo esc_html($current_section['label']); ?>
-                            </strong>
-                            <p>
-                                <?php echo esc_html($current_section['description']); ?>
-                            </p>
+                            <strong><?php echo esc_html($current_section['label']); ?></strong>
+                            <p><?php echo esc_html($current_section['description']); ?></p>
                         </div>
                     </div>
                 </div>
@@ -409,13 +394,9 @@ function wl_render_home_options_page()
                             <?php esc_html_e('Bài viết đã chọn', 'wanderland'); ?>
                         </h2>
                         <div class="wl-counter-wrap">
-                            <span id="wl-post-count">
-                                <?php echo count($saved_posts); ?>
-                            </span>
+                            <span id="wl-post-count"><?php echo count($saved_posts); ?></span>
                             <span class="wl-counter-sep">/</span>
-                            <span>
-                                <?php echo esc_html($max_posts); ?>
-                            </span>
+                            <span><?php echo esc_html($max_posts); ?></span>
                         </div>
                     </div>
 
@@ -428,9 +409,7 @@ function wl_render_home_options_page()
                         <div class="wl-empty-state" id="wl-empty-state"
                             <?php echo !empty($saved_posts) ? 'style="display:none"' : ''; ?>>
                             <span class="dashicons dashicons-plus-alt2 wl-empty-icon"></span>
-                            <p>
-                                <?php esc_html_e('Chưa có bài viết nào.', 'wanderland'); ?>
-                            </p>
+                            <p><?php esc_html_e('Chưa có bài viết nào.', 'wanderland'); ?></p>
                             <p class="wl-empty-hint">
                                 <?php esc_html_e('Dùng ô tìm kiếm bên trái để thêm.', 'wanderland'); ?>
                             </p>
@@ -475,19 +454,13 @@ function wl_render_home_options_page()
                             <?php endif; ?>
 
                             <div class="wl-post-info">
-                                <span class="wl-post-title">
-                                    <?php echo esc_html($post->post_title); ?>
-                                </span>
+                                <span class="wl-post-title"><?php echo esc_html($post->post_title); ?></span>
                                 <div class="wl-post-meta">
                                     <?php if ($cat_name): ?>
-                                    <span class="wl-post-cat">
-                                        <?php echo esc_html($cat_name); ?>
-                                    </span>
+                                    <span class="wl-post-cat"><?php echo esc_html($cat_name); ?></span>
                                     <span class="wl-meta-dot" aria-hidden="true">·</span>
                                     <?php endif; ?>
-                                    <span class="wl-post-date">
-                                        <?php echo esc_html($post_date); ?>
-                                    </span>
+                                    <span class="wl-post-date"><?php echo esc_html($post_date); ?></span>
                                 </div>
                             </div>
 

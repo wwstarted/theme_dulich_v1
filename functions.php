@@ -149,6 +149,8 @@ add_action('wp_enqueue_scripts', 'wl_enqueue_assets');
 
 require_once get_template_directory() . '/inc/home-options.php';
 
+require_once get_template_directory() . '/inc/functions-newsletter.php';
+
 
 // ── Customizer settings ──────────────────────────────────────
 function wl_customizer_settings($wp_customize)
