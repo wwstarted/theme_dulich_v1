@@ -1,0 +1,448 @@
+/* ============================================================
+   WANDERLAND — page-cms.css
+   CMS Page template: hero + image slider + content
+   ============================================================ */
+
+/* ============================================================
+   1. HERO — same pattern as single/archive
+   ============================================================ */
+
+.wl-cms-main {
+  background: #fff;
+}
+
+.wl-cms-hero {
+  position: relative;
+  width: 100%;
+  height: 420px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+
+.wl-cms-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.18) 0%,
+    rgba(0, 0, 0, 0.52) 100%
+  );
+}
+
+.wl-cms-hero-inner {
+  position: absolute;
+  bottom: 80px;
+  left: var(--gutter, 40px);
+  z-index: 2;
+  max-width: 640px;
+}
+
+.wl-cms-hero-tagline {
+  display: block;
+  font-family: var(--font-body, "Jost", sans-serif);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.72);
+  margin-bottom: 10px;
+}
+
+.wl-cms-hero-title {
+  font-family: var(--font-body, "Jost", sans-serif);
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #fff;
+  margin: 0;
+  line-height: 1.1;
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.3);
+}
+
+.wl-cms-hero-brush {
+  position: absolute;
+  bottom: -24px;
+  left: 0;
+  width: 100%;
+  z-index: 3;
+  pointer-events: none;
+  line-height: 0;
+}
+
+.wl-cms-hero-brush img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 70px;
+  min-height: 28px;
+  object-fit: cover;
+  object-position: top center;
+}
+
+/* ============================================================
+   2. IMAGE SLIDER
+   ============================================================ */
+
+.wl-cms-slider-section {
+  background: #fff;
+  padding: 64px 0 0;
+  overflow: hidden;
+}
+
+.wl-cms-slider-wrap {
+  position: relative;
+  max-width: 1200px; /* ← khớp với các trang khác */
+  margin: 0 auto;
+  padding: 0 var(--gutter, 40px); /* ← padding chuẩn */
+}
+
+/* Slider viewport */
+.wl-cms-slider {
+  overflow: hidden;
+  position: relative;
+}
+
+/* Sliding track */
+.wl-cms-slider-track {
+  display: flex;
+  gap: 12px;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+}
+
+/* Each slide */
+.wl-cms-slide {
+  flex: 0 0 calc((100% - 24px) / 3); /* 3-up with 2 gaps */
+  min-width: 0;
+}
+
+.wl-cms-slide-inner {
+  overflow: hidden;
+  aspect-ratio: 5 / 6;
+  background: var(--color-light-gray, #f0eeea);
+}
+
+.wl-cms-slide-inner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.wl-cms-slide:hover .wl-cms-slide-inner img {
+  transform: scale(1.04);
+}
+
+/* ── Arrow buttons — brush stroke style ── */
+.wl-cms-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wl-cms-arrow--prev {
+  left: calc(var(--gutter, 40px) - 76px); /* nằm ngoài content area */
+}
+.wl-cms-arrow--next {
+  right: calc(var(--gutter, 40px) - 76px);
+}
+
+/* Arrow inner — brush mask same as hero */
+.wl-cms-arrow .wl-arrow-inner {
+  position: relative;
+  width: 72px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wl-cms-arrow .wl-arrow-inner::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  mask-image: url("../images/arrow-brush.svg");
+  mask-size: 100% 100%;
+  mask-repeat: no-repeat;
+  background-color: rgba(42, 42, 42, 0.1);
+  transition: background-color 0.25s ease;
+  overflow: hidden;
+}
+
+.wl-cms-arrow:hover .wl-arrow-inner::before {
+  background-color: rgba(42, 42, 42, 0.22);
+}
+
+.wl-cms-arrow .wl-arrow-inner svg {
+  position: relative;
+  z-index: 1;
+  width: 18px;
+  height: 18px;
+  color: var(--color-primary, #2c2c2c);
+}
+
+/* ============================================================
+   3. PAGE CONTENT
+   ============================================================ */
+
+.wl-cms-content-wrap {
+  padding: 64px 0 80px;
+}
+
+.wl-cms-container {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 0 var(--gutter, 40px);
+}
+
+.wl-cms-content {
+  font-family: var(--font-body, "Jost", sans-serif);
+  font-size: 15px;
+  font-weight: 300;
+  line-height: 1.88;
+  color: var(--color-text, #4a4a4a);
+}
+
+/* Headings */
+.wl-cms-content h1,
+.wl-cms-content h2,
+.wl-cms-content h3,
+.wl-cms-content h4 {
+  font-family: var(--font-body, "Jost", sans-serif);
+  font-weight: 700;
+  color: var(--color-primary, #2c2c2c);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin: 40px 0 16px;
+  line-height: 1.2;
+}
+
+.wl-cms-content h1 {
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+}
+.wl-cms-content h2 {
+  font-size: clamp(1.3rem, 2.2vw, 1.7rem);
+}
+.wl-cms-content h3 {
+  font-size: clamp(1.1rem, 1.8vw, 1.35rem);
+}
+.wl-cms-content h4 {
+  font-size: 1.1rem;
+}
+
+.wl-cms-content p {
+  margin: 0 0 24px;
+}
+
+/* First h2 — no top margin */
+.wl-cms-content > h2:first-child,
+.wl-cms-content > h3:first-child {
+  margin-top: 0;
+}
+
+/* Blockquote */
+.wl-cms-content blockquote {
+  margin: 36px 0;
+  padding: 28px 36px;
+  border-left: 3px solid var(--color-accent, #b89d6e);
+  background: #faf8f5;
+}
+
+.wl-cms-content blockquote p {
+  font-style: italic;
+  color: var(--color-primary, #2c2c2c);
+  font-size: 1.05rem;
+  margin: 0;
+}
+
+/* Lists */
+.wl-cms-content ul,
+.wl-cms-content ol {
+  margin: 0 0 24px 24px;
+  padding: 0;
+}
+
+.wl-cms-content li {
+  margin-bottom: 8px;
+}
+
+/* Links */
+.wl-cms-content a {
+  color: var(--color-accent, #b89d6e);
+  text-decoration: underline;
+  transition: color 0.2s ease;
+}
+
+.wl-cms-content a:hover {
+  color: var(--color-primary, #2c2c2c);
+}
+
+/* Separator */
+.wl-cms-content hr {
+  border: none;
+  border-top: 1px solid var(--color-border, #e8e5e0);
+  margin: 40px 0;
+}
+
+/* Images in content */
+.wl-cms-content img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 28px 0;
+}
+
+/* Tables */
+.wl-cms-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 28px 0;
+  font-size: 13px;
+}
+
+.wl-cms-content th,
+.wl-cms-content td {
+  padding: 10px 14px;
+  text-align: left;
+  border-bottom: 1px solid var(--color-border, #e8e5e0);
+}
+
+.wl-cms-content th {
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-size: 11px;
+  color: var(--color-primary, #2c2c2c);
+  background: #faf8f5;
+}
+
+/* ============================================================
+   4. RESPONSIVE — Tablet ≤ 1199px
+   ============================================================ */
+
+@media (max-width: 1199px) {
+  .wl-cms-hero {
+    height: 340px;
+  }
+
+  .wl-cms-hero-inner {
+    bottom: 64px;
+  }
+
+  .wl-cms-slider-wrap {
+    padding: 0 var(--gutter, 40px);
+  }
+
+  .wl-cms-arrow .wl-arrow-inner {
+    width: 60px;
+    height: 40px;
+  }
+
+  .wl-cms-content-wrap {
+    padding: 48px 0 64px;
+  }
+
+  .wl-cms-arrow--prev {
+    left: 0;
+  }
+  .wl-cms-arrow--next {
+    right: 0;
+  }
+}
+
+/* ============================================================
+   5. RESPONSIVE — Mobile ≤ 767px — 2 slides visible
+   ============================================================ */
+
+@media (max-width: 767px) {
+  .wl-cms-hero {
+    height: 280px;
+  }
+
+  .wl-cms-hero-inner {
+    bottom: 52px;
+    left: 20px;
+  }
+
+  .wl-cms-hero-title {
+    font-size: 2rem;
+  }
+
+  .wl-cms-slider-section {
+    padding-top: 40px;
+  }
+
+  .wl-cms-slider-wrap {
+    padding: 0 52px;
+  }
+
+  .wl-cms-arrow--prev {
+    left: 4px;
+  }
+  .wl-cms-arrow--next {
+    right: 4px;
+  }
+
+  /* 2 slides on tablet/mobile */
+  .wl-cms-slide {
+    flex: 0 0 calc((100% - 12px) / 2);
+  }
+
+  .wl-cms-arrow .wl-arrow-inner {
+    width: 48px;
+    height: 32px;
+  }
+
+  .wl-cms-arrow .wl-arrow-inner svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .wl-cms-content-wrap {
+    padding: 36px 0 52px;
+  }
+
+  .wl-cms-container {
+    padding: 0 20px;
+  }
+}
+
+/* ============================================================
+   6. RESPONSIVE — Small mobile ≤ 480px — 1 slide
+   ============================================================ */
+
+@media (max-width: 480px) {
+  .wl-cms-hero {
+    height: 220px;
+  }
+
+  .wl-cms-hero-title {
+    font-size: 1.7rem;
+  }
+
+  .wl-cms-slider-wrap {
+    padding: 0 44px;
+  }
+
+  /* 1 slide on small mobile */
+  .wl-cms-slide {
+    flex: 0 0 100%;
+  }
+
+  .wl-cms-container {
+    padding: 0 16px;
+  }
+}

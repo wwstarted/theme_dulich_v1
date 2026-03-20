@@ -248,3 +248,24 @@ select {
 body {
   padding-top: 0;
 }
+
+body,
+html {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
+/* ── Global font weight adjustment ── */
+body,
+p,
+li,
+td,
+input,
+textarea,
+select,
+.mkdf-icon-text,
+.wl-single-entry,
+.wl-archive-excerpt,
+.wl-404-desc {
+  font-weight: 600;
+}

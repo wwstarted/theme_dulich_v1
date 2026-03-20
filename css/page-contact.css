@@ -1,0 +1,499 @@
+/* ============================================================
+   WANDERLAND — page-contact.css
+   Contact page: hero (reuses cms) + info cards + form
+   ============================================================ */
+
+/* ── Hero inherits from page-cms.css ────────────────────────
+   .wl-cms-hero, .wl-cms-hero-overlay, .wl-cms-hero-inner,
+   .wl-cms-hero-title, .wl-cms-hero-brush all reused
+   ─────────────────────────────────────────────────────────── */
+
+/* ============================================================
+   1. CONTACT BODY LAYOUT
+   ============================================================ */
+
+.wl-contact-body {
+  background: #fff;
+  padding: 72px 0 96px;
+}
+
+.wl-contact-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--gutter, 40px);
+  display: grid;
+  grid-template-columns: 380px 1fr;
+  gap: 72px;
+  align-items: start;
+}
+
+/* ============================================================
+   2. INFO SIDEBAR
+   ============================================================ */
+
+.wl-contact-info {
+  position: sticky;
+  top: calc(
+    var(--topbar-height, 44px) + var(--header-height-desktop, 90px) + 24px
+  );
+}
+
+.wl-contact-info-title {
+  font-family: var(--font-body, "Jost", sans-serif);
+  font-size: clamp(1.3rem, 2vw, 1.65rem);
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--color-primary, #2c2c2c);
+  margin: 0 0 16px;
+}
+
+.wl-contact-info-desc {
+  font-family: var(--font-body, "Jost", sans-serif);
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 1.75;
+  color: var(--color-secondary, #878787);
+  margin: 0 0 36px;
+}
+
+/* ── Info cards ── */
+.wl-contact-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin-bottom: 32px;
+}
+
+.wl-contact-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--color-border, #e8e5e0);
+}
+
+.wl-contact-card:first-child {
+  border-top: 1px solid var(--color-border, #e8e5e0);
+}
+
+.wl-contact-card-icon {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f7f5f2;
+  color: var(--color-accent, #b89d6e);
+}
+
+.wl-contact-card-icon svg {
+  width: 18px;
+  height: 18px;
+  stroke: currentColor;
+  fill: none;
+}
+
+.wl-contact-card-text {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding-top: 2px;
+}
+
+.wl-contact-card-label {
+  font-family: var(--font-body, "Jost", sans-serif);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-secondary, #878787);
+}
+
+.wl-contact-card-value {
+  font-family: var(--font-body, "Jost", sans-serif);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.55;
+  color: var(--color-primary, #2c2c2c);
+}
+
+.wl-contact-card-link {
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.wl-contact-card-link:hover {
+  color: var(--color-accent, #b89d6e);
+}
+
+/* ── Social links ── */
+.wl-contact-social {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 28px;
+}
+
+.wl-contact-social-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--color-border, #e8e5e0);
+  color: var(--color-secondary, #878787);
+  font-size: 16px;
+  text-decoration: none;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.18s ease;
+}
+
+.wl-contact-social-btn:hover {
+  background: var(--color-accent, #b89d6e);
+  border-color: var(--color-accent, #b89d6e);
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+/* ── Map embed ── */
+.wl-contact-map {
+  overflow: hidden;
+  border: 1px solid var(--color-border, #e8e5e0);
+}
+
+.wl-contact-map iframe {
+  display: block;
+  width: 100%;
+  height: 220px;
+}
+
+/* ============================================================
+   3. CONTACT FORM
+   ============================================================ */
+
+.wl-contact-form-wrap {
+  padding-top: 4px;
+}
+
+.wl-contact-form-title {
+  font-family: var(--font-body, "Jost", sans-serif);
+  font-size: clamp(1.3rem, 2vw, 1.65rem);
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--color-primary, #2c2c2c);
+  margin: 0 0 36px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--color-border, #e8e5e0);
+}
+
+/* Form rows */
+.wl-cf-row {
+  margin-bottom: 20px;
+}
+
+.wl-cf-row--2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.wl-cf-row--submit {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-top: 8px;
+}
+
+/* Field */
+.wl-cf-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* Label */
+.wl-cf-label {
+  font-family: var(--font-body, "Jost", sans-serif);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-primary, #2c2c2c);
+}
+
+.wl-cf-required {
+  color: var(--color-accent, #b89d6e);
+  margin-left: 2px;
+}
+
+/* Input + Textarea */
+.wl-cf-input,
+.wl-cf-textarea {
+  width: 100%;
+  padding: 13px 16px;
+  font-family: var(--font-body, "Jost", sans-serif);
+  font-size: 13px;
+  font-weight: 300;
+  color: var(--color-primary, #2c2c2c);
+  background: #fff;
+  border: 1px solid var(--color-border, #e8e5e0);
+  outline: none;
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease,
+    box-shadow 0.2s ease;
+  -webkit-appearance: none;
+  box-sizing: border-box;
+}
+
+.wl-cf-input::placeholder,
+.wl-cf-textarea::placeholder {
+  color: var(--color-secondary, #878787);
+  font-style: italic;
+  letter-spacing: 0.02em;
+}
+
+.wl-cf-input:focus,
+.wl-cf-textarea:focus {
+  border-color: var(--color-accent, #b89d6e);
+  background: #fdfcfb;
+  box-shadow: 0 0 0 3px rgba(184, 157, 110, 0.1);
+}
+
+/* Validation states */
+.wl-cf-input.is-invalid,
+.wl-cf-textarea.is-invalid {
+  border-color: #e05252;
+  box-shadow: 0 0 0 3px rgba(224, 82, 82, 0.08);
+}
+
+.wl-cf-input.is-valid,
+.wl-cf-textarea.is-valid {
+  border-color: var(--color-accent, #59815b);
+}
+
+.wl-cf-textarea {
+  resize: vertical;
+  min-height: 160px;
+}
+
+/* Submit button */
+.wl-cf-submit {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 36px;
+  font-family: var(--font-body, "Jost", sans-serif);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #fff;
+  background: var(--color-primary, #2c2c2c);
+  border: none;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition:
+    background 0.25s ease,
+    transform 0.18s ease,
+    gap 0.2s ease;
+}
+
+.wl-cf-submit::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--color-accent, #b89d6e);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 0;
+}
+
+.wl-cf-submit:hover::before {
+  transform: scaleX(1);
+}
+
+.wl-cf-submit-text,
+.wl-cf-submit-icon {
+  position: relative;
+  z-index: 1;
+}
+
+.wl-cf-submit-icon svg {
+  width: 16px;
+  height: 16px;
+  stroke: currentColor;
+  fill: none;
+  transition: transform 0.2s ease;
+}
+
+.wl-cf-submit:hover .wl-cf-submit-icon svg {
+  transform: translateX(4px);
+}
+
+.wl-cf-submit:active {
+  transform: translateY(1px);
+}
+
+/* Loading state */
+.wl-cf-submit.is-loading {
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+.wl-cf-submit.is-loading .wl-cf-submit-icon {
+  animation: wl-spin 0.6s linear infinite;
+}
+
+@keyframes wl-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Required note */
+.wl-cf-required-note {
+  font-family: var(--font-body, "Jost", sans-serif);
+  font-size: 12px;
+  font-weight: 300;
+  color: var(--color-secondary, #878787);
+  margin: 0;
+}
+
+/* ── Success state ── */
+.wl-contact-success {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 20px 24px;
+  background: #f0f7f0;
+  border: 1px solid #b8d9b8;
+  border-left: 3px solid #59815b;
+  margin-bottom: 32px;
+}
+
+.wl-contact-success svg {
+  width: 22px;
+  height: 22px;
+  stroke: #59815b;
+  fill: none;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.wl-contact-success p {
+  font-family: var(--font-body, "Jost", sans-serif);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.6;
+  color: #2c5a2c;
+  margin: 0;
+}
+
+/* ── Error state ── */
+.wl-contact-error {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 16px 20px;
+  background: #fdf0f0;
+  border: 1px solid #f5c6c6;
+  border-left: 3px solid #e05252;
+  margin-bottom: 24px;
+}
+
+.wl-contact-error svg {
+  width: 20px;
+  height: 20px;
+  stroke: #e05252;
+  fill: none;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.wl-contact-error p {
+  font-family: var(--font-body, "Jost", sans-serif);
+  font-size: 13px;
+  font-weight: 400;
+  color: #8c2020;
+  margin: 0;
+}
+
+/* ============================================================
+   4. RESPONSIVE — Tablet ≤ 1199px
+   ============================================================ */
+
+@media (max-width: 1199px) {
+  .wl-contact-container {
+    grid-template-columns: 320px 1fr;
+    gap: 52px;
+  }
+
+  .wl-contact-body {
+    padding: 56px 0 72px;
+  }
+}
+
+/* ============================================================
+   5. RESPONSIVE — Mobile ≤ 767px — stack vertically
+   ============================================================ */
+
+@media (max-width: 767px) {
+  .wl-contact-body {
+    padding: 40px 0 56px;
+  }
+
+  .wl-contact-container {
+    grid-template-columns: 1fr;
+    gap: 44px;
+    padding: 0 20px;
+  }
+
+  .wl-contact-info {
+    position: static;
+    order: 2; /* form first on mobile */
+  }
+
+  .wl-contact-form-wrap {
+    order: 1;
+  }
+
+  .wl-cf-row--2 {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .wl-cf-row--submit {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .wl-cf-submit {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* ============================================================
+   6. RESPONSIVE — Small mobile ≤ 480px
+   ============================================================ */
+
+@media (max-width: 480px) {
+  .wl-contact-container {
+    padding: 0 16px;
+  }
+
+  .wl-contact-form-title,
+  .wl-contact-info-title {
+    font-size: 1.25rem;
+  }
+}

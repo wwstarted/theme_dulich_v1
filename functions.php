@@ -56,11 +56,11 @@ function wl_enqueue_assets()
 
     wp_enqueue_style(
         'wl-google-fonts',
-        'https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Muli:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Dancing+Script:wght@600&display=swap',
+        'https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Outfit:wght@300;400;500;600;700&family=Dancing+Script:wght@600&display=swap',
         array(),
         null
     );
-    $ver = '1.1.4';
+    $ver = '1.1.7';
 
     $uri = get_template_directory_uri();
 
@@ -137,6 +137,7 @@ function wl_enqueue_assets()
 
     if (is_archive() || (is_home() && !is_front_page())) {
         wp_enqueue_style('wl-archive', $uri . '/css/archive.css', array('wl-global'), $ver);
+        wp_enqueue_script('wl-archive', $uri . '/js/archive.js', array(), $ver, true);
     }
 
     if (is_page() && !is_front_page()) {
@@ -144,12 +145,25 @@ function wl_enqueue_assets()
     }
 
     if (is_search()) {
-        wp_enqueue_style('wl-search', $uri . '/css/search.css', array('wl-global'), $ver);
+        wp_enqueue_style('wl-archive', $uri . '/css/archive.css', array('wl-global'), $ver);
+        wp_enqueue_style('wl-search', $uri . '/css/search.css', array('wl-archive'), $ver);
+        wp_enqueue_script('wl-search', $uri . '/js/search.js', array(), $ver, true);
     }
 
     if (is_404()) {
         wp_enqueue_style('wl-404', $uri . '/css/404.css', array('wl-global'), $ver);
         wp_enqueue_script('wl-404', $uri . '/js/404.js', array(), $ver, true);
+    }
+
+    if (is_page_template('page-cms.php')) {
+        wp_enqueue_style('wl-page-cms', $uri . '/css/page-cms.css', array('wl-global'), $ver);
+        wp_enqueue_script('wl-page-cms', $uri . '/js/page-cms.js', array(), $ver, true);
+    }
+
+    if (is_page_template('page-contact.php')) {
+        wp_enqueue_style('wl-page-cms', $uri . '/css/page-cms.css', array('wl-global'), $ver);
+        wp_enqueue_style('wl-page-contact', $uri . '/css/page-contact.css', array('wl-page-cms'), $ver);
+        wp_enqueue_script('wl-page-contact', $uri . '/js/page-contact.js', array(), $ver, true);
     }
 }
 add_action('wp_enqueue_scripts', 'wl_enqueue_assets');
@@ -160,6 +174,10 @@ require_once get_template_directory() . '/inc/home-options.php';
 require_once get_template_directory() . '/inc/functions-newsletter.php';
 
 require_once get_template_directory() . '/inc/destinations-cpt.php';
+
+require_once get_template_directory() . '/inc/cms-page-meta.php';
+
+require_once get_template_directory() . '/inc/contact-page-meta.php';
 
 
 // ── Customizer settings ──────────────────────────────────────
@@ -269,51 +287,56 @@ class WL_Header_Walker extends Walker_Nav_Menu
     public function start_el(&$output, $item, $depth = 0, $args = null, $id = 0)
     {
         $classes = empty($item->classes) ? array() : (array) $item->classes;
-        $has_children = in_array('menu-item-has-children', $classes);
-
-        if ($has_children)
+        $classes[] = 'menu-item-' . $item->ID;
+        if ($args->walker->has_children)
             $classes[] = 'has_sub';
+        // narrow class cho top-level
         if ($depth === 0)
-            $classes[] = 'narrow';   // top-level marker
-        if ($depth === 1 && $has_children)
-            $classes[] = 'sub';   // 3rd-level parent
+            $classes[] = 'narrow';
 
-        $class_names = join(' ', apply_filters('nav_menu_css_class', array_filter($classes), $item, $args, $depth));
-        $class_names = $class_names ? ' class="' . esc_attr($class_names) . '"' : '';
-        $id_attr = apply_filters('nav_menu_item_id', 'nav-menu-item-' . $item->ID, $item, $args, $depth);
-        $id_attr = $id_attr ? ' id="' . esc_attr($id_attr) . '"' : '';
-
-        $output .= '<li' . $id_attr . $class_names . '>';
+        $class_names = join(' ', apply_filters('nav_menu_css_class', array_filter($classes), $item, $args));
+        $output .= '<li class="' . esc_attr($class_names) . '">';
 
         $atts = array();
         $atts['href'] = !empty($item->url) ? $item->url : '#';
-        $atts['target'] = !empty($item->target) ? $item->target : '';
-        $atts['class'] = (in_array('current-menu-item', $classes) || in_array('current-menu-ancestor', $classes))
-            ? 'current' : '';
-        $atts = apply_filters('nav_menu_link_attributes', $atts, $item, $args, $depth);
+        $atts['class'] = in_array('current-menu-item', $classes) || in_array('current-menu-ancestor', $classes) ? 'current' : '';
 
-        $attr_str = '';
-        foreach ($atts as $attr => $val) {
-            if (!empty($val))
-                $attr_str .= ' ' . $attr . '="' . esc_attr($val) . '"';
+        $attributes = '';
+        foreach ($atts as $attr => $value) {
+            if (!empty($value))
+                $attributes .= ' ' . $attr . '="' . esc_attr($value) . '"';
         }
 
-        $out = '<a' . $attr_str . '>';
         if ($depth === 0) {
-            $out .= '<span class="mkdf-menu-item-holder"><span class="item_outer"><span class="item_text">';
-            $out .= apply_filters('the_title', $item->title, $item->ID);
-            $out .= '</span>';
-            if ($has_children)
-                $out .= '<i class="mkdf-menu-arrow fas fa-angle-down"></i>';
-            $out .= '</span></span>';
-        } else {
-            $out .= '<span class="item_outer"><span class="item_text">';
-            $out .= apply_filters('the_title', $item->title, $item->ID);
-            $out .= '</span></span>';
-        }
-        $out .= '</a>';
+            // Top-level: brush stroke SVG wrapper
+            $output .= '<a' . $attributes . '>';
+            $output .= '<span class="mkdf-menu-item-holder">';
 
-        $output .= apply_filters('walker_nav_menu_start_el', $out, $item, $depth, $args);
+            // Brush stroke shape
+            // $output .= '<span class="mkdf-active-hover">';
+            // $output .= '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.7 30" class="mkdf-active-hover-left"><polygon points="2.6,1 0.7,3.3 2,5.8 2.3,7.6 2.9,8.7 4.4,10.5 3.9,10.8 4.4,11.9 4.4,12.8 4.1,13.8 3.3,14.7 3.9,15.8 4.4,16.8 4,17.5 3.5,18.1 2.2,20.2 3.4,21.5 4.2,24.1 3.4,25.4 2.5,27.4 2.5,27.8 3.2,28.3 4.1,28.5 4.9,29 14.8,29 14.8,1"/></svg>';
+            // $output .= '<span class="mkdf-active-hover-middle"></span>';
+            // $output .= '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 13.3 30" class="mkdf-active-hover-right"><polygon points="10,1 10.2,2.1 10.6,2.9 10.6,3.3 10.8,3.7 10.8,4.3 11,5 11,5.7 11,6.3 10.5,6.7 10.8,7.3 11,7.8 11.6,8.3 11.6,8.6 11.5,8.9 11.6,9.9 11.6,10.5 12.4,11.6 12.1,12 12.4,12.2 11.8,12.8 11.4,13.5 11.6,13.7 11.9,13.7 12,13.9 11.5,15.1 10.8,16 9.1,17.7 9.7,18.2 9.3,19 9.7,19.8 9.6,20.6 9.7,21.5 9.6,21.9 9.6,22.3 10.1,22.8 9.6,23.6 9.7,24 9.7,24.2 9.9,24.4 9.5,24.7 9.3,25.4 9.3,25.9 8.8,26.2 8.5,27.1 8.8,27.8 9.4,28.6 7.8,29 0.9,29 0.9,1"/></svg>';
+            // $output .= '</span>';
+            $output .= '<span class="mkdf-active-hover"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.7 30" class="mkdf-active-hover-left"><polygon fill="currentColor" points="2.6,1 0.7,3.3 2,5.8 2.3,7.6 2.9,8.7 4.4,10.5 3.9,10.8 4.4,11.9 4.4,12.8 4.1,13.8 3.3,14.7 3.9,15.8 4.4,16.8 4,17.5 3.5,18.1 2.2,20.2 3.4,21.5 4.2,24.1 3.4,25.4 2.5,27.4 2.5,27.8 3.2,28.3 4.1,28.5 4.9,29 14.8,29 14.8,1"/></svg><span class="mkdf-active-hover-middle"></span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 13.3 30" class="mkdf-active-hover-right"><polygon fill="currentColor" points="10,1 10.2,2.1 10.6,2.9 10.6,3.3 10.8,3.7 10.8,4.3 11,5 11,5.7 11,6.3 10.5,6.7 10.8,7.3 11,7.8 11.6,8.3 11.6,8.6 11.5,8.9 11.6,9.9 11.6,10.5 12.4,11.6 12.1,12 12.4,12.2 11.8,12.8 11.4,13.5 11.6,13.7 11.9,13.7 12,13.9 11.5,15.1 10.8,16 9.1,17.7 9.7,18.2 9.3,19 9.7,19.8 9.6,20.6 9.7,21.5 9.6,21.9 9.6,22.3 10.1,22.8 9.6,23.6 9.7,24 9.7,24.2 9.9,24.4 9.5,24.7 9.3,25.4 9.3,25.9 8.8,26.2 8.5,27.1 8.8,27.8 9.4,28.6 7.8,29 0.9,29 0.9,1"/></svg></span>';
+
+            // Text + arrow
+            $output .= '<span class="item_outer">';
+            $output .= '<span class="item_text">' . apply_filters('the_title', $item->title, $item->ID) . '</span>';
+            if ($args->walker->has_children) {
+                $output .= '<i class="mkdf-menu-arrow fa fa-angle-down"></i>';
+            }
+            $output .= '</span>';
+            $output .= '</span>';
+            $output .= '</a>';
+        } else {
+            // Dropdown items: structure đơn giản hơn
+            $output .= '<a' . $attributes . '>';
+            $output .= '<span class="item_outer">';
+            $output .= '<span class="item_text">' . apply_filters('the_title', $item->title, $item->ID) . '</span>';
+            $output .= '</span>';
+            $output .= '</a>';
+        }
     }
 
     public function start_lvl(&$output, $depth = 0, $args = null)
@@ -375,3 +398,35 @@ class WL_Mobile_Walker extends Walker_Nav_Menu
 }
 
 add_filter('show_admin_bar', '__return_false');
+
+
+register_sidebar(array(
+    'name' => __('Single Post Sidebar', 'wanderland'),
+    'id' => 'single-sidebar',
+    'before_widget' => '<div class="wl-sidebar-widget widget %2$s">',
+    'after_widget' => '</div>',
+    'before_title' => '<h5 class="wl-widget-title">',
+    'after_title' => '</h5>',
+));
+
+function wl_register_footer_widgets()
+{
+    $cols = array(
+        array('id' => 'footer-col-1', 'name' => 'Footer — Col 1 (About)'),
+        array('id' => 'footer-col-2', 'name' => 'Footer — Col 2 (Newsletter)'),
+        array('id' => 'footer-col-3', 'name' => 'Footer — Col 3 (Recent News)'),
+        array('id' => 'footer-col-4', 'name' => 'Footer — Col 4 (Categories)'),
+    );
+
+    foreach ($cols as $col) {
+        register_sidebar(array(
+            'name' => __($col['name'], 'wanderland'),
+            'id' => $col['id'],
+            'before_widget' => '<div class="mkdf-footer-widget %2$s">',
+            'after_widget' => '</div>',
+            'before_title' => '<h6 class="mkdf-widget-title">',
+            'after_title' => '</h6>',
+        ));
+    }
+}
+add_action('widgets_init', 'wl_register_footer_widgets');

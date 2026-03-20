@@ -693,6 +693,21 @@
   .wl-hero-counter {
     display: none;
   }
+
+  .wl-hero-section,
+  .wl-hero-slide,
+  .wl-hero-slider {
+    border-bottom: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+  }
+
+  .wl-hero-content {
+    z-index: 5;
+    position: relative;
+    bottom: auto;
+    padding-bottom: 150px;
+  }
 }
 
 /* ============================================================
@@ -2186,7 +2201,6 @@
   object-position: top center;
 }
 
-/* Top: flip so bristles point down */
 .wl-dest-brush--top {
   margin-bottom: -2px;
 }
@@ -2195,12 +2209,10 @@
   object-position: bottom center;
 }
 
-/* Bottom: normal */
 .wl-dest-brush--bottom {
   margin-top: -2px;
 }
 
-/* ── Topographic SVG background ── */
 .wl-dest-topo {
   position: absolute;
   inset: 0;
@@ -2213,7 +2225,6 @@
   height: 100%;
 }
 
-/* ── "DESTINATIONS" watermark ── */
 .wl-dest-watermark {
   position: absolute;
   top: 50%;
@@ -2273,7 +2284,6 @@
   overflow: visible;
 }
 
-/* ── Item — JS positions absolutely ── */
 .wl-dest-item {
   position: absolute;
   display: flex;
@@ -2293,7 +2303,6 @@
   transform: translateY(-3px);
 }
 
-/* ── Item inner: image LEFT + text RIGHT (mkdf-hti-content-item-wrap) ── */
 .wl-dest-item-inner {
   display: flex;
   flex-direction: row;
@@ -2302,7 +2311,6 @@
   transition: transform 0.25s ease;
 }
 
-/* ── Flag image: 108×65px matching element ── */
 .wl-dest-img-wrap {
   flex-shrink: 0;
   width: 108px;
@@ -2969,13 +2977,35 @@
     padding: 28px 0 32px;
   }
 
-  .wl-client-item {
+  /* .wl-client-item {
     padding: 10px 16px;
-  }
+  } */
 
   .wl-client-link {
     width: 120px;
     height: 76px;
+  }
+
+  .wl-clients-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 4 cột */
+    gap: 16px;
+    overflow: hidden;
+  }
+
+  .wl-client-item {
+    width: 100%;
+    max-width: none;
+    min-width: 0;
+    padding: 10px 16px;
+    height: 80px;
+  }
+
+  .wl-client-img,
+  .wl-client-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
   }
 }
 
@@ -2990,10 +3020,12 @@
   }
 
   .wl-clients-grid {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, 1fr); /* 3 cột */
+    gap: 12px;
   }
 
   .wl-client-item {
+    height: 64px;
     padding: 8px 12px;
   }
 

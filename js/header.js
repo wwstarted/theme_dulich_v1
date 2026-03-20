@@ -14,17 +14,30 @@
     const pageHeader = document.querySelector(".mkdf-page-header");
     const mobileHeader = document.querySelector(".mkdf-mobile-header");
     const isHomePage = document.body.classList.contains("home");
+    const isSinglePost = document.body.classList.contains("single-post");
+    const isCmsPage = document.body.classList.contains(
+      "page-template-page-cms",
+    );
+    const isContactPage = document.body.classList.contains(
+      "page-template-page-contact",
+    );
+    const is404Page = document.body.classList.contains("error404");
+    const hasHeroBanner =
+      isHomePage || isSinglePost || isCmsPage || isContactPage || is404Page;
 
     // ← FIX #4: đọc offsetHeight sau DOMContentLoaded
     const TOPBAR_HEIGHT = topBar ? topBar.offsetHeight : 44;
     const STICKY_OFFSET = 80;
 
     // ── Initial state on Home ──────────────────────────────
-    if (isHomePage && pageHeader) {
+    // if (isHomePage && pageHeader) {
+    //   pageHeader.classList.add("is-transparent");
+    // }
+
+    if (hasHeroBanner && pageHeader) {
       pageHeader.classList.add("is-transparent");
     }
 
-    // ── Scroll handler ─────────────────────────────────────
     let lastScrollY = 0;
     let ticking = false;
 
@@ -58,7 +71,7 @@
           pageHeader.classList.remove("is-transparent");
         } else {
           pageHeader.classList.remove("is-sticky");
-          if (isHomePage) pageHeader.classList.add("is-transparent");
+          if (hasHeroBanner) pageHeader.classList.add("is-transparent");
         }
       }
     }
@@ -135,25 +148,22 @@
       });
     });
 
-    // Reset khi resize về desktop
     window.addEventListener("resize", function () {
       if (window.innerWidth > 1199) {
         if (mobileHeader) {
           mobileHeader.classList.remove("is-menu-open");
         }
-        // ← reset submenu items
         document
           .querySelectorAll(".mkdf-mobile-nav li.is-open")
           .forEach(function (li) {
             li.classList.remove("is-open");
           });
 
-        // ← FIX #5: reset body scroll
         document.body.style.position = "";
         document.body.style.top = "";
         document.body.style.width = "";
         document.body.style.overflowY = "";
       }
     });
-  }); // end DOMContentLoaded
+  });
 })();

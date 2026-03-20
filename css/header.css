@@ -28,6 +28,16 @@
   max-width: var(--container-wide, 1400px);
   margin: 0 auto;
   padding: 0 var(--gutter, 40px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+  padding-bottom: 0; /* border nằm sát đáy container */
+}
+
+body:not(.home):not(.single-post):not(.page-template-page-cms):not(
+    .page-template-page-contact
+  ):not(.error404)
+  .mkdf-top-bar
+  .mkdf-vertical-align-containers {
+  border-bottom: 1px solid var(--color-border, rgba(0, 0, 0, 0.08));
 }
 
 /* Left: phone + email */
@@ -116,10 +126,10 @@
   pointer-events: none;
 }
 
-body:not(.home) .mkdf-top-bar {
+/* body:not(.home) .mkdf-top-bar {
   background-color: var(--color-white, #fff) !important;
   border-bottom: 1px solid var(--color-border, #e8e8e8) !important;
-}
+} */
 
 .mkdf-page-header {
   position: fixed;
@@ -135,7 +145,7 @@ body:not(.home) .mkdf-top-bar {
 
 .mkdf-page-header .mkdf-menu-area {
   background-color: transparent;
-  padding: 0 var(--gutter, 40px);
+  padding: 0;
   transition: background-color var(--transition-base, 0.3s ease);
 }
 
@@ -319,7 +329,12 @@ body:not(.home) .mkdf-top-bar {
 }
 
 /* Non-home → chữ đen luôn */
-body:not(.home) .mkdf-main-menu > li > a {
+body:not(.home):not(.single-post):not(.page-template-page-cms):not(
+    .page-template-page-contact
+  ):not(.error404)
+  .mkdf-main-menu
+  > li
+  > a {
   color: var(--color-primary, #1a1a1a);
 }
 /* ============================================================
@@ -427,7 +442,6 @@ body:not(.home) .mkdf-main-menu > li > a {
    ============================================================ */
 .mkdf-divided-left-widget-area {
   padding-right: 20px;
-  border-right: 1px solid rgba(255, 255, 255, 0.3);
   margin-right: 8px;
   height: 100%;
   display: flex;
@@ -472,7 +486,6 @@ body:not(.home) .mkdf-main-menu > li > a {
    ============================================================ */
 .mkdf-divided-right-widget-area {
   padding-left: 20px;
-  border-left: 1px solid rgba(255, 255, 255, 0.3);
   margin-left: 8px;
   height: 100%;
   display: flex;
@@ -865,38 +878,71 @@ li.is-open > .mobile_arrow .ion-ios-arrow-down {
 }
 
 /* Trang không phải home → header luôn trắng, không transparent */
-body:not(.home) .mkdf-page-header {
+body:not(.home):not(.single-post):not(.page-template-page-cms):not(
+    .page-template-page-contact
+  ):not(.error404)
+  .mkdf-page-header {
   background-color: var(--color-white, #fff);
   box-shadow: var(--shadow-header, 0 2px 12px rgba(0, 0, 0, 0.08));
 }
 
-body:not(.home) .mkdf-main-menu > ul > li > a {
+body:not(.home):not(.single-post):not(.page-template-page-cms):not(
+    .page-template-page-contact
+  ):not(.error404)
+  .mkdf-main-menu
+  > ul
+  > li
+  > a {
   color: var(--color-primary, #1a1a1a);
 }
 
-body:not(.home) .mkdf-divided-left-widget-area .mkdf-icon-widget-holder,
-body:not(.home) .mkdf-search-opener {
+body:not(.home):not(.single-post):not(.page-template-page-cms):not(
+    .page-template-page-contact
+  ):not(.error404)
+  .mkdf-divided-left-widget-area
+  .mkdf-icon-widget-holder,
+body:not(.home):not(.single-post):not(.page-template-page-cms):not(
+    .page-template-page-contact
+  ):not(.error404)
+  .mkdf-search-opener {
   color: var(--color-primary, #1a1a1a);
 }
 
-body:not(.home) .mkdf-divided-left-widget-area {
+body:not(.home):not(.single-post) .mkdf-divided-left-widget-area {
   border-right-color: var(--color-border, #e8e8e8);
 }
 
-body:not(.home) .mkdf-divided-right-widget-area {
+body:not(.home):not(.single-post):not(.page-template-page-cms):not(
+    .page-template-page-contact
+  ):not(.error404)
+  .mkdf-divided-right-widget-area {
   border-left-color: var(--color-border, #e8e8e8);
 }
 
-body:not(.home) .mkdf-logo-wrapper .mkdf-normal-logo {
+body:not(.home):not(.single-post):not(.page-template-page-cms):not(
+    .page-template-page-contact
+  ):not(.error404)
+  .mkdf-logo-wrapper
+  .mkdf-normal-logo {
   display: block;
 }
-body:not(.home) .mkdf-logo-wrapper .mkdf-light-logo,
-body:not(.home) .mkdf-logo-wrapper .mkdf-dark-logo {
+body:not(.home):not(.single-post):not(.page-template-page-cms):not(
+    .page-template-page-contact
+  ):not(.error404)
+  .mkdf-logo-wrapper
+  .mkdf-light-logo,
+body:not(.home):not(.single-post):not(.page-template-page-cms):not(
+    .page-template-page-contact
+  ):not(.error404)
+  .mkdf-logo-wrapper
+  .mkdf-dark-logo {
   display: none;
 }
 
 /* Body cần padding-top để nội dung không bị header che */
-body:not(.home) {
+body:not(.home):not(.single-post):not(.page-template-page-cms):not(
+    .page-template-page-contact
+  ):not(.error404) {
   padding-top: calc(
     var(--topbar-height, 44px) + var(--header-height-desktop, 80px)
   );
@@ -942,10 +988,210 @@ html {
 }
 
 /* Trang không phải home → màu xám tối */
-body:not(.home) .mkdf-top-bar .mkdf-social-icon-widget-holder {
+body:not(.home):not(.single-post):not(.page-template-page-cms):not(
+    .page-template-page-contact
+  ):not(.error404)
+  .mkdf-top-bar
+  .mkdf-social-icon-widget-holder {
   color: var(--color-secondary, #878787) !important;
 }
 
-body:not(.home) .mkdf-top-bar .mkdf-icon-widget-holder {
+body:not(.home):not(.single-post):not(.page-template-page-cms):not(
+    .page-template-page-contact
+  ):not(.error404)
+  .mkdf-top-bar
+  .mkdf-icon-widget-holder {
   color: var(--color-secondary, #878787) !important;
+}
+
+/*  add css for hover */
+/* ── Brush stroke hover/active ── */
+.mkdf-main-menu > li > a {
+  position: relative;
+}
+
+.mkdf-menu-item-holder {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.mkdf-active-hover {
+  position: absolute;
+  top: 50%;
+  left: -8px;
+  right: -8px;
+  transform: translateY(-50%);
+  height: 30px;
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  font-size: 0;
+  line-height: 0;
+  pointer-events: none;
+  z-index: 0;
+  color: #59815b;
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 0.38s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.mkdf-main-menu > li:hover .mkdf-active-hover,
+.mkdf-main-menu > li.mkdf-active-item .mkdf-active-hover,
+.mkdf-main-menu > li.current-menu-item .mkdf-active-hover,
+.mkdf-main-menu > li.current-menu-ancestor .mkdf-active-hover {
+  clip-path: inset(0 0% 0 0);
+}
+
+.mkdf-active-hover-left {
+  flex-shrink: 0;
+  width: 16px; /* ← explicit px, hơi dư 15.7 */
+  height: 30px; /* ← explicit px, khớp container */
+  fill: currentColor;
+  display: block;
+  margin-right: -2px; /* ← overlap 1px để xóa gap */
+}
+
+.mkdf-active-hover-right {
+  flex-shrink: 0;
+  width: 14px; /* ← explicit px, hơi dư 13.3 */
+  height: 30px; /* ← explicit px */
+  fill: currentColor;
+  display: block;
+  margin-left: -2px; /* ← overlap 1px để xóa gap */
+}
+
+.mkdf-active-hover-middle {
+  flex: 1;
+  min-width: 2px;
+  height: 30px; /* ← explicit px */
+  background: currentColor;
+  display: block;
+  margin: 0;
+  padding: 0;
+}
+
+.item_outer {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.mkdf-main-menu > li > a::after {
+  display: none;
+}
+
+.mkdf-menu-arrow {
+  font-size: 10px;
+  transition: transform 0.2s ease;
+  flex-shrink: 0;
+}
+
+.mkdf-main-menu > li:hover .mkdf-menu-arrow {
+  transform: rotate(180deg);
+}
+
+/* ── 2 đường border trên/dưới header ── */
+
+/* body:not(.home) .mkdf-top-bar {
+  border-bottom: 1px solid var(--color-border, #e8e8e8) !important;
+} */
+
+.mkdf-page-header .mkdf-menu-area .mkdf-vertical-align-containers {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+  max-width: var(--container-wide, 1400px); /* ← khớp topbar */
+  padding: 0 var(--gutter, 40px); /* ← padding ở container */
+}
+
+.mkdf-page-header.is-sticky .mkdf-menu-area .mkdf-vertical-align-containers {
+  border-bottom: 1px solid var(--color-border, rgba(0, 0, 0, 0.08));
+}
+
+body:not(.home):not(.single-post):not(.page-template-page-cms):not(
+    .page-template-page-contact
+  ):not(.error404)
+  .mkdf-page-header
+  .mkdf-menu-area
+  .mkdf-vertical-align-containers {
+  border-bottom: 1px solid var(--color-border, rgba(0, 0, 0, 0.08));
+}
+
+body.page-template-page-cms {
+  padding-top: 0;
+}
+
+body.page-template-page-contact {
+  padding-top: 0;
+}
+
+/* ── Mobile nav footer ── */
+.mkdf-mobile-nav-footer {
+  border-top: 1px solid var(--color-border, #e8e5e0);
+  padding: 24px 20px 28px;
+  background: #faf8f5;
+}
+
+.mkdf-mobile-nav-contact {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.mkdf-mobile-nav-contact-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-body, "Jost", sans-serif);
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--color-secondary, #878787);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.mkdf-mobile-nav-contact-item i {
+  font-size: 16px;
+  color: var(--color-accent, #b89d6e);
+  flex-shrink: 0;
+  width: 18px;
+  text-align: center;
+}
+
+.mkdf-mobile-nav-contact-item:hover {
+  color: var(--color-primary, #2c2c2c);
+}
+
+.mkdf-mobile-nav-social {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* ← thêm dòng này */
+  gap: 12px;
+}
+
+.mkdf-mobile-nav-social a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--color-border, #e8e5e0);
+  color: var(--color-secondary, #878787);
+  font-size: 16px;
+  text-decoration: none;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.mkdf-mobile-nav-social a:hover {
+  background: var(--color-accent, #b89d6e);
+  border-color: var(--color-accent, #b89d6e);
+  color: #fff;
+}
+
+.mkdf-mobile-nav > .mkdf-grid > ul > li:last-child {
+  border-bottom: none;
 }

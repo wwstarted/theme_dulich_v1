@@ -1,0 +1,1823 @@
+/* ============================================================
+   WANDERLAND — single.css
+   Single post: blog hero + featured image + content + sidebar
+   ============================================================ */
+
+/* ============================================================
+   1. BLOG HERO BANNER
+   Full-screen, header + topbar float above (like home hero)
+   ============================================================ */
+
+.wl-single-main {
+  background: #fff;
+}
+
+.wl-blog-hero {
+  position: relative;
+  width: 100%;
+  height: 452px;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+
+.wl-blog-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.25) 0%,
+    rgba(0, 0, 0, 0.55) 100%
+  );
+}
+
+/* "BLOG" title — bottom-left like site mẫu */
+.wl-blog-hero-inner {
+  position: absolute;
+  bottom: 80px; /* above brush stroke */
+  left: var(--gutter, 40px);
+  z-index: 2;
+}
+
+.wl-blog-hero-title {
+  font-family: var(--font-body, "Jost", sans-serif);
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #fff;
+  margin: 0;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+}
+
+/* Brush stroke — reuse home hero pattern */
+.wl-blog-hero-brush {
+  position: absolute;
+  bottom: -24px;
+  left: 0;
+  width: 100%;
+  z-index: 3;
+  pointer-events: none;
+  line-height: 0;
+}
+
+.wl-blog-hero-brush img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 70px;
+  min-height: 28px;
+  object-fit: cover;
+  object-position: top center;
+}
+
+/* ============================================================
+   2. CONTAINER
+   ============================================================ */
+
+.wl-single-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--gutter, 40px);
+}
+
+/* ============================================================
+   3. FEATURED IMAGE — contained, below hero
+   ============================================================ */
+
+.wl-single-featured-wrap {
+  background: #fff;
+  padding-top: 48px;
+}
+
+.wl-single-featured-inner {
+  position: relative;
+  /* Max matches site mẫu ~1300×851 ratio */
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.wl-single-featured-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 560px;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Category badge over featured image */
+.wl-single-cat-badge {
+  position: absolute;
+  top: 18px;
+  left: 0;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: rgba(255, 255, 255, 0.93);
+  color: var(--color-primary, #2c2c2c);
+  font-family: var(--font-body, "Jost", sans-serif);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 7px 14px 7px 12px;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.wl-single-cat-badge:hover {
+  background: var(--color-accent, #b89d6e);
+  color: #fff;
+}
+
+.wl-single-cat-icon {
+  display: flex;
+  align-items: center;
+}
+
+.wl-single-cat-icon svg {
+  width: 12px;
+  height: 12px;
+  stroke: currentColor;
+  fill: none;
+}
+
+/* ============================================================
+   4. POST HEADER — left-aligned
+   Row 1: breadcrumb | Row 2: author+date | Row 3: title
+   ============================================================ */
+
+.wl-single-header-wrap {
+  background: #fff;
+  padding: 40px 0 40px;
+  border-bottom: 1px solid var(--color-border, #e8e5e0);
+}
+
+.wl-single-header {
+  /* Left-aligned — max width matches content column */
+  max-width: 760px;
+  text-align: left;
+}
+
+/* Breadcrumb */
+.wl-single-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.wl-single-breadcrumb a {
+  font-family: var(--font-body, "Jost", sans-serif);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-secondary, #878787);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.wl-single-breadcrumb a:hover {
+  color: var(--color-accent, #b89d6e);
+}
+
+.wl-bc-sep {
+  color: var(--color-secondary, #878787);
+  font-size: 11px;
+  opacity: 0.4;
+}
+
+/* Author + Date row */
+.wl-single-meta-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+}
+
+.wl-single-author-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.wl-single-author-name {
+  font-family: var(--font-body, "Jost", sans-serif);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-primary, #2c2c2c);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.wl-single-author-name:hover {
+  color: var(--color-accent, #b89d6e);
+}
+
+.wl-meta-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--color-secondary, #878787);
+  opacity: 0.4;
+  flex-shrink: 0;
+  display: inline-block;
+}
+
+.wl-single-date {
+  font-family: var(--font-body, "Jost", sans-serif);
+  font-size: 12px;
+  font-weight: 300;
+  font-style: italic;
+  color: var(--color-secondary, #878787);
+  letter-spacing: 0.03em;
+}
+
+/* Title */
+.wl-single-title {
+  font-family: var(--font-body, "Jost", sans-serif);
+  font-size: clamp(1.6rem, 3.5vw, 2.6rem);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  line-height: 1.2;
+  color: var(--color-primary, #2c2c2c);
+  margin: 0;
+}
+
+/* ============================================================
+   5. MAIN LAYOUT (content + sidebar)
+   ============================================================ */
+
+.wl-single-layout {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 0 64px;
+  padding: 56px 0 80px;
+  align-items: start;
+}
+
+/* ============================================================
+   6. TABLE OF CONTENTS (TOC)
+   ============================================================ */
+
+.wl-toc {
+  margin-bottom: 40px;
+  border: 1px solid var(--color-border, #e8e5e0);
+  background: #faf8f5;
+}
+
+/* ẩn nếu không có heading */
+.wl-toc.is-empty {
+  display: none;
+}
+
+/* Header row */
+.wl-toc-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--color-border, #e8e5e0);
+  cursor: pointer;
+  user-select: none;
+}
+
+.wl-toc-title {
+  font-family: var(--font-body, "Jost", sans-serif);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-primary, #2c2c2c);
+}
+
+/* Toggle button */
+.wl-toc-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  color: var(--color-secondary, #878787);
+  transition: color 0.2s ease;
+  flex-shrink: 0;
+}
+
+.wl-toc-toggle:hover {
+  color: var(--color-accent, #b89d6e);
+}
+
+.wl-toc-arrow {
+  font-size: 16px;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: block;
+}
+
+/* Collapsed state */
+.wl-toc.is-collapsed .wl-toc-arrow {
+  transform: rotate(180deg);
+}
+
+/* TOC body — animated open/close */
+.wl-toc-body {
+  overflow: hidden;
+  max-height: 600px;
+  transition:
+    max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.25s ease;
+  opacity: 1;
+}
+
+.wl-toc.is-collapsed .wl-toc-body {
+  max-height: 0;
+  opacity: 0;
+}
+
+/* TOC list */
+.wl-toc-list {
+  list-style: none;
+  margin: 0;
+  padding: 14px 20px 18px;
+  counter-reset: toc-counter;
+}
+
+.wl-toc-list li {
+  counter-increment: toc-counter;
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  padding: 5px 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.wl-toc-list li:last-child {
+  border-bottom: none;
+}
+
+/* Counter number */
+.wl-toc-list li::before {
+  content: counter(toc-counter, decimal-leading-zero);
+  font-family: var(--font-body, "Jost", sans-serif);
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--color-accent, #b89d6e);
+  letter-spacing: 0.04em;
+  flex-shrink: 0;
+  line-height: 1.6;
+}
+
+/* TOC link */
+.wl-toc-list li a {
+  font-family: var(--font-body, "Jost", sans-serif);
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.55;
+  color: var(--color-primary, #2c2c2c);
+  text-decoration: none;
+  transition: color 0.18s ease;
+}
+
+.wl-toc-list li a:hover {
+  color: var(--color-accent, #b89d6e);
+}
+
+/* h3 sub-items — indented */
+.wl-toc-list li.wl-toc-h3 {
+  padding-left: 20px;
+}
+
+.wl-toc-list li.wl-toc-h3 a {
+  font-size: 12px;
+  color: var(--color-secondary, #878787);
+}
+
+/* Active item (highlighted while scrolling) */
+.wl-toc-list li.is-active a {
+  color: var(--color-accent, #b89d6e);
+  font-weight: 500;
+}
+
+/* ============================================================
+   7. POST CONTENT
+   ============================================================ */
+
+.wl-single-entry {
+  font-family: var(--font-body, "Jost", sans-serif);
+  font-size: 15px;
+  font-weight: 300;
+  line-height: 1.88;
+  color: var(--color-text, #4a4a4a);
+}
+
+.wl-single-entry p {
+  margin: 0 0 26px;
+}
+
+.wl-single-entry h2,
+.wl-single-entry h3,
+.wl-single-entry h4 {
+  font-family: var(--font-heading, "Cormorant Garamond", serif);
+  font-weight: 400;
+  color: var(--color-primary, #2c2c2c);
+  margin: 40px 0 18px;
+  line-height: 1.2;
+}
+
+.wl-single-entry h2 {
+  font-size: clamp(1.5rem, 2.5vw, 2.1rem);
+}
+.wl-single-entry h3 {
+  font-size: clamp(1.25rem, 2vw, 1.65rem);
+}
+.wl-single-entry h4 {
+  font-size: 1.15rem;
+}
+
+/* Blockquote */
+.wl-single-entry blockquote {
+  margin: 40px 0;
+  padding: 32px 40px;
+  border-left: none;
+  background: transparent;
+  text-align: center;
+  position: relative;
+}
+
+.wl-single-entry blockquote::before,
+.wl-single-entry blockquote::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--color-border, #e8e5e0);
+}
+
+.wl-single-entry blockquote::before {
+  top: 0;
+}
+.wl-single-entry blockquote::after {
+  bottom: 0;
+}
+
+.wl-single-entry blockquote p,
+.wl-single-entry blockquote h3,
+.wl-single-entry blockquote h2 {
+  font-family: var(--font-body, "Jost", sans-serif);
+  font-size: clamp(0.9rem, 1.4vw, 1.1rem);
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--color-primary, #2c2c2c);
+  line-height: 1.55;
+  margin: 0;
+}
+
+/* Images inside content */
+.wl-single-entry img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 32px 0;
+}
+
+/* 2-column image grid */
+.wl-single-entry .wp-block-gallery,
+.wl-single-entry .gallery {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin: 32px 0;
+}
+
+.wl-single-entry .gallery img,
+.wl-single-entry .wp-block-gallery img {
+  width: 100%;
+  height: 260px;
+  object-fit: cover;
+  margin: 0;
+}
+
+/* Links */
+.wl-single-entry a {
+  color: var(--color-accent, #b89d6e);
+  text-decoration: underline;
+  transition: color 0.2s ease;
+}
+
+.wl-single-entry a:hover {
+  color: var(--color-primary, #2c2c2c);
+}
+
+/* Lists */
+.wl-single-entry ul,
+.wl-single-entry ol {
+  margin: 0 0 26px 24px;
+  padding: 0;
+}
+
+.wl-single-entry li {
+  margin-bottom: 8px;
+}
+
+/* ============================================================
+   7. POST FOOTER (tags + share)
+   ============================================================ */
+
+.wl-single-footer {
+  margin-top: 48px;
+  padding-top: 28px;
+  border-top: 1px solid var(--color-border, #e8e5e0);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.wl-single-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.wl-tag {
+  display: inline-block;
+  padding: 6px 14px;
+  font-family: var(--font-body, "Jost", sans-serif);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-primary, #2c2c2c);
+  background: transparent;
+  border: 1px solid var(--color-border, #e8e5e0);
+  text-decoration: none;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.wl-tag:hover {
+  background: var(--color-accent, #b89d6e);
+  border-color: var(--color-accent, #b89d6e);
+  color: #fff;
+}
+
+.wl-single-share {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.wl-share-label {
+  font-family: var(--font-body, "Jost", sans-serif);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-secondary, #878787);
+}
+
+.wl-share-links {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.wl-share-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  color: var(--color-secondary, #878787);
+  font-size: 18px;
+  text-decoration: none;
+  transition:
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.wl-share-btn:hover {
+  color: var(--color-primary, #2c2c2c);
+  transform: translateY(-2px);
+}
+
+/* ============================================================
+   8. PREV / NEXT NAVIGATION — matching element mẫu
+   thumbnail + arrow + label | label + arrow + thumbnail
+   ============================================================ */
+
+.wl-single-nav {
+  margin-top: 48px;
+  border-top: 1px solid var(--color-border, #e8e5e0);
+  border-bottom: 1px solid var(--color-border, #e8e5e0);
+}
+
+.wl-single-nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 80px;
+}
+
+.wl-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  text-decoration: none;
+  padding: 16px 0;
+  transition: opacity 0.2s ease;
+  flex: 1;
+}
+
+.wl-nav-item:hover {
+  opacity: 0.75;
+}
+
+.wl-nav-prev {
+  justify-content: flex-start;
+}
+
+.wl-nav-next {
+  justify-content: flex-end;
+}
+
+/* Thumbnail: 76×50 */
+.wl-nav-thumb {
+  flex-shrink: 0;
+  width: 76px;
+  height: 50px;
+  overflow: hidden;
+}
+
+.wl-nav-thumb img {
+  width: 76px;
+  height: 50px;
+  object-fit: cover;
+  display: block;
+  margin: 0;
+  transition: transform 0.4s ease;
+}
+
+.wl-nav-item:hover .wl-nav-thumb img {
+  transform: scale(1.06);
+}
+
+/* Arrow mark */
+.wl-nav-mark {
+  display: flex;
+  align-items: center;
+  color: var(--color-accent, #59815b);
+  font-size: 28px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+/* Label */
+.wl-nav-label {
+  font-family: var(--font-body, "Jost", sans-serif);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-primary, #2c2c2c);
+  white-space: nowrap;
+}
+
+/* Divider between prev and next */
+.wl-single-nav-inner::after {
+  content: "";
+  width: 1px;
+  height: 40px;
+  background: var(--color-border, #e8e5e0);
+  flex-shrink: 0;
+  margin: 0 8px;
+}
+
+/* ============================================================
+   9. AUTHOR BOX — matching element mẫu
+   background + avatar left + social+name+bio right
+   ============================================================ */
+
+.wl-author-box {
+  margin-top: 48px;
+  background: #f7f5f2;
+  border: 1px solid var(--color-border, #e8e5e0);
+}
+
+.wl-author-box-inner {
+  display: flex;
+  align-items: stretch;
+  min-height: 170px;
+}
+
+/* Avatar column — left, with border-right */
+.wl-author-box-img {
+  flex-shrink: 0;
+  width: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 28px 32px;
+  border-right: 1px solid var(--color-border, #e8e5e0);
+  background: #fff;
+}
+
+.wl-author-box-avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Content column — right */
+.wl-author-box-content {
+  flex: 1;
+  padding: 24px 28px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
+}
+
+/* Social icons + Follow — same row */
+.wl-author-social {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 4px;
+}
+
+.wl-author-social a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-secondary, #878787);
+  font-size: 18px;
+  text-decoration: none;
+  transition:
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.wl-author-social a:hover {
+  color: var(--color-primary, #2c2c2c);
+  transform: translateY(-2px);
+}
+
+.wl-author-follow-label {
+  font-family: var(--font-body, "Jost", sans-serif);
+  font-size: 12px;
+  font-weight: 300;
+  font-style: italic;
+  color: var(--color-secondary, #878787);
+  letter-spacing: 0.04em;
+  margin-left: 4px;
+}
+
+/* Author name */
+.wl-author-box-name {
+  font-family: var(--font-body, "Jost", sans-serif);
+  font-size: clamp(1rem, 1.5vw, 1.25rem);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.wl-author-box-name a {
+  color: var(--color-primary, #2c2c2c);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.wl-author-box-name a:hover {
+  color: var(--color-accent, #b89d6e);
+}
+
+/* Bio */
+.wl-author-box-bio {
+  font-family: var(--font-body, "Jost", sans-serif);
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 1.72;
+  color: var(--color-secondary, #878787);
+  margin: 0;
+}
+
+/* ============================================================
+   10. COMMENTS
+   ============================================================ */
+
+.wl-comments-wrap {
+  margin-top: 56px;
+  padding-top: 44px;
+  border-top: 1px solid var(--color-border, #e8e5e0);
+}
+
+.wl-comments-wrap .comments-title {
+  font-family: var(--font-heading, "Cormorant Garamond", serif);
+  font-size: 1.7rem;
+  font-weight: 400;
+  color: var(--color-primary, #2c2c2c);
+  margin: 0 0 32px;
+}
+
+.wl-comments-wrap .comment-list {
+  list-style: none;
+  margin: 0 0 40px;
+  padding: 0;
+}
+
+.wl-comments-wrap .comment-list .comment {
+  padding: 24px 0;
+  border-bottom: 1px solid var(--color-border, #e8e5e0);
+}
+
+.wl-comments-wrap .comment-list .comment-body {
+  display: flex;
+  gap: 18px;
+}
+
+.wl-comments-wrap .comment-list .comment-author img {
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.wl-comments-wrap .comment-list .comment-author b a {
+  font-family: var(--font-body, "Jost", sans-serif);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-primary, #2c2c2c);
+  text-decoration: none;
+}
+
+.wl-comments-wrap .comment-list .comment-metadata a {
+  font-family: var(--font-body, "Jost", sans-serif);
+  font-size: 11px;
+  font-weight: 300;
+  font-style: italic;
+  color: var(--color-secondary, #878787);
+  text-decoration: none;
+}
+
+.wl-comments-wrap .comment-list .comment-content p {
+  font-family: var(--font-body, "Jost", sans-serif);
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 1.75;
+  color: var(--color-text, #4a4a4a);
+  margin: 8px 0 0;
+}
+
+.wl-comments-wrap .reply a {
+  font-family: var(--font-body, "Jost", sans-serif);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-secondary, #878787);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.wl-comments-wrap .reply a:hover {
+  color: var(--color-accent, #b89d6e);
+}
+
+/* Comment Form */
+.wl-comments-wrap #respond .comment-reply-title {
+  font-family: var(--font-heading, "Cormorant Garamond", serif);
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: var(--color-primary, #2c2c2c);
+  margin: 0 0 24px;
+}
+
+.wl-comments-wrap #respond .comment-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.wl-comments-wrap #respond p.comment-form-author,
+.wl-comments-wrap #respond p.comment-form-email {
+  margin: 0;
+}
+
+.wl-comments-wrap #respond p.comment-form-url,
+.wl-comments-wrap #respond p.comment-form-comment,
+.wl-comments-wrap #respond p.comment-notes,
+.wl-comments-wrap #respond p.comment-form-cookies-consent,
+.wl-comments-wrap #respond p.form-submit {
+  grid-column: span 2;
+  margin: 0;
+}
+
+.wl-comments-wrap #respond label {
+  display: none;
+}
+
+.wl-comments-wrap #respond input[type="text"],
+.wl-comments-wrap #respond input[type="email"],
+.wl-comments-wrap #respond input[type="url"],
+.wl-comments-wrap #respond textarea {
+  width: 100%;
+  padding: 13px 16px;
+  font-family: var(--font-body, "Jost", sans-serif);
+  font-size: 13px;
+  font-weight: 300;
+  color: var(--color-primary, #2c2c2c);
+  background: #fff;
+  border: 1px solid var(--color-border, #e8e5e0);
+  outline: none;
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease;
+  -webkit-appearance: none;
+  box-sizing: border-box;
+}
+
+.wl-comments-wrap #respond input[type="text"]:focus,
+.wl-comments-wrap #respond input[type="email"]:focus,
+.wl-comments-wrap #respond input[type="url"]:focus,
+.wl-comments-wrap #respond textarea:focus {
+  border-color: var(--color-accent, #b89d6e);
+  background: #fafaf8;
+}
+
+.wl-comments-wrap #respond textarea {
+  min-height: 150px;
+  resize: vertical;
+}
+
+.wl-comments-wrap #respond input[type="submit"] {
+  display: inline-flex;
+  align-items: center;
+  padding: 13px 34px;
+  font-family: var(--font-body, "Jost", sans-serif);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #fff;
+  background: var(--color-primary, #2c2c2c);
+  border: none;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    transform 0.18s ease;
+}
+
+.wl-comments-wrap #respond input[type="submit"]:hover {
+  background: var(--color-accent, #b89d6e);
+  transform: translateY(-2px);
+}
+
+/* ============================================================
+   11. SIDEBAR — Recent Posts horizontal cards
+   ============================================================ */
+
+.wl-single-sidebar {
+  position: sticky;
+  top: calc(
+    var(--topbar-height, 44px) + var(--header-height-desktop, 90px) + 24px
+  );
+}
+
+.wl-sidebar-widget,
+.wl-single-sidebar .widget {
+  margin-bottom: 36px;
+  padding-bottom: 36px;
+  border-bottom: 1px solid var(--color-border, #e8e5e0);
+}
+
+.wl-single-sidebar .widget:last-child,
+.wl-sidebar-widget:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.wl-widget-title,
+.wl-single-sidebar .widgettitle,
+.wl-single-sidebar .widget-title {
+  font-family: var(--font-body, "Jost", sans-serif);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-primary, #2c2c2c);
+  margin: 0 0 18px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--color-border, #e8e5e0);
+}
+
+/* ── Recent Posts list ── */
+.wl-recent-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.wl-recent-item {
+  border-bottom: 1px solid var(--color-border, #e8e5e0);
+}
+
+.wl-recent-item:last-child {
+  border-bottom: none;
+}
+
+/* Horizontal card link */
+.wl-recent-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.wl-recent-link:hover {
+  opacity: 0.8;
+}
+
+/* Thumbnail — square fixed */
+.wl-recent-thumb {
+  flex-shrink: 0;
+  width: 64px;
+  height: 52px;
+  overflow: hidden;
+  background: var(--color-light-gray, #f0eeea);
+}
+
+.wl-recent-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+
+.wl-recent-link:hover .wl-recent-thumb img {
+  transform: scale(1.06);
+}
+
+.wl-recent-thumb-placeholder {
+  width: 100%;
+  height: 100%;
+  background: var(--color-light-gray, #f0eeea);
+}
+
+/* Text block */
+.wl-recent-text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+/* Title — clamp 2 dòng */
+.wl-recent-title {
+  font-family: var(--font-body, "Jost", sans-serif);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  line-height: 1.45;
+  color: var(--color-primary, #2c2c2c);
+  transition: color 0.2s ease;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.wl-recent-link:hover .wl-recent-title {
+  color: var(--color-accent, #b89d6e);
+}
+
+/* Date */
+.wl-recent-date {
+  font-family: var(--font-body, "Jost", sans-serif);
+  font-size: 10px;
+  font-weight: 300;
+  font-style: italic;
+  color: var(--color-secondary, #878787);
+  letter-spacing: 0.03em;
+}
+
+/* ── Categories list ── */
+.wl-cat-list,
+.wl-single-sidebar .widget_categories ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.wl-cat-list li,
+.wl-single-sidebar .widget_categories ul li {
+  border-bottom: 1px solid var(--color-border, #e8e5e0);
+}
+
+.wl-cat-list li:last-child,
+.wl-single-sidebar .widget_categories ul li:last-child {
+  border-bottom: none;
+}
+
+.wl-cat-list li a,
+.wl-single-sidebar .widget_categories ul li a {
+  display: block;
+  padding: 9px 0;
+  font-family: var(--font-body, "Jost", sans-serif);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--color-secondary, #878787);
+  text-decoration: none;
+  transition:
+    color 0.2s ease,
+    padding-left 0.2s ease;
+}
+
+.wl-cat-list li a:hover,
+.wl-single-sidebar .widget_categories ul li a:hover {
+  color: var(--color-accent, #b89d6e);
+  padding-left: 6px;
+}
+
+/* ── Tag cloud ── */
+.wl-tag-cloud,
+.wl-single-sidebar .widget_tag_cloud .tagcloud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.wl-tag-cloud a,
+.wl-single-sidebar .widget_tag_cloud .tagcloud a {
+  display: inline-block;
+  padding: 5px 11px;
+  font-family: var(--font-body, "Jost", sans-serif);
+  font-size: 11px !important;
+  font-weight: 500;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--color-secondary, #878787);
+  border: 1px solid var(--color-border, #e8e5e0);
+  text-decoration: none;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.wl-tag-cloud a:hover,
+.wl-single-sidebar .widget_tag_cloud .tagcloud a:hover {
+  background: var(--color-accent, #b89d6e);
+  border-color: var(--color-accent, #b89d6e);
+  color: #fff;
+}
+
+/* ── Sidebar widget images ── */
+.wl-single-sidebar .widget img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ── Recent posts from WP widget ── */
+.wl-single-sidebar .widget_recent_entries ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.wl-single-sidebar .widget_recent_entries ul li {
+  padding: 10px 0;
+  border-bottom: 1px solid var(--color-border, #e8e5e0);
+}
+
+.wl-single-sidebar .widget_recent_entries ul li:last-child {
+  border-bottom: none;
+}
+
+.wl-single-sidebar .widget_recent_entries ul li a {
+  font-family: var(--font-body, "Jost", sans-serif);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--color-primary, #2c2c2c);
+  text-decoration: none;
+  transition: color 0.2s ease;
+  display: block;
+  margin-bottom: 3px;
+}
+
+.wl-single-sidebar .widget_recent_entries ul li a:hover {
+  color: var(--color-accent, #b89d6e);
+}
+
+.wl-single-sidebar .widget_recent_entries ul li .post-date {
+  font-size: 11px;
+  font-style: italic;
+  color: var(--color-secondary, #878787);
+}
+
+/* ============================================================
+   12. READING PROGRESS BAR (JS)
+   ============================================================ */
+
+.wl-reading-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  width: 0%;
+  background: var(--color-accent, #b89d6e);
+  z-index: 9999;
+  transition: width 0.1s linear;
+  pointer-events: none;
+}
+
+/* ============================================================
+   13. LIGHTBOX (JS)
+   ============================================================ */
+
+.wl-lightbox-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.92);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 0.3s ease,
+    visibility 0.3s ease;
+}
+
+.wl-lightbox-overlay.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.wl-lightbox-img-wrap {
+  max-width: 90vw;
+  max-height: 90vh;
+}
+
+.wl-lightbox-img {
+  max-width: 100%;
+  max-height: 90vh;
+  object-fit: contain;
+  display: block;
+  cursor: default !important;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.6);
+}
+
+.wl-lightbox-close {
+  position: absolute;
+  top: 20px;
+  right: 24px;
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 36px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0;
+  transition: color 0.2s ease;
+}
+
+.wl-lightbox-close:hover {
+  color: #fff;
+}
+
+/* ============================================================
+   14. SCROLL FADE-IN (JS)
+   ============================================================ */
+
+.wl-will-animate {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.wl-will-animate.wl-fade-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ============================================================
+   RELATED POSTS SECTION
+   ============================================================ */
+
+.wl-related-section {
+  background: #f7f5f2;
+  padding: 72px 0 80px;
+  border-top: 1px solid var(--color-border, #e8e5e0);
+}
+
+/* ── Section header ── */
+.wl-related-header {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 48px;
+}
+
+.wl-related-title {
+  font-family: var(--font-body, "Jost", sans-serif);
+  font-size: clamp(1.3rem, 2vw, 1.7rem);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-primary, #2c2c2c);
+  margin: 0;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.wl-related-title-accent {
+  color: var(--color-accent, #b89d6e);
+  margin-left: 10px;
+}
+
+.wl-related-line {
+  flex: 1;
+  height: 1px;
+  background: var(--color-border, #e8e5e0);
+}
+
+/* ── Grid: 3 equal columns ── */
+.wl-related-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+/* ── Card — equal height via flex column ── */
+.wl-related-card {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border: 1px solid var(--color-border, #e8e5e0);
+  transition:
+    box-shadow 0.25s ease,
+    transform 0.25s ease;
+}
+
+.wl-related-card:hover {
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+  transform: translateY(-3px);
+}
+
+/* ── Image block — fixed ratio 16:10 ── */
+.wl-related-img-link {
+  display: block;
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 16 / 10;
+  flex-shrink: 0;
+}
+
+.wl-related-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.wl-related-card:hover .wl-related-img {
+  transform: scale(1.05);
+}
+
+.wl-related-img-placeholder {
+  width: 100%;
+  height: 100%;
+  background: var(--color-light-gray, #f0eeea);
+}
+
+/* Category badge trên ảnh */
+.wl-related-cat {
+  position: absolute;
+  bottom: 12px;
+  left: 0;
+  font-family: var(--font-body, "Jost", sans-serif);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-primary, #2c2c2c);
+  background: rgba(255, 255, 255, 0.92);
+  padding: 5px 12px;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.wl-related-card:hover .wl-related-cat {
+  background: var(--color-accent, #b89d6e);
+  color: #fff;
+}
+
+/* ── Content — flex-grow để đẩy read more xuống đáy ── */
+.wl-related-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1; /* chiếm hết chiều cao còn lại */
+  padding: 20px 22px 22px;
+  gap: 0;
+}
+
+/* Meta: author + date */
+.wl-related-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+.wl-related-author {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--font-body, "Jost", sans-serif);
+  font-size: 11px;
+  font-weight: 300;
+  font-style: italic;
+  color: var(--color-secondary, #878787);
+}
+
+.wl-related-author svg {
+  width: 11px;
+  height: 11px;
+  stroke: currentColor;
+  fill: none;
+  flex-shrink: 0;
+  opacity: 0.7;
+}
+
+.wl-related-meta-dot {
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: var(--color-secondary, #878787);
+  opacity: 0.4;
+  flex-shrink: 0;
+  display: inline-block;
+}
+
+.wl-related-date {
+  font-family: var(--font-body, "Jost", sans-serif);
+  font-size: 11px;
+  font-weight: 300;
+  font-style: italic;
+  color: var(--color-secondary, #878787);
+}
+
+/* Title */
+.wl-related-post-title {
+  font-family: var(--font-body, "Jost", sans-serif);
+  font-size: clamp(0.85rem, 1.1vw, 0.98rem);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  line-height: 1.4;
+  color: var(--color-primary, #2c2c2c);
+  margin: 0 0 10px;
+
+  /* Giới hạn 2 dòng để đồng đều giữa các card */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.wl-related-post-title a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.wl-related-post-title a:hover {
+  color: var(--color-accent, #b89d6e);
+}
+
+/* Excerpt — giới hạn 3 dòng */
+.wl-related-excerpt {
+  font-family: var(--font-body, "Jost", sans-serif);
+  font-size: 13px;
+  font-weight: 300;
+  line-height: 1.72;
+  color: var(--color-secondary, #878787);
+  margin: 0 0 18px;
+  flex: 1; /* đẩy read more xuống đáy */
+
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Read More — luôn nằm ở đáy card */
+.wl-related-readmore {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--font-body, "Jost", sans-serif);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-primary, #2c2c2c);
+  text-decoration: none;
+  padding-bottom: 2px;
+  border-bottom: 1px solid var(--color-primary, #2c2c2c);
+  align-self: flex-start; /* không stretch full width */
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease,
+    gap 0.18s ease;
+  margin-top: auto; /* đẩy xuống đáy */
+}
+
+.wl-related-readmore:hover {
+  color: var(--color-accent, #b89d6e);
+  border-color: var(--color-accent, #b89d6e);
+  gap: 11px;
+}
+
+.wl-related-readmore svg {
+  width: 13px;
+  height: 13px;
+  stroke: currentColor;
+  fill: none;
+  flex-shrink: 0;
+  transition: transform 0.18s ease;
+}
+
+.wl-related-readmore:hover svg {
+  transform: translateX(3px);
+}
+
+/* ── Related responsive — Tablet ≤ 1199px ── */
+@media (max-width: 1199px) {
+  .wl-related-section {
+    padding: 56px 0 64px;
+  }
+  .wl-related-grid {
+    gap: 18px;
+  }
+}
+
+/* ── Related responsive — Mobile ≤ 767px ── */
+@media (max-width: 767px) {
+  .wl-related-section {
+    padding: 44px 0 52px;
+  }
+  .wl-related-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .wl-related-header {
+    margin-bottom: 32px;
+  }
+}
+
+/* ── Related responsive — Small mobile ≤ 480px ── */
+@media (max-width: 480px) {
+  .wl-related-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ============================================================
+   15. RESPONSIVE — Tablet ≤ 1199px
+   ============================================================ */
+
+@media (max-width: 1199px) {
+  .wl-blog-hero {
+    height: 360px;
+  }
+
+  .wl-blog-hero-title {
+    font-size: 2.2rem;
+  }
+
+  .wl-blog-hero-inner {
+    bottom: 64px;
+  }
+
+  .wl-single-layout {
+    grid-template-columns: 1fr 250px;
+    gap: 0 44px;
+  }
+
+  .wl-single-featured-wrap {
+    padding-top: 36px;
+  }
+
+  .wl-single-header-wrap {
+    padding: 32px 0 32px;
+  }
+}
+
+/* ============================================================
+   16. RESPONSIVE — Mobile ≤ 767px
+   ============================================================ */
+
+@media (max-width: 767px) {
+  .wl-single-container {
+    padding: 0 20px;
+  }
+
+  .wl-blog-hero {
+    height: 260px;
+  }
+
+  .wl-blog-hero-title {
+    font-size: 1.8rem;
+  }
+
+  .wl-blog-hero-inner {
+    bottom: 48px;
+    left: 20px;
+  }
+
+  .wl-blog-hero-brush img {
+    max-height: 48px;
+  }
+
+  .wl-single-featured-wrap {
+    padding-top: 28px;
+  }
+
+  .wl-single-featured-img {
+    max-height: 280px;
+  }
+
+  .wl-single-header-wrap {
+    padding: 28px 0 24px;
+  }
+
+  .wl-single-title {
+    font-size: 1.55rem;
+  }
+
+  .wl-single-layout {
+    grid-template-columns: 1fr;
+    padding: 36px 0 48px;
+    gap: 44px 0;
+  }
+
+  .wl-single-sidebar {
+    position: static;
+    border-top: 1px solid var(--color-border, #e8e5e0);
+    padding-top: 36px;
+  }
+
+  .wl-single-nav {
+    margin-top: 32px;
+  }
+
+  .wl-nav-item {
+    gap: 10px;
+  }
+
+  .wl-nav-label {
+    display: none; /* ẩn label trên mobile nhỏ, chỉ show thumb + arrow */
+  }
+
+  .wl-author-box-inner {
+    flex-direction: column;
+  }
+
+  .wl-author-box-img {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid var(--color-border, #e8e5e0);
+    padding: 24px;
+  }
+
+  .wl-author-box-content {
+    padding: 20px 24px;
+  }
+
+  .wl-single-footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .wl-single-entry .gallery,
+  .wl-single-entry .wp-block-gallery {
+    grid-template-columns: 1fr;
+  }
+
+  .wl-single-entry blockquote {
+    padding: 22px 18px;
+  }
+
+  .wl-comments-wrap #respond .comment-form {
+    grid-template-columns: 1fr;
+  }
+
+  .wl-comments-wrap #respond p.comment-form-author,
+  .wl-comments-wrap #respond p.comment-form-email,
+  .wl-comments-wrap #respond p.comment-form-url,
+  .wl-comments-wrap #respond p.form-submit {
+    grid-column: span 1;
+  }
+}
+
+/* ============================================================
+   17. RESPONSIVE — Small mobile ≤ 480px
+   ============================================================ */
+
+@media (max-width: 480px) {
+  .wl-single-container {
+    padding: 0 16px;
+  }
+
+  .wl-blog-hero {
+    height: 200px;
+  }
+
+  .wl-blog-hero-title {
+    font-size: 1.5rem;
+  }
+
+  .wl-blog-hero-inner {
+    left: 16px;
+    bottom: 40px;
+  }
+
+  .wl-single-featured-img {
+    max-height: 220px;
+  }
+
+  .wl-single-title {
+    font-size: 1.35rem;
+  }
+
+  .wl-author-box {
+    padding: 18px 14px;
+  }
+}
+
+/* ============================================================
+   18. REDUCED MOTION
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  .wl-will-animate {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .wl-reading-progress {
+    display: none;
+  }
+}

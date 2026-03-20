@@ -48,27 +48,30 @@
         <div class="mkdf-footer-middle-inner mkdf-grid">
             <div class="mkdf-grid-row mkdf-footer-middle-alignment-left">
 
-                <!-- Col 1: About the blog -->
+                <!-- Col 1 -->
                 <div class="mkdf-column-content mkdf-grid-col-3">
+                    <?php if (is_active_sidebar('footer-col-1')): ?>
+                    <?php dynamic_sidebar('footer-col-1'); ?>
+                    <?php else: ?>
                     <div class="mkdf-footer-widget">
-                        <div class="mkdf-widget-title-holder">
-                            <h6 class="mkdf-widget-title"><?php esc_html_e('About the blog', 'wanderland'); ?></h6>
-                        </div>
-                        <div class="mkdf-footer-about-text">
-                            <p><?php echo wp_kses_post(get_theme_mod('wl_footer_about', 'Lorem ipsum dolor sit amet, conse ctetur adipisicing elit, sed do eiusmod mas.')); ?>
-                            </p>
-                        </div>
+                        <h6 class="mkdf-widget-title"><?php esc_html_e('About the blog', 'wanderland'); ?></h6>
+                        <p class="mkdf-footer-about-text">
+                            <?php echo wp_kses_post(get_theme_mod(
+                                    'wl_footer_about',
+                                    'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod mas.'
+                                )); ?>
+                        </p>
                     </div>
+                    <?php endif; ?>
                 </div>
 
-                <!-- Col 2: Subscribe to newsletter -->
+                <!-- Col 2 -->
                 <div class="mkdf-column-content mkdf-grid-col-3">
+                    <?php if (is_active_sidebar('footer-col-2')): ?>
+                    <?php dynamic_sidebar('footer-col-2'); ?>
+                    <?php else: ?>
                     <div class="mkdf-footer-widget mkdf-footer-newsletter">
-                        <div class="mkdf-widget-title-holder">
-                            <h6 class="mkdf-widget-title">
-                                <?php esc_html_e('Subscribe to newsletter', 'wanderland'); ?>
-                            </h6>
-                        </div>
+                        <h6 class="mkdf-widget-title"><?php esc_html_e('Subscribe to newsletter', 'wanderland'); ?></h6>
                         <form class="mkdf-footer-newsletter-form" method="post"
                             action="<?php echo esc_url(admin_url('admin-post.php')); ?>">
                             <input type="hidden" name="action" value="wl_newsletter_subscribe">
@@ -89,27 +92,26 @@
                             </button>
                         </form>
                     </div>
+                    <?php endif; ?>
                 </div>
 
-                <!-- Col 3: Recent news -->
+                <!-- Col 3 -->
                 <div class="mkdf-column-content mkdf-grid-col-3">
+                    <?php if (is_active_sidebar('footer-col-3')): ?>
+                    <?php dynamic_sidebar('footer-col-3'); ?>
+                    <?php else: ?>
                     <div class="mkdf-footer-widget">
-                        <div class="mkdf-widget-title-holder">
-                            <h6 class="mkdf-widget-title"><?php esc_html_e('Recent news', 'wanderland'); ?></h6>
-                        </div>
+                        <h6 class="mkdf-widget-title"><?php esc_html_e('Recent news', 'wanderland'); ?></h6>
                         <div class="mkdf-footer-recent-posts">
                             <?php
-                            $recent_posts = new WP_Query(array(
-                                'post_type' => 'post',
-                                'posts_per_page' => 3,
-                                'orderby' => 'date',
-                                'order' => 'DESC',
-                                'no_found_rows' => true,
-                            ));
-                            if ($recent_posts->have_posts()):
-                                while ($recent_posts->have_posts()):
-                                    $recent_posts->the_post();
-                                    ?>
+                                $recent = new WP_Query(array(
+                                    'posts_per_page' => 3,
+                                    'orderby' => 'date',
+                                    'order' => 'DESC',
+                                    'no_found_rows' => true,
+                                ));
+                                while ($recent->have_posts()):
+                                    $recent->the_post(); ?>
                             <div class="mkdf-footer-post-item">
                                 <div class="mkdf-footer-post-date">
                                     <span class="mkdf-icon-font-elegant icon_calendar"></span>
@@ -119,45 +121,38 @@
                                     </a>
                                 </div>
                                 <p class="mkdf-footer-post-title">
-                                    <a href="<?php the_permalink(); ?>" title="<?php the_title_attribute(); ?>">
-                                        <?php the_title(); ?>
-                                    </a>
+                                    <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
                                 </p>
                             </div>
-                            <?php
-                                endwhile;
-                                wp_reset_postdata();
-                            endif;
-                            ?>
+                            <?php endwhile;
+                                wp_reset_postdata(); ?>
                         </div>
                     </div>
+                    <?php endif; ?>
                 </div>
 
-                <!-- Col 4: Instagram feed -->
+                <!-- Col 4: Categories (thay Instagram) -->
                 <div class="mkdf-column-content mkdf-grid-col-3">
-                    <div class="mkdf-footer-widget mkdf-footer-instagram">
-                        <div class="mkdf-widget-title-holder">
-                            <h6 class="mkdf-widget-title"><?php esc_html_e('Instagram feed', 'wanderland'); ?></h6>
-                        </div>
-                        <?php
-                        // Render Instagram widget if active, or placeholder grid
-                        if (is_active_widget(false, false, 'mkdf_instagram_widget', true)) {
-                            the_widget('mkdf_instagram_widget');
-                        } else {
-                            // Placeholder grid — 6 squares
-                            echo '<div class="mkdf-instagram-placeholder">';
-                            for ($i = 0; $i < 6; $i++) {
-                                echo '<div class="mkdf-instagram-placeholder-item"></div>';
-                            }
-                            echo '</div>';
-                        }
-                        ?>
+                    <?php if (is_active_sidebar('footer-col-4')): ?>
+                    <?php dynamic_sidebar('footer-col-4'); ?>
+                    <?php else: ?>
+                    <div class="mkdf-footer-widget mkdf-footer-categories">
+                        <h6 class="mkdf-widget-title"><?php esc_html_e('Categories', 'wanderland'); ?></h6>
+                        <ul class="mkdf-footer-cat-list">
+                            <?php wp_list_categories(array(
+                                    'title_li' => '',
+                                    'hide_empty' => true,
+                                    'orderby' => 'name',
+                                    'order' => 'ASC',
+                                )); ?>
+                        </ul>
                     </div>
+                    <?php endif; ?>
                 </div>
 
             </div>
         </div>
-    </div><!-- .mkdf-footer-middle-holder -->
+    </div>
 
 
     <!-- ============================================================

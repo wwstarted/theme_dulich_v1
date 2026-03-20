@@ -1,0 +1,399 @@
+/* ============================================================
+   WANDERLAND — 404.css
+   Full-screen 404: 100vh, bg image, header floats, no scroll
+   ============================================================ */
+
+/* ── Lock scroll on 404 page ── */
+body.error404 {
+  overflow: hidden;
+  height: 100vh;
+  padding-top: 0 !important; /* override body:not(.home) padding */
+}
+
+/* ============================================================
+   1. MAIN + SCENE
+   ============================================================ */
+
+.wl-404-main {
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* Full-screen background */
+.wl-404-scene {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* Dark overlay */
+.wl-404-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(20, 20, 20, 0.72) 0%,
+    rgba(20, 20, 20, 0.55) 100%
+  );
+}
+
+/* ============================================================
+   2. CONTENT — centered, above overlay
+   ============================================================ */
+
+.wl-404-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 0 var(--gutter, 40px);
+  max-width: 640px;
+  width: 100%;
+
+  /* Push down slightly to account for floating header */
+  margin-top: calc(
+    var(--topbar-height, 44px) + var(--header-height-desktop, 90px)
+  );
+}
+
+/* ============================================================
+   3. 404 NUMBER + COMPASS
+   ============================================================ */
+
+.wl-404-number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  line-height: 1;
+  margin-bottom: 20px;
+}
+
+.wl-404-number > span:not(.wl-404-compass) {
+  font-family: var(--font-heading, "Cormorant Garamond", serif);
+  font-size: clamp(6rem, 14vw, 11rem);
+  font-weight: 300;
+  color: #fff;
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+  text-shadow: 0 2px 40px rgba(0, 0, 0, 0.4);
+}
+
+/* Compass replacing the 0 */
+.wl-404-compass {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: clamp(80px, 11vw, 130px);
+  height: clamp(80px, 11vw, 130px);
+  flex-shrink: 0;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.wl-404-compass svg {
+  width: 100%;
+  height: 100%;
+  animation: wl404-compass-rock 5s ease-in-out infinite;
+  filter: drop-shadow(0 2px 12px rgba(0, 0, 0, 0.3));
+}
+
+.wl-404-needle-n {
+  transform-origin: 60px 62px;
+  animation: wl404-needle 7s ease-in-out infinite;
+}
+
+@keyframes wl404-compass-rock {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  30% {
+    transform: rotate(4deg);
+  }
+  70% {
+    transform: rotate(-4deg);
+  }
+}
+
+@keyframes wl404-needle {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  20% {
+    transform: rotate(10deg);
+  }
+  45% {
+    transform: rotate(-6deg);
+  }
+  65% {
+    transform: rotate(4deg);
+  }
+  85% {
+    transform: rotate(-2deg);
+  }
+}
+
+/* ============================================================
+   4. TEXT
+   ============================================================ */
+
+.wl-404-tagline {
+  font-family: var(--font-body, "Jost", sans-serif);
+  font-size: clamp(11px, 1.2vw, 13px);
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-accent, #b89d6e);
+  margin: 0 0 10px;
+}
+
+.wl-404-title {
+  font-family: var(--font-body, "Jost", sans-serif);
+  font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #fff;
+  margin: 0 0 28px;
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* ============================================================
+   5. SEARCH FORM
+   ============================================================ */
+
+.wl-404-search {
+  width: 100%;
+  max-width: 420px;
+  margin-bottom: 24px;
+}
+
+.wl-404-search-inner {
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  overflow: hidden;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.wl-404-search-inner:focus-within {
+  background: rgba(255, 255, 255, 0.16);
+  border-color: var(--color-accent, #b89d6e);
+}
+
+.wl-404-search-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  padding: 13px 16px;
+  font-family: var(--font-body, "Jost", sans-serif);
+  font-size: 13px;
+  font-weight: 300;
+  color: #fff;
+  min-width: 0;
+}
+
+.wl-404-search-input::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+  font-style: italic;
+}
+
+.wl-404-search-btn {
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-accent, #b89d6e);
+  border: none;
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  line-height: 1;
+}
+
+.wl-404-search-btn:hover {
+  background: #a08050;
+}
+
+/* ============================================================
+   6. ACTION BUTTONS
+   ============================================================ */
+
+.wl-404-btns {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.wl-404-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 26px;
+  font-family: var(--font-body, "Jost", sans-serif);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.18s ease;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.wl-404-btn svg {
+  width: 14px;
+  height: 14px;
+  stroke: currentColor;
+  fill: none;
+  flex-shrink: 0;
+}
+
+.wl-404-btn--primary {
+  background: #fff;
+  color: var(--color-primary, #2c2c2c);
+}
+
+.wl-404-btn--primary:hover {
+  background: var(--color-accent, #b89d6e);
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+.wl-404-btn--secondary {
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.wl-404-btn--secondary:hover {
+  background: rgba(255, 255, 255, 0.18);
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-2px);
+}
+
+/* ============================================================
+   7. HEADER FLOAT — same as home/single
+   ============================================================ */
+
+/* header.js sẽ thêm is-transparent khi body.error404 */
+/* Chỉ cần đảm bảo body không có padding-top */
+
+/* ============================================================
+   8. RESPONSIVE — Tablet ≤ 1199px
+   ============================================================ */
+
+@media (max-width: 1199px) {
+  .wl-404-content {
+    margin-top: calc(
+      var(--topbar-height, 44px) + var(--header-height-desktop, 90px)
+    );
+  }
+}
+
+/* ============================================================
+   9. RESPONSIVE — Mobile ≤ 767px
+   ============================================================ */
+
+@media (max-width: 767px) {
+  .wl-404-content {
+    padding: 0 20px;
+    /* Mobile: header height khác */
+    margin-top: var(--header-height-mobile, 66px);
+  }
+
+  .wl-404-number > span:not(.wl-404-compass) {
+    font-size: 5rem;
+  }
+
+  .wl-404-compass {
+    width: 72px;
+    height: 72px;
+  }
+
+  .wl-404-number {
+    gap: 6px;
+    margin-bottom: 16px;
+  }
+
+  .wl-404-title {
+    margin-bottom: 20px;
+  }
+
+  .wl-404-search {
+    max-width: 100%;
+    margin-bottom: 18px;
+  }
+
+  .wl-404-btns {
+    gap: 10px;
+  }
+}
+
+/* ============================================================
+   10. RESPONSIVE — Small mobile ≤ 480px
+   ============================================================ */
+
+@media (max-width: 480px) {
+  .wl-404-number > span:not(.wl-404-compass) {
+    font-size: 4rem;
+  }
+
+  .wl-404-compass {
+    width: 58px;
+    height: 58px;
+  }
+
+  .wl-404-btn {
+    padding: 10px 20px;
+    font-size: 10px;
+  }
+
+  .wl-404-btns {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .wl-404-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* ============================================================
+   11. REDUCED MOTION
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  .wl-404-compass svg,
+  .wl-404-needle-n {
+    animation: none;
+  }
+}

@@ -99,8 +99,7 @@
                     <div class="mkdf-divided-left-widget-area">
                         <div class="mkdf-divided-left-widget-area-inner">
                             <div class="mkdf-position-left-inner-wrap">
-                                <a class="mkdf-icon-widget-holder"
-                                    href="<?php echo esc_url(home_url('/destination-list/')); ?>">
+                                <a class="mkdf-icon-widget-holder" href="<?php echo esc_url(home_url('#')); ?>">
                                     <span class="mkdf-icon-element ion-map"></span>
                                     <span class="mkdf-icon-text">
                                         <?php esc_html_e('Destinations', 'wanderland'); ?>
@@ -288,22 +287,93 @@
             </div><!-- .mkdf-mobile-header-holder -->
 
             <!-- Mobile nav panel -->
-            <nav class="mkdf-mobile-nav" role="navigation"
-                aria-label="<?php esc_attr_e('Mobile Menu', 'wanderland'); ?>">
+            <!-- Mobile nav panel -->
+            <nav class="mkdf-mobile-nav" ...>
                 <div class="mkdf-grid">
                     <?php
-                    wp_nav_menu(array(
-                        'theme_location' => 'mobile',
-                        'menu_class' => '',
-                        'container' => false,
-                        'depth' => 3,
-                        'walker' => new WL_Mobile_Walker(),
-                        'fallback_cb' => false,
-                    ));
+                    // Ưu tiên menu 'mobile', fallback về 'header-left' + 'header-right'
+                    if (has_nav_menu('mobile')) {
+                        wp_nav_menu(array(
+                            'theme_location' => 'mobile',
+                            'menu_class' => '',
+                            'container' => false,
+                            'depth' => 3,
+                            'walker' => new WL_Mobile_Walker(),
+                        ));
+                    } else {
+                        // Ghép cả 2 nav desktop vào mobile
+                        wp_nav_menu(array(
+                            'theme_location' => 'header-left',
+                            'menu_class' => '',
+                            'container' => false,
+                            'depth' => 3,
+                            'walker' => new WL_Mobile_Walker(),
+                            'fallback_cb' => false,
+                        ));
+                        wp_nav_menu(array(
+                            'theme_location' => 'header-right',
+                            'menu_class' => '',
+                            'container' => false,
+                            'depth' => 3,
+                            'walker' => new WL_Mobile_Walker(),
+                            'fallback_cb' => false,
+                        ));
+                    }
                     ?>
                 </div>
+                <!-- Mobile menu footer -->
+                <div class="mkdf-mobile-nav-footer">
+
+                    <!-- Contact info -->
+                    <div class="mkdf-mobile-nav-contact">
+                        <?php if ($phone = get_theme_mod('wl_phone', '')): ?>
+                        <a class="mkdf-mobile-nav-contact-item"
+                            href="tel:<?php echo esc_attr(preg_replace('/\s+/', '', $phone)); ?>">
+                            <i class="ion-android-call" aria-hidden="true"></i>
+                            <span>
+                                <?php echo esc_html($phone); ?>
+                            </span>
+                        </a>
+                        <?php endif; ?>
+                        <?php if ($email = get_theme_mod('wl_email', '')): ?>
+                        <a class="mkdf-mobile-nav-contact-item" href="mailto:<?php echo esc_attr($email); ?>">
+                            <i class="ion-ios-email-outline" aria-hidden="true"></i>
+                            <span>
+                                <?php echo esc_html($email); ?>
+                            </span>
+                        </a>
+                        <?php endif; ?>
+                    </div>
+
+                    <!-- Social links -->
+                    <div class="mkdf-mobile-nav-social">
+                        <?php if ($ig = get_theme_mod('wl_social_instagram')): ?>
+                        <a href="<?php echo esc_url($ig); ?>" target="_blank" rel="noopener noreferrer"
+                            aria-label="Instagram">
+                            <i class="ion-social-instagram"></i>
+                        </a>
+                        <?php endif; ?>
+                        <?php if ($tw = get_theme_mod('wl_social_twitter')): ?>
+                        <a href="<?php echo esc_url($tw); ?>" target="_blank" rel="noopener noreferrer"
+                            aria-label="Twitter">
+                            <i class="ion-social-twitter"></i>
+                        </a>
+                        <?php endif; ?>
+                        <?php if ($fb = get_theme_mod('wl_social_facebook')): ?>
+                        <a href="<?php echo esc_url($fb); ?>" target="_blank" rel="noopener noreferrer"
+                            aria-label="Facebook">
+                            <i class="ion-social-facebook"></i>
+                        </a>
+                        <?php endif; ?>
+                        <?php if ($yt = get_theme_mod('wl_social_youtube')): ?>
+                        <a href="<?php echo esc_url($yt); ?>" target="_blank" rel="noopener noreferrer"
+                            aria-label="YouTube">
+                            <i class="ion-social-youtube"></i>
+                        </a>
+                        <?php endif; ?>
+                    </div>
+
+                </div><!-- .mkdf-mobile-nav-footer -->
             </nav>
-
-
         </div>
     </header>
